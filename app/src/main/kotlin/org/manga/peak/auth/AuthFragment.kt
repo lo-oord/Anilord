@@ -8,6 +8,7 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -37,6 +38,32 @@ class AuthFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         render()
+        playEntranceAnimation()
+    }
+
+    private fun playEntranceAnimation() {
+        val views = listOf(
+            binding.brandBlock,
+            binding.textTitle,
+            binding.textSubtitle,
+            binding.formFields,
+            binding.checkboxTerms,
+            binding.textRequirements,
+            binding.textLinkPrimary,
+            binding.buttonPrimary,
+            binding.textSecondaryInfo,
+            binding.textLinkSecondary,
+            binding.buttonGoogle,
+            binding.buttonGuest,
+            binding.textBottomAction,
+        )
+        views.filter { it.isVisible }.forEachIndexed { index, target ->
+            target.clearAnimation()
+            val animation = AnimationUtils.loadAnimation(requireContext(), R.anim.anilord_fade_slide_in).apply {
+                startOffset = index * 35L
+            }
+            target.startAnimation(animation)
+        }
     }
 
     private fun render() {

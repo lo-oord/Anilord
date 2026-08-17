@@ -8,6 +8,7 @@
     android:padding="32dp">
 
     <ImageView
+        android:id="@+id/image_logo"
         android:layout_width="156dp"
         android:layout_height="156dp"
         android:contentDescription="@string/app_name"
@@ -15,6 +16,7 @@
         android:scaleType="centerInside" />
 
     <TextView
+        android:id="@+id/text_brand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="-12dp"
