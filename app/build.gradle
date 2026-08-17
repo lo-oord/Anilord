@@ -133,15 +133,17 @@ android {
 			freeCompilerArgs += ['-opt-in=org.koitharu.kotatsu.parsers.InternalParsersApi']
 		}
 	}
-	applicationVariants.configureEach { variant ->
-		if (variant.name == 'nightly') {
+		applicationVariants.configureEach { variant ->
 			variant.outputs.each { output ->
-				def now = LocalDateTime.now()
-				output.versionCodeOverride = now.format("yyMMdd").toInteger()
-				output.versionNameOverride = 'N' + now.format("yyyyMMdd")
+				def variantVersionName = variant.versionName ?: '1.0'
+				output.outputFileName = "Anilord-${variant.name}-${variantVersionName}.apk"
+				if (variant.name == 'nightly') {
+					def now = LocalDateTime.now()
+					output.versionCodeOverride = now.format("yyMMdd").toInteger()
+					output.versionNameOverride = 'N' + now.format("yyyyMMdd")
+				}
 			}
 		}
-	}
 }
 dependencies {
 	implementation platform(libs.firebase.bom)
