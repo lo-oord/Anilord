@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/anilord_surface"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="32dp">
+
+    <ImageView
+        android:layout_width="156dp"
+        android:layout_height="156dp"
+        android:contentDescription="@string/app_name"
+        android:src="@mipmap/ic_launcher_foreground"
+        android:scaleType="centerInside" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-12dp"
+        android:fontFamily="sans"
+        android:letterSpacing="0.28"
+        android:text="ANILORD"
+        android:textColor="@color/anilord_accent"
+        android:textSize="22sp" />
+
+    <ProgressBar
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="56dp"
+        android:indeterminateTint="@color/anilord_accent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/auth_startup_subtitle"
+        android:textColor="@color/anilord_on_surface"
+        android:textSize="14sp" />
+</LinearLayout>

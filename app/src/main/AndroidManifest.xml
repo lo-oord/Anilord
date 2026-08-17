@@ -78,17 +78,26 @@
 			android:name="com.google.firebase.messaging.default_notification_channel_id"
 			android:value="firebase_messages" />
 
-		<activity
-			android:name="org.manga.peak.main.ui.MainActivity"
-			android:exported="true">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
-			<meta-data
-				android:name="android.app.default_searchable"
-				android:value="org.manga.peak.search.ui.multi.MultiSearchActivity" />
-		</activity>
+			<activity
+				android:name="org.manga.peak.auth.StartupActivity"
+				android:exported="true"
+				android:noHistory="true">
+				<intent-filter>
+					<action android:name="android.intent.action.MAIN" />
+					<category android:name="android.intent.category.LAUNCHER" />
+				</intent-filter>
+			</activity>
+			<activity
+				android:name="org.manga.peak.auth.AuthActivity"
+				android:exported="false"
+				android:windowSoftInputMode="adjustResize" />
+			<activity
+				android:name="org.manga.peak.main.ui.MainActivity"
+				android:exported="true">
+				<meta-data
+					android:name="android.app.default_searchable"
+					android:value="org.manga.peak.search.ui.multi.MultiSearchActivity" />
+			</activity>
 		<activity
 			android:name="org.manga.peak.anime.player.AnimePlayerActivity"
 			android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden"

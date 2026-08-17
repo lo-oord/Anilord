@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Widget.Anilord.AuthTextInput" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundColor">@color/anilord_surface</item>
+        <item name="boxStrokeColor">@color/anilord_accent</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <item name="hintTextColor">@color/anilord_on_surface</item>
+        <item name="startIconTint">@color/anilord_on_surface</item>
+        <item name="endIconTint">@color/anilord_on_surface</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Anilord.AuthInput</item>
+    </style>
+
+    <style name="ShapeAppearance.Anilord.AuthInput" parent="ShapeAppearance.Material3.Corner.Medium">
+        <item name="cornerSize">14dp</item>
+    </style>
+
+    <style name="Widget.Anilord.AuthPrimaryButton" parent="Widget.Material3.Button">
+        <item name="android:background">@drawable/auth_primary_button</item>
+        <item name="backgroundTint">@null</item>
+        <item name="cornerRadius">14dp</item>
+        <item name="android:fontFamily">sans</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="Widget.Anilord.AuthOutlineButton" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="strokeColor">@color/anilord_accent_deep</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cornerRadius">14dp</item>
+        <item name="android:fontFamily">sans</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+</resources>
