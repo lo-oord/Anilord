@@ -4,14 +4,6 @@
 	<string name="content_type_anime">Anime</string>
 	<string name="content_type_all">All</string>
 	<string name="anime_source_risto" translatable="false">RistoAnime</string>
-	<string name="support_developer">Support Anilord</string>
-	<string name="support_developer_summary">Support continued app development with a small one-time purchase</string>
-	<string name="support_developer_loading">Connecting to Google Play…</string>
-	<string name="support_developer_price">One-time support · %1$s</string>
-	<string name="support_developer_unavailable">Support is not available. Install the Play Store test or production version and make sure the product is active.</string>
-	<string name="support_developer_error">Google Play could not start the purchase. Please try again.</string>
-	<string name="support_developer_pending">Your payment is pending. You will be thanked after Google Play confirms it.</string>
-	<string name="support_developer_thanks">Thank you for supporting Anilord!</string>
 	<string name="watch">Watch</string>
 	<string name="continue_watching">Continue watching</string>
 	<string name="episodes">Episodes</string>
@@ -972,6 +964,130 @@
     <string name="create_or_restore_backup">Create or restore a backup</string>
     <string name="data_removal">Data removal</string>
     <string name="privacy">Privacy</string>
+    <string name="privacy_policy_summary">Read the Anilord privacy policy</string>
+    <string name="privacy_policy_text" formatted="false"><![CDATA[سياسة الخصوصية - Anilord
+
+آخر تحديث: 18 أغسطس 2026
+
+مرحباً بك في Anilord.
+
+نحن نحترم خصوصيتك ونسعى إلى حماية بيانات المستخدمين. توضح سياسة الخصوصية هذه كيفية جمع واستخدام وحماية المعلومات عند استخدام تطبيق Anilord. باستخدام التطبيق، فإنك توافق على ما هو موضح في هذه السياسة.
+
+قيود العمر وخصوصية الأطفال
+
+تم تصميم Anilord للمستخدمين الذين تبلغ أعمارهم 3 أعوام فأكثر.
+
+لا نقوم عن قصد بجمع أي معلومات شخصية من الأطفال دون سن 3 أعوام. إذا كنت تعتقد أن طفلاً قد زودنا بمعلومات شخصية، يرجى التواصل معنا حتى نتخذ الإجراءات المناسبة.
+
+1. المعلومات التي نجمعها
+
+قد نقوم بجمع بعض المعلومات التقنية تلقائياً للمساعدة في تشغيل التطبيق وتحسينه، مثل:
+
+- نوع الجهاز والشركة المصنعة.
+- إصدار نظام التشغيل.
+- إصدار التطبيق.
+- اللغة والمنطقة.
+- إحصائيات استخدام التطبيق.
+- بيانات الأداء.
+- تقارير الأعطال والأخطاء التقنية.
+- عنوان IP لأغراض الأمان والتحليل العام.
+
+إذا كان التطبيق يعرض إعلانات، فقد تقوم شبكات الإعلانات بجمع بعض المعلومات مثل:
+
+- معرّف الإعلانات الخاص بجوجل (Google Advertising ID).
+- معلومات الجهاز.
+- تفضيلات الإعلانات.
+
+يمكن للمستخدم إعادة تعيين معرّف الإعلانات أو إيقاف الإعلانات المخصصة من إعدادات جهازه.
+
+2. كيفية استخدام المعلومات
+
+قد نستخدم المعلومات التي يتم جمعها من أجل:
+
+- تشغيل التطبيق وتقديم خدماته.
+- تحسين الأداء والاستقرار.
+- إصلاح الأخطاء والمشكلات التقنية.
+- تحليل استخدام التطبيق بشكل عام.
+- منع إساءة الاستخدام وحماية التطبيق.
+- عرض الإعلانات عند الحاجة.
+- الالتزام بالمتطلبات القانونية.
+
+ولا نقوم بجمع أو تخزين معلومات حساسة مثل جهات الاتصال أو الرسائل أو الصور أو بيانات الدفع، إلا إذا كان ذلك مطلوباً بشكل واضح من خلال إحدى وظائف التطبيق.
+
+3. خدمات الطرف الثالث
+
+قد يستخدم Anilord بعض خدمات الجهات الخارجية، مثل:
+
+- Google Play Services.
+- Google AdMob، إذا كانت الإعلانات مفعلة.
+- Firebase Crashlytics، إذا كانت مفعلة.
+- Firebase Analytics، إذا كانت مفعلة.
+
+وتخضع هذه الخدمات لسياسات الخصوصية الخاصة بها.
+
+4. مشاركة المعلومات
+
+لا نقوم ببيع أو تأجير المعلومات الشخصية لأي طرف.
+
+وقد تتم مشاركة بعض المعلومات في الحالات التالية:
+
+- إذا كان ذلك مطلوباً بموجب القانون.
+- لحماية حقوقنا القانونية.
+- مع مزودي الخدمات الذين يساعدون في تشغيل التطبيق وتحسينه.
+- عند الحصول على موافقة المستخدم إذا كان ذلك مطلوباً.
+
+5. حماية المعلومات
+
+نطبق إجراءات أمنية مناسبة للمساعدة في حماية المعلومات من الوصول غير المصرح به أو التعديل أو الإفصاح أو الإتلاف.
+
+ومع ذلك، لا توجد أي وسيلة لنقل أو تخزين البيانات عبر الإنترنت توفر حماية كاملة بنسبة 100%.
+
+6. الاحتفاظ بالبيانات
+
+يتم الاحتفاظ بالبيانات التقنية وبيانات الأعطال فقط للمدة اللازمة لتشغيل التطبيق وتحسينه أو للوفاء بالالتزامات القانونية عند الحاجة.
+
+7. الإعلانات وتقنيات التتبع
+
+قد تستخدم شبكات الإعلانات معرّفات الإعلانات أو تقنيات مشابهة لتحسين الإعلانات وقياس أدائها.
+
+ويمكن للمستخدم التحكم في إعدادات الإعلانات المخصصة من خلال إعدادات جهازه.
+
+8. الروابط والمصادر الخارجية
+
+قد يحتوي Anilord على روابط أو مصادر أو خدمات تابعة لجهات خارجية.
+
+ولا نتحمل مسؤولية سياسات الخصوصية أو محتوى أو ممارسات تلك الجهات الخارجية. ويُنصح المستخدم بمراجعة سياسات الخصوصية الخاصة بها عند استخدام خدماتها.
+
+9. نقل البيانات دولياً
+
+قد تتم معالجة بعض البيانات التقنية من خلال خوادم تابعة لمقدمي الخدمات خارج بلد المستخدم.
+
+وتخضع معالجة هذه البيانات لسياسات مقدمي الخدمات والقوانين المعمول بها.
+
+10. التعديلات على سياسة الخصوصية
+
+قد نقوم بتحديث سياسة الخصوصية من وقت لآخر.
+
+وسيتم نشر أي تحديثات على هذه الصفحة مع تعديل تاريخ آخر تحديث.
+
+ويُعد استمرارك في استخدام التطبيق بعد نشر التعديلات موافقةً منك على السياسة المحدثة.
+
+11. الامتثال لسياسات Google Play
+
+يلتزم Anilord بمتطلبات وسياسات Google Play المتعلقة ببيانات المستخدم والخصوصية.
+
+- يتم جمع البيانات اللازمة فقط لتشغيل التطبيق وتحسينه والخدمات المرتبطة به.
+- لا يتم بيع المعلومات الشخصية لأي جهة.
+- يمكن للمستخدم التحكم في إعدادات معرّف الإعلانات والإعلانات المخصصة من إعدادات جهازه.
+- يتم التعامل مع البيانات وفقاً للمتطلبات والسياسات المعمول بها.
+
+12. التواصل معنا
+
+إذا كانت لديك أي استفسارات أو طلبات متعلقة بسياسة الخصوصية، يمكنك التواصل معنا عبر البريد الإلكتروني:
+
+البريد الإلكتروني: Anilordapp@gmail.com
+
+© 2027 Anilord. جميع الحقوق محفوظة.]]></string>
     <string name="source_broken_warning">This manga source has been marked as broken. Some features may not work</string>
     <string name="download_default_directory">Default directory for downloading manga</string>
     <string name="private_app_directory_warning">This directory with all data will be deleted if you uninstall the application</string>

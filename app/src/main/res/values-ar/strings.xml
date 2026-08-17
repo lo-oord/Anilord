@@ -3,14 +3,6 @@
 	<string name="anime">الأنمي</string>
 	<string name="content_type_anime">أنمي</string>
 	<string name="content_type_all">الكل</string>
-	<string name="support_developer">ادعم MangaPeak</string>
-	<string name="support_developer_summary">ادعم استمرار تطوير التطبيق بعملية شراء صغيرة لمرة واحدة</string>
-	<string name="support_developer_loading">ادعم لاستمرار التطبيق</string>
-	<string name="support_developer_price">دعم لمرة واحدة · %1$s</string>
-	<string name="support_developer_unavailable">الدعم غير متاح. ثبّت نسخة الاختبار أو الإنتاج من Play Store وتأكد من تفعيل المنتج.</string>
-	<string name="support_developer_error">تعذر بدء عملية الشراء من Google Play. حاول مجددًا.</string>
-	<string name="support_developer_pending">عملية الدفع معلّقة. سيتم تأكيدها بعد اعتمادها من Google Play.</string>
-	<string name="support_developer_thanks">شكرًا لدعمك MangaPeak!</string>
 	<string name="watch">مشاهدة</string>
 	<string name="continue_watching">متابعة المشاهدة</string>
 	<string name="episodes">الحلقات</string>
