@@ -1,7 +1,7 @@
 <div align="center">
   <img src="docs/images/anilord-crest.webp" alt="شعار Anilord" width="140" />
 
-  # Anilord | أنيلورد
+  # Anilord
 
   قارئ ومشغل مفتوح المصدر للمانجا والروايات والأنمي على Android.
 
