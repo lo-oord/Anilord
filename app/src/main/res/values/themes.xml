@@ -96,7 +96,7 @@
         <item name="colorSecondary">@color/anilord_accent</item>
         <item name="colorSurface">@color/anilord_surface</item>
         <item name="colorOnSurface">@color/anilord_ink</item>
-        <item name="colorBackground">@color/anilord_surface</item>
+        <item name="android:colorBackground">@color/anilord_surface</item>
         <item name="colorOnBackground">@color/anilord_ink</item>
         <item name="android:windowBackground">@color/anilord_surface</item>
         <item name="android:colorAccent">@color/anilord_accent</item>
