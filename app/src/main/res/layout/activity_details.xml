@@ -215,19 +215,6 @@
 					app:layout_constraintStart_toStartOf="parent"
 					app:layout_constraintTop_toBottomOf="@+id/textView_description" />
 
-				<include
-					android:id="@+id/details_native_ad"
-					layout="@layout/item_native_ad"
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_marginHorizontal="@dimen/margin_normal"
-					android:layout_marginTop="@dimen/margin_normal"
-					android:visibility="gone"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintTop_toBottomOf="@id/chips_tags"
-					tools:visibility="visible" />
-
 				<TextView
 					android:id="@+id/textView_scrobbling_title"
 					android:layout_width="0dp"

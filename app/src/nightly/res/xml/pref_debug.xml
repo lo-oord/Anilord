@@ -3,12 +3,5 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 
-	<org.manga.peak.settings.utils.SplitSwitchPreference
-		android:id="@+id/action_leakcanary"
-		android:defaultValue="false"
-		android:key="leak_canary"
-		android:title="LeakCanary"
-		android:summary="@string/may_affect_performance"
-		app:key="debug.leak_canary" />
 
 </androidx.preference.PreferenceScreen>

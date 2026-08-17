@@ -1024,7 +1024,4 @@
 	<string name="optional_anime_ad_message">هل ترغب في مشاهدة إعلان قبل تشغيل الحلقة؟ هذا اختياري تمامًا، ويمكنك تشغيل الحلقة فورًا بدون إعلان. وإذا اخترت مشاهدة الإعلان، فأنت تساهم بشكل مباشر في دعمنا والاستمرار في تطوير التطبيق وإضافة المزيد من المحتوى. شكرًا لدعمك ❤️</string>
 	<string name="watch_ad">مشاهدة الإعلان</string>
 	<string name="play_now">تشغيل الحلقة</string>
-	<string name="ad_privacy_options">خيارات خصوصية الإعلانات</string>
-	<string name="ad_privacy_options_summary">مراجعة أو تغيير اختيارات الموافقة على الإعلانات</string>
-	<string name="ad_privacy_options_unavailable">خيارات خصوصية الإعلانات غير متاحة حاليًا</string>
 </resources>

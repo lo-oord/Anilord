@@ -69,9 +69,6 @@
 			android:name="google_analytics_default_allow_ad_personalization_signals"
 			android:value="false" />
 		<meta-data
-			android:name="com.google.android.gms.ads.APPLICATION_ID"
-			android:value="@string/admob_app_id" />
-		<meta-data
 			android:name="com.google.firebase.messaging.default_notification_icon"
 			android:resource="@drawable/ic_notification" />
 		<meta-data

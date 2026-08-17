@@ -31,7 +31,6 @@ kotlin = "2.2.10"
 kizzyRpc = "ad8f2e32eb"
 kotlinxCoroutinesAndroid = "1.7.3"
 ksp = "2.2.10-2.0.2"
-leakcanary = "3.0-alpha-8"
 lifecycle = "2.9.4"
 material = "1.14.0"
 media3 = "1.10.1"
@@ -57,8 +56,6 @@ workinspector = "1.2"
 googleGmsGoogleServices = "4.5.0"
 firebaseBom = "34.16.0"
 googleFirebaseCrashlytics = "3.0.7"
-playServicesAds = "25.4.0"
-userMessagingPlatform = "4.0.0"
 
 [libraries]
 acra-dialog = { module = "ch.acra:acra-dialog", version.ref = "acra" }
@@ -118,7 +115,6 @@ kotlinx-coroutines-android-v173 = { module = "org.jetbrains.kotlinx:kotlinx-coro
 kotlinx-coroutines-guava = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-guava", version.ref = "coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm", version.ref = "serialization" }
-leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanary" }
 lifecycle-process = { module = "androidx.lifecycle:lifecycle-process", version.ref = "lifecycle" }
 lifecycle-service = { module = "androidx.lifecycle:lifecycle-service", version.ref = "lifecycle" }
 lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
@@ -140,8 +136,6 @@ firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics
 firebase-database = { group = "com.google.firebase", name = "firebase-database" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
 firebase-inappmessaging-display = { group = "com.google.firebase", name = "firebase-inappmessaging-display" }
-play-services-ads = { group = "com.google.android.gms", name = "play-services-ads", version.ref = "playServicesAds" }
-user-messaging-platform = { group = "com.google.android.ump", name = "user-messaging-platform", version.ref = "userMessagingPlatform" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "gradle" }

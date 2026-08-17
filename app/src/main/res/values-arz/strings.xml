@@ -5,7 +5,4 @@
 	<string name="optional_anime_ad_message">تحب تشوف إعلان قبل ما الحلقة تشتغل؟ ده اختياري تمامًا، وتقدر تشغل الحلقة فورًا من غير إعلان.</string>
 	<string name="watch_ad">مشاهدة الإعلان</string>
 	<string name="play_now">تشغيل دلوقتي</string>
-	<string name="ad_privacy_options">اختيارات خصوصية الإعلانات</string>
-	<string name="ad_privacy_options_summary">راجع أو غيّر موافقتك على الإعلانات</string>
-	<string name="ad_privacy_options_unavailable">اختيارات خصوصية الإعلانات مش متاحة دلوقتي</string>
 </resources>

@@ -1056,7 +1056,4 @@
 	<string name="optional_anime_ad_message">Would you like to view an ad before this episode starts? This is completely optional, and you can play the episode immediately without an ad.</string>
 	<string name="watch_ad">View ad</string>
 	<string name="play_now">Play now</string>
-	<string name="ad_privacy_options">Ad privacy choices</string>
-	<string name="ad_privacy_options_summary">Review or change your advertising consent choices</string>
-	<string name="ad_privacy_options_unavailable">Advertising privacy choices are not available right now</string>
 </resources>

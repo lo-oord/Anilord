@@ -31,7 +31,6 @@ import org.manga.peak.search.domain.SearchKind
 @AndroidEntryPoint
 class RemoteListFragment : MangaListFragment(), FilterCoordinator.Owner, View.OnClickListener {
 
-    override val showNativeAds = true
 
     override val viewModel by viewModels<RemoteListViewModel>()
 

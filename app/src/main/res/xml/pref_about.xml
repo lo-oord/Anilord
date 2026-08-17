@@ -23,11 +23,6 @@
 		android:title="@string/privacy"
 		app:allowDividerAbove="true" />
 
-	<Preference
-		android:key="ad_privacy_options"
-		android:persistent="false"
-		android:summary="@string/ad_privacy_options_summary"
-		android:title="@string/ad_privacy_options" />
 
 	<Preference
 		android:key="about_discord"

@@ -53,7 +53,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.manga.peak.R
-import org.manga.peak.ads.AdMobManager
 import org.manga.peak.anime.data.AnimePlaybackRepository
 import org.manga.peak.anime.data.AnimeStreamSelector
 import org.manga.peak.core.model.parcelable.ParcelableChapter
@@ -548,15 +547,13 @@ class AnimePlayerActivity : BaseActivity<ActivityAnimePlayerBinding>() {
 
 	private fun selectEpisode(selected: MangaChapter) {
 		if (selected.id == episode.id) return
-		AdMobManager.offerAnimeInterstitial(this) {
-			if (isFinishing || isDestroyed || selected.id == episode.id) return@offerAnimeInterstitial
+		if (isFinishing || isDestroyed || selected.id == episode.id) return
 			saveProgress()
 			episode = selected
 			resumePositionMs = 0L
 			hasPlaybackStarted = false
 			updateTitle()
 			loadEpisode(resolveDetails = false)
-		}
 	}
 
 	private fun moveEpisode(delta: Int, showBoundaryMessage: Boolean = true): Boolean {
@@ -1143,7 +1140,7 @@ class AnimePlayerActivity : BaseActivity<ActivityAnimePlayerBinding>() {
 			if (activity == null) {
 				launchPlayer()
 			} else {
-				AdMobManager.offerAnimeInterstitial(activity, launchPlayer)
+				launchPlayer()
 			}
 		}
 

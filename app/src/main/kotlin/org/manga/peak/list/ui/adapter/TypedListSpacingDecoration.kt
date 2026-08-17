@@ -65,7 +65,6 @@ class TypedListSpacingDecoration(
 			ListItemType.NAV_ITEM,
 			ListItemType.CHAPTER_LIST,
 			ListItemType.INFO,
-			ListItemType.NATIVE_AD,
 			null,
 				-> outRect.set(0)
 

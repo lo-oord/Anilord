@@ -6,7 +6,6 @@ import androidx.preference.Preference
 import com.google.android.material.snackbar.Snackbar
 import org.manga.peak.BuildConfig
 import org.manga.peak.R
-import org.manga.peak.ads.AdMobManager
 import org.manga.peak.core.nav.router
 import org.manga.peak.core.prefs.AppSettings
 import org.manga.peak.core.ui.BasePreferenceFragment
@@ -14,7 +13,6 @@ import org.manga.peak.core.ui.BasePreferenceFragment
 class AboutSettingsFragment : BasePreferenceFragment(R.string.about) {
 
 	private var supportPreference: Preference? = null
-	private var adPrivacyPreference: Preference? = null
 	private var supportBillingManager: SupportBillingManager? = null
 
 	override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -25,7 +23,6 @@ class AboutSettingsFragment : BasePreferenceFragment(R.string.about) {
 		supportPreference = findPreference<Preference>(KEY_SUPPORT_DEVELOPER)?.apply {
 			summary = getString(R.string.support_developer_loading)
 		}
-		adPrivacyPreference = findPreference(KEY_AD_PRIVACY_OPTIONS)
 		supportBillingManager = SupportBillingManager(
 			context = requireContext(),
 			listener = object : SupportBillingManager.Listener {
@@ -47,14 +44,12 @@ class AboutSettingsFragment : BasePreferenceFragment(R.string.about) {
 	override fun onResume() {
 		super.onResume()
 		supportBillingManager?.start()
-		adPrivacyPreference?.isVisible = AdMobManager.isPrivacyOptionsRequired(requireContext())
 	}
 
 	override fun onDestroy() {
 		supportBillingManager?.close()
 		supportBillingManager = null
 		supportPreference = null
-		adPrivacyPreference = null
 		super.onDestroy()
 	}
 
@@ -77,21 +72,6 @@ class AboutSettingsFragment : BasePreferenceFragment(R.string.about) {
 				true
 			}
 
-			KEY_AD_PRIVACY_OPTIONS -> {
-				AdMobManager.showPrivacyOptions(requireActivity()) { errorMessage ->
-					if (!isAdded || view == null) return@showPrivacyOptions
-					adPrivacyPreference?.isVisible =
-						AdMobManager.isPrivacyOptionsRequired(requireContext())
-					if (errorMessage != null) {
-						Snackbar.make(
-							listView,
-							R.string.ad_privacy_options_unavailable,
-							Snackbar.LENGTH_LONG,
-						).show()
-					}
-				}
-				true
-			}
 
 			AppSettings.KEY_LINK_DISCORD -> {
 				openLink(R.string.url_discord, preference.title)
@@ -114,6 +94,5 @@ class AboutSettingsFragment : BasePreferenceFragment(R.string.about) {
 
 	private companion object {
 		const val KEY_SUPPORT_DEVELOPER = "support_developer"
-		const val KEY_AD_PRIVACY_OPTIONS = "ad_privacy_options"
 	}
 }

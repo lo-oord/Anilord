@@ -1,7 +1,7 @@
 <div align="center">
-  <img src="docs/images/manga-peak-logo.webp" alt="Anilord logo" width="140" />
+  <img src="docs/images/anilord-crest.webp" alt="شعار Anilord" width="140" />
 
-  # Anilord | مانجا بيك
+  # Anilord | أنيلورد
 
   قارئ ومشغل مفتوح المصدر للمانجا والروايات والأنمي على Android.
 
@@ -12,7 +12,7 @@
 
 ## عن التطبيق
 
-مانجا بيك تطبيق Android يجمع قراءة المانجا والروايات ومشاهدة الأنمي في واجهة واحدة. يدعم المصادر المتعددة، البحث، المفضلة، سجل القراءة والمشاهدة، التنزيل للاستخدام دون اتصال، ووضع القراءة القابل للتخصيص.
+أنيلورد تطبيق Android مفتوح المصدر يجمع قراءة المانجا والروايات ومشاهدة الأنمي في واجهة واحدة. يدعم المصادر المتعددة، البحث، المفضلة، سجل القراءة والمشاهدة، التنزيل للاستخدام دون اتصال، ووضع القراءة القابل للتخصيص.
 
 المشروع مبني على [Kotatsu](https://github.com/KotatsuApp/Kotatsu) ويضم نسخة المصدر المستخدمة من [kotatsu-parsers](https://github.com/KotatsuApp/kotatsu-parsers) داخل المستودع لتسهيل البناء والمراجعة.
 
@@ -24,7 +24,7 @@
 - تنزيل الفصول والحلقات والقراءة أو المشاهدة دون اتصال.
 - مفضلة، تصنيفات، سجل، علامات مرجعية وإشعارات التحديثات.
 - واجهة Material You مناسبة للهواتف والأجهزة اللوحية.
-- إعلانات أصلية منظمة وإعلان اختياري قبل مشاهدة الأنمي.
+- خالٍ من الإعلانات نهائياً.
 - مزامنة ونسخ احتياطي وتكاملات تتبع اختيارية.
 - دعم Android 6.0 وما بعده.
 
@@ -47,7 +47,7 @@
 ## تشغيل نسخة التطوير
 
 ```bash
-git clone https://github.com/mangapeak/Anilord.git
+git clone https://github.com/lo-oord/Anilord.git
 cd Anilord
 ./gradlew :app:assembleDebug
 ```
@@ -62,10 +62,8 @@ cd Anilord
 
 ## الإعدادات الخاصة والآمنة
 
-لا يحتوي المستودع على مفاتيح توقيع، إعداد Firebase حقيقي، رموز بوتات، بيانات تقارير الأعطال، مفاتيح OAuth خاصة، أو معرفات AdMob الإنتاجية.
+لا يحتوي المستودع على مفاتيح توقيع أو إعداد Firebase حقيقي أو رموز بوتات أو بيانات تقارير الأعطال أو مفاتيح OAuth خاصة.
 
-- الإعلانات تستخدم معرفات Google التجريبية افتراضيًا في كل نسخ المصدر العام.
-- ضع معرفات AdMob الحقيقية في `local.properties` على جهاز البناء فقط.
 - لتفعيل Firebase، نزّل `google-services.json` من مشروع Firebase الخاص بك وضعه داخل `app/`. الملف متجاهل بواسطة Git.
 - تكاملات التتبع وبعض المصادر التي تحتاج مفاتيح خاصة تبقى معطلة حتى تضيف قيمك في `local.properties`.
 - لا ترفع `local.properties` أو `google-services.json` أو ملف التوقيع إلى GitHub.
@@ -100,4 +98,4 @@ cd Anilord
 
 ### English summary
 
-Anilord is an open-source Android manga, novel and anime client based on Kotatsu. It includes the parser source used by the app, supports offline downloads and multi-server anime playback, and builds with safe demo advertising IDs by default. Private Firebase, signing and service credentials are intentionally excluded.
+Anilord is an open-source Android manga, novel and anime client based on Kotatsu. It includes the parser source used by the app, supports offline downloads and multi-server anime playback, and ships completely ad-free. Private Firebase, signing and service credentials are intentionally excluded.

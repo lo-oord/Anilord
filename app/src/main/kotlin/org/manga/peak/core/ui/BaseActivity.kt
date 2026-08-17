@@ -21,7 +21,6 @@ import dagger.hilt.android.EntryPointAccessors
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import org.manga.peak.R
-import org.manga.peak.ads.AdMobManager
 import org.manga.peak.core.exceptions.resolve.ExceptionResolver
 import org.manga.peak.core.nav.AppRouter
 import org.manga.peak.core.ui.util.ActionModeDelegate
@@ -76,7 +75,6 @@ abstract class BaseActivity<B : ViewBinding> :
 			enableEdgeToEdge()
 		}
 		super.onCreate(savedInstanceState)
-		AdMobManager.initialize(this)
 	}
 
 	override fun onPostCreate(savedInstanceState: Bundle?) {

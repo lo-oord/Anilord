@@ -46,8 +46,6 @@ import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import org.manga.peak.R
-import org.manga.peak.ads.NativeAdController
-import org.manga.peak.ads.bindNativeAd
 import org.manga.peak.bookmarks.domain.Bookmark
 import org.manga.peak.core.image.CoilMemoryCacheKey
 import org.manga.peak.core.model.FavouriteCategory
@@ -144,8 +142,6 @@ class DetailsActivity :
 	private val viewModel: DetailsViewModel by viewModels()
 	private lateinit var menuProvider: DetailsMenuProvider
 	private lateinit var infoBinding: LayoutDetailsTableBinding
-	private val nativeAdController = NativeAdController()
-	private var isDetailsAdRequested = false
 
 	override val bottomSheet: View?
 		get() = viewBinding.containerBottomSheet
@@ -220,7 +216,6 @@ class DetailsActivity :
 	}
 
 	override fun onDestroy() {
-		nativeAdController.destroy()
 		super.onDestroy()
 	}
 
@@ -430,7 +425,6 @@ class DetailsActivity :
 
 	private fun onMangaUpdated(details: MangaDetails) {
 		val manga = details.toManga()
-		updateDetailsAd(manga)
 		with(viewBinding) {
 			textViewTitle.text = manga.title
 			textViewSubtitle.textAndVisible = manga.altTitles.joinToString("\n")
@@ -494,24 +488,6 @@ class DetailsActivity :
 		invalidateOptionsMenu()
 	}
 
-	private fun updateDetailsAd(manga: Manga) {
-		val adBinding = viewBinding.detailsNativeAd
-		val isEligible = manga.source != LocalMangaSource &&
-			manga.source != UnknownMangaSource &&
-			manga.contentRating != ContentRating.SUGGESTIVE &&
-			manga.contentRating != ContentRating.ADULT
-		if (!isEligible) {
-			adBinding.root.isVisible = false
-			return
-		}
-		if (isDetailsAdRequested) return
-		isDetailsAdRequested = true
-		nativeAdController.getOrLoad(this, DETAILS_AD_SLOT) { nativeAd ->
-			if (nativeAd == null || isFinishing || isDestroyed) return@getOrLoad
-			adBinding.bindNativeAd(nativeAd)
-			adBinding.root.isVisible = true
-		}
-	}
 
 	private fun onMangaRemoved(manga: Manga) {
 		Toast.makeText(
@@ -648,6 +624,5 @@ class DetailsActivity :
 	companion object {
 
 		private const val FAV_LABEL_LIMIT = 16
-		private const val DETAILS_AD_SLOT = 0
 	}
 }

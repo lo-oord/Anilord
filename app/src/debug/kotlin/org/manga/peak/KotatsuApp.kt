@@ -6,65 +6,66 @@ import android.os.Build
 import android.os.StrictMode
 import androidx.core.content.edit
 import androidx.fragment.app.strictmode.FragmentStrictMode
-import leakcanary.LeakCanary
 import org.manga.peak.core.BaseApp
 
 class KotatsuApp : BaseApp() {
 
-	var isLeakCanaryEnabled: Boolean
-		get() = getDebugPreferences(this).getBoolean(KEY_LEAK_CANARY, true)
+	/**
+	 * StrictMode violation notifications (visible on Android 11+) are disabled by
+	 * default in this build so that normal usage of the app stays quiet. The full
+	 * diagnostic policy is still applied when [isStrictModeEnabled] is opted in
+	 * through the debug preferences; leaks are still logged to Logcat either way.
+	 */
+	var isStrictModeEnabled: Boolean
+		get() = getDebugPreferences(this).getBoolean(KEY_STRICT_MODE, false)
 		set(value) {
-			getDebugPreferences(this).edit { putBoolean(KEY_LEAK_CANARY, value) }
-			configureLeakCanary()
+			getDebugPreferences(this).edit { putBoolean(KEY_STRICT_MODE, value) }
+			enableStrictMode()
 		}
 
 	override fun attachBaseContext(base: Context) {
 		super.attachBaseContext(base)
 		enableStrictMode()
-		configureLeakCanary()
 	}
 
-	private fun configureLeakCanary() {
-		LeakCanary.config = LeakCanary.config.copy(
-			dumpHeap = isLeakCanaryEnabled,
-		)
-	}
 
 	private fun enableStrictMode() {
-		val notifier = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+		// Diagnostics still go to Logcat in every debug build, but visible
+		// violation notifications are only attached when explicitly opted in.
+		val notifier = if (isStrictModeEnabled && Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
 			StrictModeNotifier(this)
 		} else {
 			null
 		}
 		StrictMode.setThreadPolicy(
 			StrictMode.ThreadPolicy.Builder().apply {
-				detectNetwork()
-				detectDiskWrites()
-				detectCustomSlowCalls()
-				detectResourceMismatches()
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) detectUnbufferedIo()
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) detectExplicitGc()
-				penaltyLog()
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && notifier != null) {
-					penaltyListener(notifier.executor, notifier)
-				}
-			}.build(),
+			detectNetwork()
+			detectDiskWrites()
+			detectCustomSlowCalls()
+			detectResourceMismatches()
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) detectUnbufferedIo()
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) detectExplicitGc()
+			penaltyLog()
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && notifier != null) {
+				penaltyListener(notifier.executor, notifier)
+			}
+		}.build(),
 		)
 		StrictMode.setVmPolicy(
 			StrictMode.VmPolicy.Builder().apply {
-				detectActivityLeaks()
-				detectLeakedSqlLiteObjects()
-				detectLeakedClosableObjects()
-				detectLeakedRegistrationObjects()
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-					detectContentUriWithoutPermission()
-				}
-				detectFileUriExposure()
-				penaltyLog()
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && notifier != null) {
-					penaltyListener(notifier.executor, notifier)
-				}
-			}.build(),
+			detectActivityLeaks()
+			detectLeakedSqlLiteObjects()
+			detectLeakedClosableObjects()
+			detectLeakedRegistrationObjects()
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+				detectContentUriWithoutPermission()
+			}
+			detectFileUriExposure()
+			penaltyLog()
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && notifier != null) {
+				penaltyListener(notifier.executor, notifier)
+			}
+		}.build(),
 		)
 		FragmentStrictMode.defaultPolicy = FragmentStrictMode.Policy.Builder().apply {
 			detectWrongFragmentContainer()
@@ -83,7 +84,7 @@ class KotatsuApp : BaseApp() {
 	private companion object {
 
 		const val PREFS_DEBUG = "_debug"
-		const val KEY_LEAK_CANARY = "leak_canary"
+		const val KEY_STRICT_MODE = "strict_mode"
 
 		fun getDebugPreferences(context: Context): SharedPreferences =
 			context.getSharedPreferences(PREFS_DEBUG, MODE_PRIVATE)
