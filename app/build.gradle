@@ -50,6 +50,8 @@ android {
 			// https://issuetracker.google.com/issues/408030127
 			generateLocaleConfig false
 		}
+	}
+
 	buildTypes {
 		debug {
 			applicationIdSuffix = '.debug'
