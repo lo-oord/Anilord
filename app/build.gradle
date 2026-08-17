@@ -9,7 +9,7 @@ plugins {
 	id 'androidx.room'
 	id 'org.jetbrains.kotlin.plugin.serialization'
 	// enable if needed
-	// id 'dev.reformator.stacktracedecoشroutinator'
+	// id 'dev.reformator.stacktrace-decoroutinator'
 }
 
 // Firebase is optional in the public source tree. Download google-services.json
@@ -49,6 +49,7 @@ android {
 		androidResources {
 			// https://issuetracker.google.com/issues/408030127
 			generateLocaleConfig false
+		}
 	buildTypes {
 		debug {
 			applicationIdSuffix = '.debug'
@@ -57,7 +58,8 @@ android {
 			minifyEnabled true
 			shrinkResources true 
 			proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-			// Configure production units privately in local.properties.		}
+			// Configure production units privately in local.properties.
+		}
 		nightly {
 			initWith release
 			applicationIdSuffix = '.nightly'
