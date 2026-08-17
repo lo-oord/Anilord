@@ -79,17 +79,26 @@
 	<!--== Default Theme ==-->
 	<style name="Theme.Kotatsu" parent="Base.Theme.Kotatsu" />
 
-	<!-- Base ThemeOverlay -->
-	<style name="ThemeOverlay.Kotatsu" parent="ThemeOverlay.Material3.Light" />
+	<!-- Base ThemeOverlay: Anilord uses a dark surface across all screens. -->
+	<style name="ThemeOverlay.Kotatsu" parent="ThemeOverlay.Material3.Dark">
+		<item name="android:windowBackground">@color/anilord_surface</item>
+		<item name="android:navigationBarColor">@android:color/transparent</item>
+		<item name="colorSurface">@color/anilord_surface</item>
+		<item name="colorOnSurface">@color/anilord_ink</item>
+	</style>
 
-    <!-- Anilord default: ink + violet discovery-focused palette. -->
-    <style name="ThemeOverlay.Kotatsu.Anilord" parent="ThemeOverlay.Material3.Light">
+    <!-- Anilord default: pure black + electric blue palette. -->
+    <style name="ThemeOverlay.Kotatsu.Anilord" parent="ThemeOverlay.Material3.Dark">
         <item name="colorPrimary">@color/anilord_accent</item>
         <item name="colorOnPrimary">@android:color/white</item>
-        <item name="colorPrimaryContainer">@color/anilord_accent_soft</item>
-        <item name="colorOnPrimaryContainer">@color/anilord_accent_deep</item>
-        <item name="colorSecondary">@color/anilord_accent_deep</item>
+        <item name="colorPrimaryContainer">@color/anilord_accent_deep</item>
+        <item name="colorOnPrimaryContainer">@color/anilord_accent_soft</item>
+        <item name="colorSecondary">@color/anilord_accent</item>
         <item name="colorSurface">@color/anilord_surface</item>
+        <item name="colorOnSurface">@color/anilord_ink</item>
+        <item name="colorBackground">@color/anilord_surface</item>
+        <item name="colorOnBackground">@color/anilord_ink</item>
+        <item name="android:windowBackground">@color/anilord_surface</item>
         <item name="android:colorAccent">@color/anilord_accent</item>
     </style>
 

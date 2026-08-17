@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="anilord_accent">#8B5CF6</color>
-    <color name="anilord_accent_deep">#6D28D9</color>
-    <color name="anilord_accent_soft">#EDE9FE</color>
-    <color name="anilord_ink">#17151F</color>
-    <color name="anilord_surface">#FBFAFF</color>
+    <color name="anilord_accent">#008CFF</color>
+    <color name="anilord_accent_deep">#0066CC</color>
+    <color name="anilord_accent_soft">#A8D9FF</color>
+    <color name="anilord_ink">#FFFFFF</color>
+    <color name="anilord_on_surface">#D6E0EA</color>
+    <color name="anilord_surface">#000000</color>
 </resources>

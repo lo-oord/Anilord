@@ -88,8 +88,14 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_gravity="bottom"
-			android:background="@color/anilord_surface"
-			android:elevation="10dp"
-			android:fitsSystemWindows="false" />
+			android:layout_marginStart="16dp"
+			android:layout_marginEnd="16dp"
+			android:layout_marginBottom="16dp"
+			android:background="@drawable/bg_floating_bottom_nav"
+			android:clipToPadding="false"
+			android:elevation="12dp"
+			android:fitsSystemWindows="false"
+			android:paddingTop="4dp"
+			android:paddingBottom="4dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
