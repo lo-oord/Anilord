@@ -3,7 +3,6 @@ package org.manga.peak.settings.about
 import android.os.Bundle
 import androidx.preference.Preference
 import com.google.android.material.snackbar.Snackbar
-import org.manga.peak.BuildConfig
 import org.manga.peak.R
 import org.manga.peak.core.nav.router
 import org.manga.peak.core.prefs.AppSettings
@@ -15,7 +14,7 @@ class AboutSettingsFragment : BasePreferenceFragment(R.string.about) {
 	override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
 		addPreferencesFromResource(R.xml.pref_about)
 		findPreference<Preference>(AppSettings.KEY_APP_VERSION)?.run {
-			title = getString(R.string.app_version, BuildConfig.VERSION_NAME)
+			title = getString(R.string.about_display_version)
 		}
 	}
 

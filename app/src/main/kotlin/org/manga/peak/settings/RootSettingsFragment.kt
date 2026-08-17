@@ -7,7 +7,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.preference.Preference
 import dagger.hilt.android.AndroidEntryPoint
-import org.manga.peak.BuildConfig
 import org.manga.peak.R
 import org.manga.peak.core.prefs.AppSettings
 import org.manga.peak.core.ui.BasePreferenceFragment
@@ -32,7 +31,7 @@ class RootSettingsFragment : BasePreferenceFragment(0) {
 		bindPreferenceSummary("downloads", R.string.manga_save_location, R.string.downloads_wifi_only)
 		bindPreferenceSummary("tracker", R.string.track_sources, R.string.notifications_settings)
 		bindPreferenceSummary("services", R.string.suggestions, R.string.sync, R.string.tracking)
-		findPreference<Preference>("about")?.summary = getString(R.string.app_version, BuildConfig.VERSION_NAME)
+		findPreference<Preference>("about")?.summary = getString(R.string.about_display_version)
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

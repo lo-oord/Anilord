@@ -187,6 +187,8 @@
     <string name="search_results">نتائج البحث</string>
     <string name="file_not_found">الملف غير موجود</string>
     <string name="app_version">نسخة %s</string>
+    <string name="about_display_version">الإصدار 1</string>
+
     <string name="cookies_cleared">تمت إزالة جميع ملفات تعريف الارتباط</string>
     <string name="state_finished">انتهت</string>
     <string name="state_ongoing">مستمرة</string>
