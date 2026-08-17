@@ -2,6 +2,7 @@ package org.manga.peak.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import org.manga.peak.R
 import org.manga.peak.main.ui.MainActivity
@@ -11,8 +12,29 @@ class AuthActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
         if (savedInstanceState == null) {
-            show(AuthScreen.LOGIN, addToBackStack = false)
+            if (!handleAuthCallback(intent)) show(AuthScreen.LOGIN, addToBackStack = false)
+        } else {
+            handleAuthCallback(intent)
         }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        if (intent != null) handleAuthCallback(intent)
+    }
+
+    private fun handleAuthCallback(intent: Intent): Boolean {
+        val data = intent.data ?: return false
+        if (data.getQueryParameter("error") != null) {
+            Toast.makeText(this, data.getQueryParameter("error_description") ?: "Authentication was cancelled", Toast.LENGTH_LONG).show()
+            return true
+        }
+        val session = SupabaseAuthClient.sessionFromRedirect(data) ?: return false
+        AuthSession.saveSession(this, session)
+        val isRecovery = data.getQueryParameter("type") == "recovery"
+        show(if (isRecovery) AuthScreen.RESET_PASSWORD else AuthScreen.EMAIL_VERIFIED, addToBackStack = false)
+        return true
     }
 
     fun show(screen: AuthScreen, addToBackStack: Boolean = true, email: String = "") {

@@ -1157,7 +1157,7 @@
 	<string name="anime_witcher_signed_out">Signed out from AnimeWitcher</string>
 	<string name="auth_invalid_email">Enter a valid email address</string>
 	<string name="auth_invalid_display_name">Enter a display name of at least 2 characters</string>
-	<string name="auth_password_too_short">Password must be at least 6 characters</string>
+	<string name="auth_password_too_short">Password must be at least 8 characters</string>
 
 	<!-- Anilord local authentication UI -->
 	<string name="auth_back">Back</string>
@@ -1186,6 +1186,10 @@
 	<string name="auth_send_reset_link">Send Reset Link</string>
 	<string name="auth_update_password">Update Password</string>
 	<string name="auth_continue_google">Continue with Google</string>
+	<string name="auth_continue_guest">Continue as Guest</string>
+	<string name="auth_no_email_app">No email app is installed</string>
+	<string name="auth_open_reset_email">Open the password reset link from your email first</string>
+	<string name="auth_network_error">Unable to reach Supabase. Check your connection and try again.</string>
 	<string name="auth_open_email_app">Open Email App</string>
 	<string name="auth_resend_email">Resend Email</string>
 	<string name="auth_back_to_login">Back to Login</string>
@@ -1195,17 +1199,16 @@
 	<string name="auth_no_account">Don’t have an account? Create one</string>
 	<string name="auth_have_account">Already have an account? Login</string>
 	<string name="auth_remember_password">Remember your password? Login</string>
-	<string name="auth_reset_sent">A reset link was prepared for %s.</string>
+	<string name="auth_reset_sent">Password reset email sent to %s.</string>
 	<string name="auth_verification_resent">Verification email resent.</string>
-	<string name="auth_google_unavailable">Google sign-in is not configured yet.</string>
+	<string name="auth_google_unavailable">Unable to open Google sign-in</string>
 	<string name="auth_required_field">This field is required</string>
 	<string name="auth_password_mismatch">Passwords do not match</string>
 	<string name="auth_terms_required">Accept the Terms of Service and Privacy Policy</string>
-	<string name="auth_local_session_notice">Local preview mode: authentication is stored on this device until a backend is connected.</string>
 	<string name="auth_error_email_exists">This email is already registered on this device</string>
 	<string name="auth_error_invalid_credentials">Incorrect email or password</string>
 	<string name="auth_error_user_disabled">This account has been disabled</string>
-	<string name="auth_error_weak_password">Choose a stronger password of at least 6 characters</string>
+	<string name="auth_error_weak_password">Choose a stronger password of at least 8 characters</string>
 	<string name="auth_error_too_many_attempts">Too many attempts. Please wait and try again</string>
 	<string name="auth_error_operation_not_allowed">This sign-in method is not configured yet</string>
 	<string name="auth_error_generic">Authentication failed: %1$s</string>

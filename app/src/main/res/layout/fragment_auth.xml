@@ -224,6 +224,16 @@
             android:textColor="@color/anilord_ink"
             android:visibility="gone" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_guest"
+            style="@style/Widget.Anilord.AuthOutlineButton"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/auth_continue_guest"
+            android:textColor="@color/anilord_ink"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/text_bottom_action"
             android:layout_width="wrap_content"

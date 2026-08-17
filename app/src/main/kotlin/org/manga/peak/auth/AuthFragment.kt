@@ -2,6 +2,7 @@ package org.manga.peak.auth
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Patterns
 import android.view.LayoutInflater
@@ -10,6 +11,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import org.manga.peak.R
 import org.manga.peak.databinding.FragmentAuthBinding
 
@@ -26,11 +29,7 @@ class AuthFragment : Fragment() {
         verificationEmail = requireArguments().getString(ARG_EMAIL).orEmpty()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentAuthBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -43,43 +42,33 @@ class AuthFragment : Fragment() {
     private fun render() {
         binding.buttonBack.isVisible = screen != AuthScreen.LOGIN
         binding.buttonBack.setOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
-        binding.buttonGoogle.setOnClickListener {
-            toast(getString(R.string.auth_google_unavailable))
+        binding.buttonGoogle.setOnClickListener { openGoogleSignIn() }
+        binding.buttonGuest.setOnClickListener { continueAsGuest() }
+        binding.textLinkPrimary.setOnClickListener { if (screen == AuthScreen.LOGIN) authActivity.show(AuthScreen.FORGOT_PASSWORD) }
+        binding.textLinkSecondary.setOnClickListener { if (screen == AuthScreen.EMAIL_VERIFICATION) resendVerification() }
+        binding.textBottomAction.setOnClickListener {
+            when (screen) {
+                AuthScreen.LOGIN -> authActivity.show(AuthScreen.CREATE_ACCOUNT)
+                AuthScreen.CREATE_ACCOUNT, AuthScreen.FORGOT_PASSWORD, AuthScreen.EMAIL_VERIFICATION,
+                AuthScreen.RESET_PASSWORD, AuthScreen.EMAIL_VERIFIED -> authActivity.show(AuthScreen.LOGIN)
+                AuthScreen.SPLASH -> Unit
+            }
         }
-        binding.textLinkPrimary.setOnClickListener { onPrimaryLinkClicked() }
-        binding.textLinkSecondary.setOnClickListener { onSecondaryLinkClicked() }
-        binding.textBottomAction.setOnClickListener { onBottomActionClicked() }
         binding.buttonPrimary.setOnClickListener { onPrimaryAction() }
 
         binding.inputUsername.isVisible = screen == AuthScreen.CREATE_ACCOUNT
         binding.inputConfirmPassword.isVisible = screen == AuthScreen.CREATE_ACCOUNT || screen == AuthScreen.RESET_PASSWORD
         binding.checkboxTerms.isVisible = screen == AuthScreen.CREATE_ACCOUNT
         binding.textRequirements.isVisible = screen == AuthScreen.RESET_PASSWORD
-        binding.inputEmail.isVisible = screen in setOf(
-            AuthScreen.LOGIN,
-            AuthScreen.CREATE_ACCOUNT,
-            AuthScreen.FORGOT_PASSWORD,
-        )
+        binding.inputEmail.isVisible = screen in setOf(AuthScreen.LOGIN, AuthScreen.CREATE_ACCOUNT, AuthScreen.FORGOT_PASSWORD)
         binding.inputPassword.isVisible = screen in setOf(AuthScreen.LOGIN, AuthScreen.CREATE_ACCOUNT, AuthScreen.RESET_PASSWORD)
-        binding.formFields.isVisible = screen in setOf(
-            AuthScreen.LOGIN,
-            AuthScreen.CREATE_ACCOUNT,
-            AuthScreen.FORGOT_PASSWORD,
-            AuthScreen.RESET_PASSWORD,
-        )
-
+        binding.formFields.isVisible = screen in setOf(AuthScreen.LOGIN, AuthScreen.CREATE_ACCOUNT, AuthScreen.FORGOT_PASSWORD, AuthScreen.RESET_PASSWORD)
         binding.buttonGoogle.isVisible = screen == AuthScreen.LOGIN || screen == AuthScreen.CREATE_ACCOUNT
+        binding.buttonGuest.isVisible = screen == AuthScreen.LOGIN || screen == AuthScreen.CREATE_ACCOUNT
         binding.textSecondaryInfo.isVisible = screen == AuthScreen.EMAIL_VERIFICATION || screen == AuthScreen.EMAIL_VERIFIED
         binding.textLinkPrimary.isVisible = screen == AuthScreen.LOGIN
         binding.textLinkSecondary.isVisible = screen == AuthScreen.EMAIL_VERIFICATION
-        binding.textBottomAction.isVisible = screen in setOf(
-            AuthScreen.LOGIN,
-            AuthScreen.CREATE_ACCOUNT,
-            AuthScreen.FORGOT_PASSWORD,
-            AuthScreen.EMAIL_VERIFICATION,
-            AuthScreen.RESET_PASSWORD,
-            AuthScreen.EMAIL_VERIFIED,
-        )
+        binding.textBottomAction.isVisible = screen != AuthScreen.SPLASH
 
         when (screen) {
             AuthScreen.SPLASH -> Unit
@@ -118,7 +107,7 @@ class AuthFragment : Fragment() {
         binding.textTitle.setText(R.string.auth_verification_title)
         binding.textSubtitle.text = getString(R.string.auth_verification_subtitle, verificationEmail)
         binding.formFields.isVisible = false
-        binding.textSecondaryInfo.setText(R.string.auth_local_session_notice)
+        binding.textSecondaryInfo.setText(R.string.auth_check_inbox)
         binding.buttonPrimary.setText(R.string.auth_open_email_app)
         binding.textLinkSecondary.setText(R.string.auth_resend_email)
         binding.textBottomAction.setText(R.string.auth_back_to_login)
@@ -154,36 +143,14 @@ class AuthFragment : Fragment() {
         }
     }
 
-    private fun onPrimaryLinkClicked() {
-        if (screen == AuthScreen.LOGIN) authActivity.show(AuthScreen.FORGOT_PASSWORD)
-    }
-
-    private fun onSecondaryLinkClicked() {
-        if (screen == AuthScreen.EMAIL_VERIFICATION) {
-            toast(getString(R.string.auth_verification_resent))
-        }
-    }
-
-    private fun onBottomActionClicked() {
-        when (screen) {
-            AuthScreen.LOGIN -> authActivity.show(AuthScreen.CREATE_ACCOUNT)
-            AuthScreen.CREATE_ACCOUNT,
-            AuthScreen.FORGOT_PASSWORD,
-            AuthScreen.EMAIL_VERIFICATION,
-            AuthScreen.RESET_PASSWORD,
-            AuthScreen.EMAIL_VERIFIED -> authActivity.show(AuthScreen.LOGIN)
-            AuthScreen.SPLASH -> Unit
-        }
-    }
-
     private fun login() {
         val email = binding.editEmail.text?.toString()?.trim().orEmpty()
         val password = binding.editPassword.text?.toString().orEmpty()
         if (!validateEmail(email) || !validatePassword(password)) return
-        if (AuthSession.signIn(requireContext(), email, password)) {
+        withLoading {
+            val session = SupabaseAuthClient.signIn(email, password)
+            AuthSession.saveSession(requireContext(), session)
             authActivity.finishAuthentication()
-        } else {
-            binding.inputPassword.error = getString(R.string.auth_error_invalid_credentials)
         }
     }
 
@@ -205,16 +172,35 @@ class AuthFragment : Fragment() {
             valid = false
         }
         if (!valid) return
-        AuthSession.saveAccount(requireContext(), email, password)
-        verificationEmail = email
-        authActivity.show(AuthScreen.EMAIL_VERIFICATION, email = verificationEmail)
+        withLoading {
+            val session = SupabaseAuthClient.signUp(email, password, username)
+            verificationEmail = email
+            if (session != null) {
+                AuthSession.saveSession(requireContext(), session)
+                authActivity.finishAuthentication()
+            } else {
+                authActivity.show(AuthScreen.EMAIL_VERIFICATION, email = email)
+            }
+        }
     }
 
     private fun sendResetLink() {
         val email = binding.editEmail.text?.toString()?.trim().orEmpty()
         if (!validateEmail(email)) return
-        toast(getString(R.string.auth_reset_sent, email))
-        authActivity.show(AuthScreen.RESET_PASSWORD, email = email)
+        withLoading {
+            SupabaseAuthClient.sendPasswordReset(email)
+            verificationEmail = email
+            toast(getString(R.string.auth_reset_sent, email))
+            authActivity.show(AuthScreen.RESET_PASSWORD, email = email)
+        }
+    }
+
+    private fun resendVerification() {
+        if (verificationEmail.isBlank()) return
+        withLoading {
+            SupabaseAuthClient.resendVerification(verificationEmail)
+            toast(getString(R.string.auth_verification_resent))
+        }
     }
 
     private fun updatePassword() {
@@ -225,19 +211,40 @@ class AuthFragment : Fragment() {
             binding.inputConfirmPassword.error = getString(R.string.auth_password_mismatch)
             return
         }
-        val email = verificationEmail.ifBlank { binding.editEmail.text?.toString()?.trim().orEmpty() }
-        if (email.isNotBlank()) AuthSession.saveAccount(requireContext(), email, password)
-        authActivity.show(AuthScreen.LOGIN)
+        val token = AuthSession.accessToken(requireContext())
+        if (token.isNullOrBlank()) {
+            toast(getString(R.string.auth_open_reset_email))
+            return
+        }
+        withLoading {
+            val session = SupabaseAuthClient.updatePassword(token, password)
+            AuthSession.saveSession(requireContext(), session)
+            authActivity.show(AuthScreen.EMAIL_VERIFIED)
+        }
+    }
+
+    private fun openGoogleSignIn() {
+        try {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(SupabaseAuthClient.googleSignInUrl())))
+        } catch (_: ActivityNotFoundException) {
+            toast(getString(R.string.auth_google_unavailable))
+        }
+    }
+
+    private fun continueAsGuest() {
+        withLoading {
+            val session = SupabaseAuthClient.signInAnonymously()
+            AuthSession.saveSession(requireContext(), session)
+            authActivity.finishAuthentication()
+        }
     }
 
     private fun openEmailApp() {
-        val intent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_APP_EMAIL)
         try {
-            startActivity(intent)
+            startActivity(Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_APP_EMAIL))
         } catch (_: ActivityNotFoundException) {
-            toast(getString(R.string.auth_verification_resent))
+            toast(getString(R.string.auth_no_email_app))
         }
-        authActivity.show(AuthScreen.EMAIL_VERIFIED)
     }
 
     private fun validateEmail(email: String): Boolean {
@@ -250,7 +257,7 @@ class AuthFragment : Fragment() {
     }
 
     private fun validatePassword(password: String): Boolean {
-        if (password.length < 6) {
+        if (password.length < 8) {
             binding.inputPassword.error = getString(R.string.auth_password_too_short)
             return false
         }
@@ -258,8 +265,29 @@ class AuthFragment : Fragment() {
         return true
     }
 
+    private fun withLoading(block: suspend () -> Unit) {
+        binding.buttonPrimary.isEnabled = false
+        binding.buttonGoogle.isEnabled = false
+        binding.buttonGuest.isEnabled = false
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                block()
+            } catch (error: SupabaseAuthException) {
+                toast(error.message.orEmpty())
+            } catch (error: Exception) {
+                toast(error.message ?: getString(R.string.auth_network_error))
+            } finally {
+                if (_binding != null) {
+                    binding.buttonPrimary.isEnabled = true
+                    binding.buttonGoogle.isEnabled = true
+                    binding.buttonGuest.isEnabled = true
+                }
+            }
+        }
+    }
+
     private fun toast(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
     }
 
     override fun onDestroyView() {

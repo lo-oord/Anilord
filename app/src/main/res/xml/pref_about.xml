@@ -9,11 +9,17 @@
 		android:persistent="false"
 		android:summary="@string/check_for_updates" />
 
-	<Preference
-		android:key="about_privacy"
-		android:persistent="false"
-		android:summary="@string/privacy_policy_summary"
-		android:title="@string/privacy"
-		app:allowDividerAbove="true" />
+		<Preference
+			android:key="about_privacy"
+			android:persistent="false"
+			android:summary="@string/privacy_policy_summary"
+			android:title="@string/privacy"
+			app:allowDividerAbove="true" />
+
+		<Preference
+			android:key="auth_logout"
+			android:persistent="false"
+			android:title="@string/logout"
+			app:allowDividerAbove="true" />
 
 </PreferenceScreen>

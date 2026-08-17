@@ -76,6 +76,7 @@ open class BaseApp : Application(), Configuration.Provider {
 
 	override fun onCreate() {
 		super.onCreate()
+		org.manga.peak.auth.AuthConfig.initialize(resources)
 		PlatformRegistry.applicationContext = this // TODO replace with OkHttp.initialize
 		if (ACRA.isACRASenderServiceProcess()) {
 			return
