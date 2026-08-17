@@ -50,6 +50,16 @@ android {
 			// https://issuetracker.google.com/issues/408030127
 			generateLocaleConfig false
 		}
+		resValue 'string', 'tg_backup_bot_token', localProperty('tg_backup_bot_token', '')
+		resValue 'string', 'shikimori_clientId', localProperty('shikimori_client_id', '')
+		resValue 'string', 'shikimori_clientSecret', localProperty('shikimori_client_secret', '')
+		resValue 'string', 'anilist_clientId', localProperty('anilist_client_id', '')
+		resValue 'string', 'anilist_clientSecret', localProperty('anilist_client_secret', '')
+		resValue 'string', 'mal_clientId', localProperty('mal_client_id', '')
+		resValue 'string', 'kitsu_clientId', localProperty('kitsu_client_id', '')
+		resValue 'string', 'kitsu_clientSecret', localProperty('kitsu_client_secret', '')
+		resValue 'string', 'acra_login', localProperty('acra_login', '')
+		resValue 'string', 'acra_password', localProperty('acra_password', '')
 	}
 
 	buildTypes {
