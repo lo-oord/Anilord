@@ -1,0 +1,35 @@
+name: Anilord Release Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      variant:
+        description: Gradle variant to assemble
+        required: true
+        default: release
+        type: choice
+        options: [ release, nightly ]
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+      - run: chmod +x ./gradlew
+      - name: Assemble selected variant
+        run: ./gradlew --no-daemon --stacktrace assemble${{ inputs.variant == 'nightly' && 'Nightly' || 'Release' }}
+      - name: Upload APKs
+        uses: actions/upload-artifact@v4
+        with:
+          name: anilord-${{ inputs.variant }}-apk
+          path: app/build/outputs/apk/**/*.apk
+          if-no-files-found: error

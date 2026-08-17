@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@android:color/black">
+
+	<androidx.media3.ui.PlayerView
+		android:id="@+id/player_view"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:background="@android:color/black"
+		app:keep_content_on_player_reset="true"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:resize_mode="fit"
+		app:show_buffering="always"
+		app:use_controller="true" />
+
+	<com.google.android.material.appbar.AppBarLayout
+		android:id="@+id/appbar"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:background="@drawable/bg_player_top_scrim"
+		android:elevation="0dp"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+
+		<com.google.android.material.appbar.MaterialToolbar
+			android:id="@id/toolbar"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@android:color/transparent"
+			android:theme="@style/ThemeOverlay.Material3.Dark.ActionBar" />
+
+		<HorizontalScrollView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:clipToPadding="false"
+			android:paddingStart="16dp"
+			android:paddingEnd="72dp"
+			android:paddingBottom="12dp"
+			android:scrollbars="none">
+
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:orientation="horizontal">
+
+				<TextView
+					android:id="@+id/text_episode_badge"
+					android:layout_width="wrap_content"
+					android:layout_height="36dp"
+					android:background="@drawable/bg_player_pill"
+					android:gravity="center"
+					android:maxLines="1"
+					android:paddingHorizontal="14dp"
+					android:textColor="@android:color/white"
+					android:textSize="13sp"
+					android:textStyle="bold"
+					tools:text="Episode 12" />
+
+				<TextView
+					android:id="@+id/text_server_badge"
+					android:layout_width="wrap_content"
+					android:layout_height="36dp"
+					android:layout_marginStart="8dp"
+					android:background="@drawable/bg_player_pill"
+					android:drawablePadding="6dp"
+					android:ellipsize="end"
+					android:gravity="center"
+					android:maxLines="1"
+					android:maxWidth="180dp"
+					android:paddingHorizontal="14dp"
+					android:textColor="@android:color/white"
+					android:textSize="13sp"
+					app:drawableStartCompat="@drawable/ic_storage"
+					app:drawableTint="@android:color/white"
+					tools:text="Server 1 · 1080p" />
+
+			</LinearLayout>
+
+		</HorizontalScrollView>
+
+	</com.google.android.material.appbar.AppBarLayout>
+
+	<LinearLayout
+		android:id="@+id/loading_group"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:gravity="center"
+		android:orientation="vertical"
+		app:layout_constraintBottom_toBottomOf="@id/player_view"
+		app:layout_constraintEnd_toEndOf="@id/player_view"
+		app:layout_constraintStart_toStartOf="@id/player_view"
+		app:layout_constraintTop_toTopOf="@id/player_view">
+
+		<com.google.android.material.progressindicator.CircularProgressIndicator
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="12dp"
+			android:text="@string/anime_loading_servers"
+			android:textColor="@android:color/white" />
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:id="@+id/layout_error"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:gravity="center"
+		android:orientation="vertical"
+		android:visibility="gone"
+		app:layout_constraintBottom_toBottomOf="@id/player_view"
+		app:layout_constraintEnd_toEndOf="@id/player_view"
+		app:layout_constraintStart_toStartOf="@id/player_view"
+		app:layout_constraintTop_toTopOf="@id/player_view"
+		tools:visibility="visible">
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/anime_no_servers"
+			android:textAppearance="?attr/textAppearanceBodyLarge"
+			android:textColor="@android:color/white" />
+
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/button_retry"
+			style="@style/Widget.Material3.Button.TextButton"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/retry" />
+
+	</LinearLayout>
+
+	<com.google.android.material.card.MaterialCardView
+		android:id="@+id/quick_controls"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginHorizontal="12dp"
+		android:layout_marginBottom="68dp"
+		android:elevation="12dp"
+		app:cardBackgroundColor="#E617171A"
+		app:cardCornerRadius="28dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:strokeColor="#33FFFFFF"
+		app:strokeWidth="1dp">
+
+		<HorizontalScrollView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:fillViewport="true"
+			android:scrollbars="none">
+
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:gravity="center"
+				android:orientation="horizontal"
+				android:paddingHorizontal="6dp"
+				android:paddingVertical="4dp">
+
+				<com.google.android.material.button.MaterialButton
+					android:id="@+id/button_quick_previous"
+					style="@style/Widget.Material3.Button.TextButton"
+					android:layout_width="wrap_content"
+					android:layout_height="48dp"
+					android:contentDescription="@string/previous_episode"
+					android:minWidth="48dp"
+					android:paddingHorizontal="10dp"
+					android:textColor="@android:color/white"
+					app:icon="@drawable/ic_previous"
+					app:iconPadding="0dp"
+					app:iconTint="@android:color/white" />
+
+				<com.google.android.material.button.MaterialButton
+					android:id="@+id/button_quick_servers"
+					style="@style/Widget.Material3.Button.TextButton"
+					android:layout_width="wrap_content"
+					android:layout_height="48dp"
+					android:maxLines="1"
+					android:minWidth="48dp"
+					android:paddingHorizontal="10dp"
+					android:text="@string/anime_servers"
+					android:textColor="@android:color/white"
+					app:icon="@drawable/ic_storage"
+					app:iconTint="@android:color/white" />
+
+				<com.google.android.material.button.MaterialButton
+					android:id="@+id/button_quick_quality"
+					style="@style/Widget.Material3.Button.TextButton"
+					android:layout_width="wrap_content"
+					android:layout_height="48dp"
+					android:maxLines="1"
+					android:minWidth="48dp"
+					android:paddingHorizontal="10dp"
+					android:text="@string/player_quality_auto"
+					android:textColor="@android:color/white"
+					app:icon="@drawable/ic_high_quality"
+					app:iconTint="@android:color/white" />
+
+				<com.google.android.material.button.MaterialButton
+					android:id="@+id/button_quick_speed"
+					style="@style/Widget.Material3.Button.TextButton"
+					android:layout_width="wrap_content"
+					android:layout_height="48dp"
+					android:maxLines="1"
+					android:minWidth="48dp"
+					android:paddingHorizontal="10dp"
+					android:text="1×"
+					android:textColor="@android:color/white"
+					app:icon="@drawable/ic_player_speed"
+					app:iconTint="@android:color/white"
+					tools:ignore="HardcodedText" />
+
+				<com.google.android.material.button.MaterialButton
+					android:id="@+id/button_quick_next"
+					style="@style/Widget.Material3.Button.TextButton"
+					android:layout_width="wrap_content"
+					android:layout_height="48dp"
+					android:contentDescription="@string/next_episode"
+					android:minWidth="48dp"
+					android:paddingHorizontal="10dp"
+					android:textColor="@android:color/white"
+					app:icon="@drawable/ic_next"
+					app:iconPadding="0dp"
+					app:iconTint="@android:color/white" />
+
+			</LinearLayout>
+
+		</HorizontalScrollView>
+
+	</com.google.android.material.card.MaterialCardView>
+
+	<com.google.android.material.card.MaterialCardView
+		android:id="@+id/gesture_feedback"
+		android:layout_width="220dp"
+		android:layout_height="wrap_content"
+		android:elevation="20dp"
+		android:visibility="gone"
+		app:cardBackgroundColor="#E61A1A1E"
+		app:cardCornerRadius="24dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:strokeColor="#40FFFFFF"
+		app:strokeWidth="1dp">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:orientation="vertical"
+			android:padding="20dp">
+
+			<ImageView
+				android:id="@+id/image_gesture_feedback"
+				android:layout_width="32dp"
+				android:layout_height="32dp"
+				android:contentDescription="@null"
+				android:src="@drawable/ic_volume"
+				android:tint="@android:color/white" />
+
+			<TextView
+				android:id="@+id/text_gesture_feedback"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:textColor="@android:color/white"
+				android:textSize="16sp"
+				android:textStyle="bold"
+				tools:text="Volume · 75%" />
+
+			<com.google.android.material.progressindicator.LinearProgressIndicator
+				android:id="@+id/progress_gesture_feedback"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="12dp"
+				android:max="100"
+				android:progress="75"
+				app:indicatorColor="?attr/colorPrimary"
+				app:trackColor="#40FFFFFF"
+				tools:progress="75" />
+
+		</LinearLayout>
+
+	</com.google.android.material.card.MaterialCardView>
+
+	<com.google.android.material.button.MaterialButton
+		android:id="@+id/button_controls_lock"
+		style="?materialIconButtonFilledTonalStyle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="12dp"
+		android:contentDescription="@string/player_lock_controls"
+		android:elevation="16dp"
+		app:backgroundTint="#B3000000"
+		app:icon="@drawable/ic_lock_open"
+		app:iconTint="@android:color/white"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<com.google.android.material.button.MaterialButton
+		android:id="@+id/button_player_settings"
+		style="?materialIconButtonFilledTonalStyle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="12dp"
+		android:layout_marginEnd="12dp"
+		android:contentDescription="@string/player_settings"
+		android:elevation="16dp"
+		app:backgroundTint="#B3000000"
+		app:icon="@drawable/ic_settings"
+		app:iconTint="@android:color/white"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

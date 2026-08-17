@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="url_github" translatable="false">https://github.com/hema995/Mangapeak</string>
+	<string name="url_telegram_web" translatable="false">https://telegram.me/mangapeak</string>
+	<string name="url_telegram" translatable="false">tg://resolve?domain=mangapeak</string>
+	<string name="url_discord" translatable="false">https://discord.gg/aeVfVuVUr2</string>
+	<string name="url_instagram" translatable="false">https://www.instagram.com/mangapeakapp</string>
+	<string name="url_weblate" translatable="false">https://hosted.weblate.org/engage/kotatsu</string>
+	<string name="url_user_manual" translatable="false">https://mangapeak.github.io/privacy</string>
+	<string name="url_error_report" translatable="false">https://mangapeak.app/report</string>
+	<string name="url_google_play" translatable="false">https://play.google.com/store/apps/details?id=org.manga.peak</string>
+	<string name="tg_backup_bot_name" translatable="false">kotatsu_backup_bot</string>
+	<string name="discord_app_id" translatable="false">1395464028611940393</string>
+	<string name="app_icon_url" translatable="false">https://raw.githubusercontent.com/hema995/Mangapeak/main/ic_launcher_round.png</string>
+	<string-array name="values_theme" translatable="false">
+		<item>-1</item>
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+	<string-array name="values_track_sources" translatable="false">
+		<item>favourites</item>
+		<item>history</item>
+	</string-array>
+	<string-array name="values_track_sources_default" translatable="false">
+		<item>favourites</item>
+	</string-array>
+	<string-array name="values_network_policy" translatable="false">
+		<item>1</item>
+		<item>2</item>
+		<item>0</item>
+	</string-array>
+	<string-array name="values_image_proxies" translatable="false">
+		<item>-1</item>
+		<item>0</item>
+		<item>1</item>
+	</string-array>
+	<string-array name="values_proxy_types" translatable="false">
+		<item>DIRECT</item>
+		<item>HTTP</item>
+		<item>SOCKS</item>
+	</string-array>
+	<string-array name="values_backup_frequency" translatable="false">
+		<item>0.25</item>
+		<item>1</item>
+		<item>2</item>
+		<item>7</item>
+		<item>14</item>
+		<item>30</item>
+	</string-array>
+	<string-array name="details_tabs_values" translatable="false">
+		<item>-1</item>
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+	<string-array name="values_tracker_frequency" translatable="false">
+		<item>-1</item>
+		<item>0.4</item>
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+	<string-array name="values_reader_crop" translatable="false">
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+	<string-array name="values_list_badges" translatable="false">
+		<!-- MangaListMapper flags -->
+		<item>4</item>
+		<item>1</item>
+	</string-array>
+</resources>

@@ -1,0 +1,284 @@
+import java.time.LocalDateTime
+
+plugins {
+	id 'com.android.application'
+	id 'kotlin-android'
+	id 'com.google.devtools.ksp'
+	id 'kotlin-parcelize'
+	id 'dagger.hilt.android.plugin'
+	id 'androidx.room'
+	id 'org.jetbrains.kotlin.plugin.serialization'
+	// enable if needed
+	// id 'dev.reformator.stacktracedecoشroutinator'
+}
+
+// Firebase is optional in the public source tree. Download google-services.json
+// from your own Firebase project to enable its Gradle integrations.
+if (file('google-services.json').isFile()) {
+	apply plugin: 'com.google.gms.google-services'
+	apply plugin: 'com.google.firebase.crashlytics'
+}
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.isFile()) {
+	localProperties.load(new FileInputStream(localPropertiesFile))
+}
+def localProperty = { String name, String fallback -> localProperties.getProperty(name, fallback) }
+def demoAdMobAppId = 'ca-app-pub-3940256099942544~3347511713'
+def demoNativeAdUnitId = 'ca-app-pub-3940256099942544/2247696110'
+def demoInterstitialAdUnitId = 'ca-app-pub-3940256099942544/1033173712'
+
+android {
+	compileSdk = 36
+	buildToolsVersion = '35.0.0'
+	namespace = 'org.manga.peak'
+	dependenciesInfo {
+		includeInApk = false
+		includeInBundle = false
+	}
+
+	defaultConfig {
+		applicationId "com.anilord.app"
+		minSdk = 23
+		targetSdk = 36
+		versionCode = 1081
+		versionName = '2.6.5'
+		generatedDensities = []
+		testInstrumentationRunner 'org.manga.peak.HiltTestRunner'
+		ksp {
+			arg('room.generateKotlin', 'true')
+		}
+		androidResources {
+			// https://issuetracker.google.com/issues/408030127
+			generateLocaleConfig false
+		}
+		resValue 'string', 'tg_backup_bot_token', localProperty('tg_backup_bot_token', '')
+		resValue 'string', 'shikimori_clientId', localProperty('shikimori_client_id', '')
+		resValue 'string', 'shikimori_clientSecret', localProperty('shikimori_client_secret', '')
+		resValue 'string', 'anilist_clientId', localProperty('anilist_client_id', '')
+		resValue 'string', 'anilist_clientSecret', localProperty('anilist_client_secret', '')
+		resValue 'string', 'mal_clientId', localProperty('mal_client_id', '')
+		resValue 'string', 'kitsu_clientId', localProperty('kitsu_client_id', '')
+		resValue 'string', 'kitsu_clientSecret', localProperty('kitsu_client_secret', '')
+		resValue 'string', 'acra_login', localProperty('acra_login', '')
+		resValue 'string', 'acra_password', localProperty('acra_password', '')
+		// Safe Google demo IDs are used until production AdMob IDs are supplied in local.properties.
+		resValue 'string', 'admob_app_id', localProperty('admob_app_id', demoAdMobAppId)
+		resValue 'string', 'admob_native_ad_unit_id', localProperty('admob_native_ad_unit_id', demoNativeAdUnitId)
+		resValue 'string', 'admob_anime_interstitial_ad_unit_id', localProperty(
+			'admob_anime_interstitial_ad_unit_id', demoInterstitialAdUnitId,
+		)
+		resValue 'bool', 'admob_tag_for_under_age_of_consent', localProperty(
+			'admob_tag_for_under_age_of_consent',
+			'false',
+		)
+	}
+	buildTypes {
+		debug {
+			applicationIdSuffix = '.debug'
+			// Development builds must never generate real AdMob traffic.
+			resValue 'string', 'admob_app_id', demoAdMobAppId
+			resValue 'string', 'admob_native_ad_unit_id', demoNativeAdUnitId
+			resValue 'string', 'admob_anime_interstitial_ad_unit_id', demoInterstitialAdUnitId
+			resValue 'bool', 'admob_tag_for_under_age_of_consent', 'false'
+		}
+		release {
+			minifyEnabled true
+			shrinkResources true 
+			proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+			// Configure production units privately in local.properties.
+			resValue 'string', 'admob_app_id', localProperty('admob_app_id', demoAdMobAppId)
+			resValue 'string', 'admob_native_ad_unit_id', localProperty('admob_native_ad_unit_id', demoNativeAdUnitId)
+			resValue 'string', 'admob_anime_interstitial_ad_unit_id', localProperty(
+				'admob_anime_interstitial_ad_unit_id', demoInterstitialAdUnitId,
+			)
+			resValue 'bool', 'admob_tag_for_under_age_of_consent', localProperty(
+				'admob_tag_for_under_age_of_consent', 'false',
+			)
+		}
+		nightly {
+			initWith release
+			applicationIdSuffix = '.nightly'
+			// Nightly builds are test builds and must not request production ads.
+			resValue 'string', 'admob_app_id', demoAdMobAppId
+			resValue 'string', 'admob_native_ad_unit_id', demoNativeAdUnitId
+			resValue 'string', 'admob_anime_interstitial_ad_unit_id', demoInterstitialAdUnitId
+			resValue 'bool', 'admob_tag_for_under_age_of_consent', 'false'
+		}
+	}
+	buildFeatures {
+		viewBinding true
+		buildConfig true
+	}
+	packagingOptions {
+		resources {
+			excludes += [
+				'META-INF/README.md',
+				'META-INF/NOTICE.md'
+			]
+		}
+		jniLibs {
+			useLegacyPackaging false
+		}
+	}
+	sourceSets {
+		androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
+		main.java.srcDirs += 'src/main/kotlin/'
+	}
+	compileOptions {
+		coreLibraryDesugaringEnabled true
+		sourceCompatibility JavaVersion.VERSION_17
+		targetCompatibility JavaVersion.VERSION_17
+	}
+	kotlinOptions {
+		jvmTarget = JavaVersion.VERSION_17.toString()
+		freeCompilerArgs += [
+			'-opt-in=kotlin.ExperimentalStdlibApi',
+			'-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi',
+			'-opt-in=kotlinx.coroutines.ExperimentalForInheritanceCoroutinesApi',
+			'-opt-in=kotlinx.coroutines.InternalForInheritanceCoroutinesApi',
+			'-opt-in=kotlinx.coroutines.FlowPreview',
+			'-opt-in=kotlin.contracts.ExperimentalContracts',
+			'-opt-in=coil3.annotation.ExperimentalCoilApi',
+			'-opt-in=coil3.annotation.InternalCoilApi',
+			'-opt-in=kotlinx.serialization.ExperimentalSerializationApi',
+			'-Xjspecify-annotations=strict',
+			'-Xannotation-default-target=first-only',
+			'-Xtype-enhancement-improvements-strict-mode'
+		]
+	}
+	room {
+		schemaDirectory "$projectDir/schemas"
+	}
+	lint {
+		abortOnError true
+		disable 'MissingTranslation', 'PrivateResource', 'SetJavaScriptEnabled', 'SimpleDateFormat'
+	}
+	testOptions {
+		unitTests.includeAndroidResources true
+		unitTests.returnDefaultValues false
+		kotlinOptions {
+			freeCompilerArgs += ['-opt-in=org.koitharu.kotatsu.parsers.InternalParsersApi']
+		}
+	}
+	applicationVariants.configureEach { variant ->
+		if (variant.name == 'nightly') {
+			variant.outputs.each { output ->
+				def now = LocalDateTime.now()
+				output.versionCodeOverride = now.format("yyMMdd").toInteger()
+				output.versionNameOverride = 'N' + now.format("yyyyMMdd")
+			}
+		}
+	}
+}
+dependencies {
+	implementation platform(libs.firebase.bom)
+	implementation libs.firebase.messaging
+	implementation libs.firebase.analytics
+	implementation libs.firebase.database
+	implementation libs.firebase.crashlytics
+	implementation libs.firebase.inappmessaging.display
+	def parsersVersion = libs.versions.parsers.get()
+	if (System.properties.containsKey('parsersVersionOverride')) {
+		// usage:
+		// -DparsersVersionOverride=$(curl -s https://api.github.com/repos/kotatsuapp/kotatsu-parsers/commits/master -H "Accept: application/vnd.github.sha" | cut -c -10)
+		parsersVersion = System.getProperty('parsersVersionOverride')
+	}
+	//noinspection UseTomlInstead
+	implementation("com.github.hany18h:kotatsu-parsers:$parsersVersion") {
+		exclude group: 'org.json', module: 'json'
+	}
+
+	coreLibraryDesugaring libs.desugar.jdk.libs
+	implementation libs.kotlin.stdlib
+	implementation libs.kotlinx.coroutines.android
+	implementation libs.kotlinx.coroutines.guava
+
+	implementation libs.androidx.appcompat
+	implementation libs.androidx.core
+	implementation libs.androidx.activity
+	implementation libs.androidx.fragment
+	implementation libs.androidx.transition
+	implementation libs.androidx.collection
+	implementation libs.lifecycle.viewmodel
+	implementation libs.lifecycle.service
+	implementation libs.lifecycle.process
+	implementation libs.androidx.constraintlayout
+	implementation libs.androidx.documentfile
+	implementation libs.androidx.swiperefreshlayout
+	implementation libs.androidx.recyclerview
+	implementation libs.androidx.viewpager2
+	implementation libs.androidx.preference
+	implementation libs.androidx.biometric
+	implementation libs.material
+	implementation libs.media3.exoplayer
+	implementation libs.media3.exoplayer.hls
+	implementation libs.media3.ui
+	implementation libs.androidx.lifecycle.common.java8
+	implementation libs.androidx.webkit
+	implementation libs.app.update
+	implementation libs.app.update.ktx
+	implementation libs.play.review
+	implementation libs.play.review.ktx
+	implementation libs.play.billing
+	implementation libs.play.services.ads
+	implementation libs.user.messaging.platform
+
+	implementation libs.androidx.work.runtime
+	implementation libs.guava
+	implementation libs.androidx.window
+
+	implementation libs.androidx.room.runtime
+	implementation libs.androidx.room.ktx
+	ksp libs.androidx.room.compiler
+
+	implementation libs.okhttp
+	implementation libs.okhttp.tls
+	implementation libs.okhttp.dnsoverhttps
+	implementation libs.okio
+	implementation libs.kotlinx.serialization.json
+
+	implementation libs.adapterdelegates
+	implementation libs.adapterdelegates.viewbinding
+
+	implementation libs.hilt.android
+	ksp libs.hilt.compiler
+	implementation libs.androidx.hilt.work
+	ksp libs.androidx.hilt.compiler
+
+	implementation libs.coil.core
+	implementation libs.coil.network
+	implementation libs.coil.gif
+	implementation libs.coil.svg
+	implementation libs.avif.decoder
+	implementation libs.ssiv
+	implementation libs.disk.lru.cache
+	implementation libs.kizzyrpc
+
+	implementation libs.acra.http
+	implementation libs.acra.dialog
+	implementation libs.conscrypt.android
+
+
+	debugImplementation libs.leakcanary.android
+	nightlyImplementation libs.leakcanary.android
+	debugImplementation libs.workinspector
+
+	testImplementation libs.junit
+	testImplementation libs.json
+	testImplementation libs.kotlinx.coroutines.test
+
+	androidTestImplementation libs.androidx.runner
+	androidTestImplementation libs.androidx.rules
+	androidTestImplementation libs.androidx.test.core
+	androidTestImplementation libs.androidx.junit
+
+	androidTestImplementation libs.kotlinx.coroutines.test
+
+	androidTestImplementation libs.androidx.room.testing
+	androidTestImplementation libs.moshi.kotlin
+
+	androidTestImplementation libs.hilt.android.testing
+	kspAndroidTest libs.hilt.android.compiler
+}

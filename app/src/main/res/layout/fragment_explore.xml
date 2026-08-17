@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<HorizontalScrollView
+		android:id="@+id/scroll_content_type"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:clipToPadding="false"
+		android:scrollbars="none"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+
+		<org.manga.peak.core.ui.widgets.ChipsView
+			android:id="@+id/chips_content_type"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:clipChildren="false"
+			android:clipToPadding="false"
+			android:paddingStart="@dimen/list_spacing_normal"
+			android:paddingEnd="@dimen/list_spacing_normal"
+			android:paddingBottom="@dimen/margin_small"
+			app:chipStyle="@style/Widget.Kotatsu.Chip.Filter"
+			app:singleLine="true" />
+
+	</HorizontalScrollView>
+
+	<androidx.recyclerview.widget.RecyclerView
+		android:id="@+id/recyclerView"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:clipToPadding="false"
+		android:orientation="vertical"
+		android:padding="@dimen/list_spacing_normal"
+		android:scrollbars="vertical"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/scroll_content_type"
+		tools:listitem="@layout/item_explore_source_list" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

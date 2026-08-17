@@ -1,0 +1,30 @@
+# Android Studio normally writes this line automatically.
+# Windows example: sdk.dir=C\:\\Users\\YOUR_NAME\\AppData\\Local\\Android\\Sdk
+# Linux/macOS example: sdk.dir=/home/YOUR_NAME/Android/Sdk
+
+# Optional Telegram backup bot token
+tg_backup_bot_token=
+
+# AdMob: safe Google demo IDs. Replace only in your private local.properties.
+admob_app_id=ca-app-pub-3940256099942544~3347511713
+admob_native_ad_unit_id=ca-app-pub-3940256099942544/2247696110
+admob_anime_interstitial_ad_unit_id=ca-app-pub-3940256099942544/1033173712
+admob_tag_for_under_age_of_consent=false
+
+# Optional tracking integrations
+shikimori_client_id=
+shikimori_client_secret=
+anilist_client_id=
+anilist_client_secret=
+mal_client_id=
+kitsu_client_id=
+kitsu_client_secret=
+
+# Optional private crash-report server credentials
+acra_login=
+acra_password=
+
+# Optional source credentials. Keep them private.
+anime_slayer_client_secret=
+anime_witcher_algolia_search_key=
+anime_witcher_firebase_api_key=

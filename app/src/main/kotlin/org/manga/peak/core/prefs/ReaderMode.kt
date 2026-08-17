@@ -1,0 +1,19 @@
+package org.manga.peak.core.prefs
+
+import androidx.annotation.Keep
+
+@Keep
+enum class ReaderMode(val id: Int) {
+
+	STANDARD(1),
+	REVERSED(3),
+	VERTICAL(4),
+	WEBTOON(2),
+	NOVEL(5),
+	;
+
+	companion object {
+
+		fun valueOf(id: Int) = entries.firstOrNull { it.id == id }
+	}
+}

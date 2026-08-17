@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:title="@string/about">
+
+	<Preference
+		android:key="app_version"
+		android:persistent="false"
+		android:summary="@string/check_for_updates" />
+
+	<Preference
+		android:key="support_developer"
+		android:persistent="false"
+		android:summary="@string/support_developer_summary"
+		android:title="@string/support_developer"
+		app:allowDividerAbove="true" />
+
+	<Preference
+		android:key="about_help"
+		android:persistent="false"
+		android:summary="@string/url_user_manual"
+		android:title="@string/privacy"
+		app:allowDividerAbove="true" />
+
+	<Preference
+		android:key="ad_privacy_options"
+		android:persistent="false"
+		android:summary="@string/ad_privacy_options_summary"
+		android:title="@string/ad_privacy_options" />
+
+	<Preference
+		android:key="about_discord"
+		android:persistent="false"
+		android:summary="@string/url_discord"
+		android:title="@string/discord" />
+
+	<Preference
+		android:key="about_source_code"
+		android:persistent="false"
+		android:selectable="false"
+		android:summary="@string/coming_soon"
+		android:title="@string/source_code" />
+
+</PreferenceScreen>

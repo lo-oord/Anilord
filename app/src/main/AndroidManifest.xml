@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools">
+
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="com.android.vending.BILLING" />
+	<uses-permission
+		android:name="android.permission.FOREGROUND_SERVICE"
+		tools:ignore="ForegroundServicesPolicy" />
+	<uses-permission android:name="android.permission.WAKE_LOCK" />
+	<uses-permission android:name="android.permission.VIBRATE" />
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+	<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+	<uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+	<uses-permission
+		android:name="android.permission.READ_EXTERNAL_STORAGE"
+		tools:node="remove" />
+	<uses-permission
+		android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+		tools:node="remove" />
+	<uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+	<uses-permission
+		android:name="android.permission.ACCESS_ADSERVICES_AD_ID"
+		tools:node="remove" />
+	<uses-permission
+		android:name="android.permission.ACCESS_ADSERVICES_ATTRIBUTION"
+		tools:node="remove" />
+
+	<queries>
+		<intent>
+			<action android:name="android.intent.action.PROCESS_TEXT" />
+			<data android:mimeType="text/plain" />
+		</intent>
+		<intent>
+			<action android:name="android.speech.action.RECOGNIZE_SPEECH" />
+		</intent>
+		<intent>
+			<action android:name="app.kotatsu.parser.PROVIDE_MANGA" />
+		</intent>
+	</queries>
+
+	<application
+		android:name="org.manga.peak.KotatsuApp"
+		android:allowBackup="true"
+		android:backupAgent="org.manga.peak.backups.domain.AppBackupAgent"
+		android:dataExtractionRules="@xml/backup_rules"
+		android:enableOnBackInvokedCallback="@bool/is_predictive_back_enabled"
+		android:extractNativeLibs="true"
+		android:fullBackupContent="@xml/backup_content"
+		android:fullBackupOnly="true"
+		android:hasFragileUserData="true"
+		android:restoreAnyVersion="true"
+		android:icon="@mipmap/ic_launcher"
+		android:label="@string/app_name"
+		android:largeHeap="true"
+		android:localeConfig="@xml/locales_config"
+		android:networkSecurityConfig="@xml/network_security_config"
+		android:roundIcon="@mipmap/ic_launcher_round"
+		android:supportsRtl="true"
+		android:theme="@style/Theme.Kotatsu"
+		tools:ignore="UnusedAttribute">
+
+		<meta-data
+			android:name="google_analytics_adid_collection_enabled"
+			android:value="false" />
+		<meta-data
+			android:name="google_analytics_default_allow_ad_personalization_signals"
+			android:value="false" />
+		<meta-data
+			android:name="com.google.android.gms.ads.APPLICATION_ID"
+			android:value="@string/admob_app_id" />
+		<meta-data
+			android:name="com.google.firebase.messaging.default_notification_icon"
+			android:resource="@drawable/ic_notification" />
+		<meta-data
+			android:name="com.google.firebase.messaging.default_notification_color"
+			android:resource="@color/blue_primary" />
+		<meta-data
+			android:name="com.google.firebase.messaging.default_notification_channel_id"
+			android:value="firebase_messages" />
+
+		<activity
+			android:name="org.manga.peak.main.ui.MainActivity"
+			android:exported="true">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+			<meta-data
+				android:name="android.app.default_searchable"
+				android:value="org.manga.peak.search.ui.multi.MultiSearchActivity" />
+		</activity>
+		<activity
+			android:name="org.manga.peak.anime.player.AnimePlayerActivity"
+			android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden"
+			android:exported="false"
+			android:hardwareAccelerated="true"
+			android:screenOrientation="fullSensor"
+			android:supportsPictureInPicture="true" />
+		<activity
+			android:name="org.manga.peak.details.ui.DetailsActivity"
+			android:exported="true">
+			<intent-filter>
+				<action android:name="${applicationId}.action.VIEW_MANGA" />
+			</intent-filter>
+		</activity>
+		<activity
+			android:name="org.manga.peak.reader.ui.ReaderActivity"
+			android:exported="true">
+			<intent-filter>
+				<action android:name="${applicationId}.action.READ_MANGA" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="com.samsung.android.support.REMOTE_ACTION" />
+			</intent-filter>
+
+			<meta-data
+				android:name="com.samsung.android.support.REMOTE_ACTION"
+				android:resource="@xml/remote_action" />
+		</activity>
+		<activity
+			android:name="org.manga.peak.search.ui.MangaListActivity"
+			android:exported="true"
+			android:label="@string/manga_list">
+			<intent-filter>
+				<action android:name="${applicationId}.action.EXPLORE_MANGA" />
+			</intent-filter>
+		</activity>
+		<activity
+			android:name="org.manga.peak.history.ui.HistoryActivity"
+			android:label="@string/history" />
+		<activity
+			android:name="org.manga.peak.tracker.ui.updates.UpdatesActivity"
+			android:label="@string/updates" />
+		<activity
+			android:name="org.manga.peak.favourites.ui.FavouritesActivity"
+			android:label="@string/favourites" />
+		<activity
+			android:name="org.manga.peak.bookmarks.ui.AllBookmarksActivity"
+			android:label="@string/bookmarks" />
+		<activity
+			android:name="org.manga.peak.suggestions.ui.SuggestionsActivity"
+			android:label="@string/suggestions" />
+		<activity
+			android:name="org.manga.peak.details.ui.related.RelatedMangaActivity"
+			android:label="@string/related_manga" />
+		<activity
+			android:name="org.manga.peak.settings.SettingsActivity"
+			android:exported="true"
+			android:label="@string/settings">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+
+				<data android:scheme="kotatsu" />
+				<data android:scheme="anilord" />
+				<data android:host="about" />
+			</intent-filter>
+		</activity>
+		<activity
+			android:name="org.manga.peak.settings.reader.ReaderTapGridConfigActivity"
+			android:label="@string/reader_actions" />
+		<activity
+			android:name="org.manga.peak.settings.storage.directories.MangaDirectoriesActivity"
+			android:label="@string/local_manga_directories" />
+		<activity
+			android:name="org.manga.peak.browser.BrowserActivity"
+			android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+			android:windowSoftInputMode="adjustResize" />
+		<activity
+			android:name="org.manga.peak.browser.cloudflare.CloudFlareActivity"
+			android:autoRemoveFromRecents="true"
+			android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+			android:windowSoftInputMode="adjustResize" />
+		<activity
+			android:name="org.manga.peak.settings.sources.auth.SourceAuthActivity"
+			android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+			android:windowSoftInputMode="adjustResize" />
+		<activity
+			android:name="org.manga.peak.settings.sources.auth.CredentialsSourceAuthActivity"
+			android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+			android:windowSoftInputMode="adjustResize" />
+		<activity
+			android:name="org.manga.peak.favourites.ui.categories.FavouriteCategoriesActivity"
+			android:label="@string/manage_categories" />
+		<activity
+			android:name="org.manga.peak.widget.shelf.ShelfWidgetConfigActivity"
+			android:exported="true"
+			android:label="@string/manga_shelf">
+			<intent-filter>
+				<action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+			</intent-filter>
+		</activity>
+		<activity
+			android:name="org.manga.peak.widget.recent.RecentWidgetConfigActivity"
+			android:exported="true"
+			android:label="@string/recent_manga">
+			<intent-filter>
+				<action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+			</intent-filter>
+		</activity>
+		<activity
+			android:name="org.manga.peak.search.ui.multi.SearchActivity"
+			android:label="@string/search" />
+		<activity
+			android:name="org.manga.peak.main.ui.protect.ProtectActivity"
+			android:noHistory="true"
+			android:windowSoftInputMode="adjustResize" />
+		<activity
+			android:name="org.manga.peak.settings.protect.ProtectSetupActivity"
+			android:windowSoftInputMode="adjustResize" />
+		<activity
+			android:name="org.manga.peak.download.ui.list.DownloadsActivity"
+			android:label="@string/downloads"
+			android:launchMode="singleTop" />
+		<activity android:name="org.manga.peak.image.ui.ImageActivity" />
+		<activity android:name="org.manga.peak.favourites.ui.categories.edit.FavouritesCategoryEditActivity" />
+		<activity android:name="org.manga.peak.explore.ui.preset.SourcePresetEditActivity" />
+		<activity
+			android:name="org.manga.peak.explore.ui.preset.SourcePresetListActivity"
+			android:label="@string/source_presets" />
+		<activity
+			android:name="org.manga.peak.settings.override.OverrideConfigActivity"
+			android:label="@string/edit" />
+		<activity
+			android:name="org.manga.peak.reader.ui.colorfilter.ColorFilterConfigActivity"
+			android:label="@string/color_correction" />
+		<activity
+			android:name="org.manga.peak.scrobbling.common.ui.config.ScrobblerConfigActivity"
+			android:exported="true"
+			android:label="@string/settings"
+			android:launchMode="singleTop">
+
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+
+				<data android:scheme="kotatsu" />
+				<data android:host="shikimori-auth" />
+				<data android:host="anilist-auth" />
+				<data android:host="mal-auth" />
+				<data android:host="kitsu-auth" />
+			</intent-filter>
+
+		</activity>
+		<activity
+			android:name="org.manga.peak.settings.sources.catalog.SourcesCatalogActivity"
+			android:label="@string/sources_catalog" />
+		<activity
+			android:name="org.manga.peak.scrobbling.kitsu.ui.KitsuAuthActivity"
+			android:exported="false"
+			android:label="@string/kitsu"
+			tools:ignore="AppLinkUrlError">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<data android:scheme="kotatsu+kitsu" />
+			</intent-filter>
+		</activity>
+		<activity
+			android:name="org.manga.peak.stats.ui.StatsActivity"
+			android:label="@string/reading_stats" />
+		<activity
+			android:name="org.manga.peak.alternatives.ui.AlternativesActivity"
+			android:label="@string/alternatives" />
+		<activity
+			android:name="org.manga.peak.tracker.ui.debug.TrackerDebugActivity"
+			android:label="@string/tracker_debug_info" />
+		<activity
+			android:name="org.manga.peak.picker.ui.PageImagePickActivity"
+			android:exported="true"
+			android:label="@string/pick_manga_page">
+			<intent-filter>
+				<action android:name="android.intent.action.GET_CONTENT" />
+
+				<category android:name="android.intent.category.OPENABLE" />
+				<category android:name="android.intent.category.DEFAULT" />
+
+				<data android:mimeType="image/*" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.PICK" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<data android:mimeType="image/*" />
+			</intent-filter>
+		</activity>
+		<activity
+			android:name="org.manga.peak.scrobbling.discord.ui.DiscordAuthActivity"
+			android:label="@string/discord" />
+
+		<service
+			android:name="androidx.work.impl.foreground.SystemForegroundService"
+			android:foregroundServiceType="dataSync"
+			tools:node="merge" />
+		<service
+			android:name="org.manga.peak.local.ui.LocalChaptersRemoveService"
+			android:foregroundServiceType="dataSync"
+			android:label="@string/local_manga_processing" />
+		<service
+			android:name="org.manga.peak.backups.ui.periodical.PeriodicalBackupService"
+			android:foregroundServiceType="dataSync"
+			android:label="@string/periodic_backups" />
+		<service
+			android:name="org.manga.peak.alternatives.ui.AutoFixService"
+			android:foregroundServiceType="dataSync"
+			android:label="@string/fixing_manga" />
+		<service
+			android:name="org.manga.peak.local.ui.LocalIndexUpdateService"
+			android:label="@string/local_manga_processing" />
+		<service
+			android:name="org.manga.peak.backups.ui.backup.BackupService"
+			android:foregroundServiceType="dataSync"
+			android:label="@string/creating_backup" />
+		<service
+			android:name="org.manga.peak.backups.ui.restore.RestoreService"
+			android:foregroundServiceType="dataSync"
+			android:label="@string/restoring_backup" />
+		<service
+			android:name="org.manga.peak.local.ui.ImportService"
+			android:foregroundServiceType="dataSync"
+			android:label="@string/importing_manga" />
+		<service
+			android:name="org.manga.peak.widget.shelf.ShelfWidgetService"
+			android:label="@string/manga_shelf"
+			android:permission="android.permission.BIND_REMOTEVIEWS" />
+		<service
+			android:name="org.manga.peak.widget.recent.RecentWidgetService"
+			android:label="@string/recent_manga"
+			android:permission="android.permission.BIND_REMOTEVIEWS" />
+		<service
+			android:name="org.manga.peak.details.service.MangaPrefetchService"
+			android:exported="false"
+			android:label="@string/prefetch_content" />
+		<service
+			android:name="org.manga.peak.firebase.MangaPeakMessagingService"
+			android:exported="false">
+			<intent-filter>
+				<action android:name="com.google.firebase.MESSAGING_EVENT" />
+			</intent-filter>
+		</service>
+		<provider
+			android:name="org.manga.peak.search.ui.MangaSuggestionsProvider"
+			android:authorities="${applicationId}.MangaSuggestionsProvider"
+			android:exported="false" />
+		<provider
+			android:name="androidx.core.content.FileProvider"
+			android:authorities="${applicationId}.files"
+			android:exported="false"
+			android:grantUriPermissions="true">
+			<meta-data
+				android:name="android.support.FILE_PROVIDER_PATHS"
+				android:resource="@xml/filepaths" />
+		</provider>
+		<provider
+			android:name="androidx.startup.InitializationProvider"
+			android:authorities="${applicationId}.androidx-startup"
+			android:exported="false"
+			tools:node="remove">
+			<meta-data
+				android:name="androidx.work.WorkManagerInitializer"
+				android:value="androidx.startup"
+				tools:node="remove" />
+		</provider>
+
+		<receiver
+			android:name="org.manga.peak.core.exceptions.resolve.CaptchaHandler$DiscardReceiver"
+			android:exported="false">
+			<intent-filter>
+				<action android:name="org.manga.peak.CAPTCHA_DISCARD" />
+			</intent-filter>
+		</receiver>
+		<receiver
+			android:name="org.manga.peak.widget.shelf.ShelfWidgetProvider"
+			android:exported="true"
+			android:label="@string/manga_shelf">
+			<intent-filter>
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+			</intent-filter>
+			<meta-data
+				android:name="android.appwidget.provider"
+				android:resource="@xml/widget_shelf" />
+		</receiver>
+		<receiver
+			android:name="org.manga.peak.widget.recent.RecentWidgetProvider"
+			android:exported="true"
+			android:label="@string/recent_manga">
+			<intent-filter>
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+			</intent-filter>
+			<meta-data
+				android:name="android.appwidget.provider"
+				android:resource="@xml/widget_recent" />
+		</receiver>
+		<receiver
+			android:name="org.manga.peak.core.ErrorReporterReceiver"
+			android:exported="false">
+			<intent-filter>
+				<action android:name="${applicationId}.action.REPORT_ERROR" />
+			</intent-filter>
+		</receiver>
+
+		<meta-data
+			android:name="android.webkit.WebView.EnableSafeBrowsing"
+			android:value="false" />
+		<meta-data
+			android:name="android.webkit.WebView.MetricsOptOut"
+			android:value="true" />
+		<meta-data
+			android:name="com.samsung.android.icon_container.has_icon_container"
+			android:value="@bool/com_samsung_android_icon_container_has_icon_container" />
+
+	</application>
+
+</manifest>
