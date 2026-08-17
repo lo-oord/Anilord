@@ -18,10 +18,10 @@ class AuthActivity : AppCompatActivity() {
         }
     }
 
-    override fun onNewIntent(intent: Intent?) {
+    override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
-        if (intent != null) handleAuthCallback(intent)
+        handleAuthCallback(intent)
     }
 
     private fun handleAuthCallback(intent: Intent): Boolean {

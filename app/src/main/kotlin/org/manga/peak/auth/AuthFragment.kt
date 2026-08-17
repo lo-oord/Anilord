@@ -107,7 +107,7 @@ class AuthFragment : Fragment() {
         binding.textTitle.setText(R.string.auth_verification_title)
         binding.textSubtitle.text = getString(R.string.auth_verification_subtitle, verificationEmail)
         binding.formFields.isVisible = false
-        binding.textSecondaryInfo.setText(R.string.auth_check_inbox)
+        binding.textSecondaryInfo.text = getString(R.string.auth_verification_subtitle, verificationEmail)
         binding.buttonPrimary.setText(R.string.auth_open_email_app)
         binding.textLinkSecondary.setText(R.string.auth_resend_email)
         binding.textBottomAction.setText(R.string.auth_back_to_login)
