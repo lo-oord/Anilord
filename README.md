@@ -1,106 +1,123 @@
 <div align="center">
-  <img src="docs/images/anilord-crest.webp" alt="Anilord Logo" width="140" />Anilord
+  <img src="docs/images/anilord-crest.webp" alt="Anilord logo" width="140" />
 
-An open-source Android client for Manga, Anime, and Novels.
+  # Anilord
 
-"Android 6.0+" (https://img.shields.io/badge/Android-6.0%2B-3DDC84?logo=android&logoColor=white)
-"Kotlin" (https://img.shields.io/badge/Kotlin-2.2.10-7F52FF?logo=kotlin&logoColor=white)
-"License" (https://img.shields.io/badge/License-GPL--3.0-blue)
+  **عميل Android مفتوح المصدر للمانجا والأنمي والروايات**
 
-</div>About
+  [![Android](https://img.shields.io/badge/Android-6.0%2B-3DDC84?logo=android&logoColor=white)](https://developer.android.com/about/versions/marshmallow)
+  [![Kotlin](https://img.shields.io/badge/Kotlin-2.2.10-7F52FF?logo=kotlin&logoColor=white)](https://kotlinlang.org/)
+  [![Build](https://github.com/lo-oord/Anilord/actions/workflows/android.yml/badge.svg)](https://github.com/lo-oord/Anilord/actions/workflows/android.yml)
+  [![License](https://img.shields.io/badge/License-GPL--3.0-blue.svg)](LICENSE)
+</div>
 
-Anilord is an open-source Android application that brings Manga, Anime, and Novels together in a single modern interface.
+## نبذة عن المشروع
 
-It supports multiple sources, search, favorites, reading and watch history, downloads for offline use, customizable reading, and built-in anime playback.
+Anilord هو تطبيق Android يجمع تصفح المانجا والأنمي والروايات وقراءتها أو مشاهدتها من خلال واجهة واحدة. يعتمد التطبيق على نظام مصادر متعددة؛ لذلك يمكن للمستخدم البحث في أكثر من مصدر، فتح التفاصيل، اختيار الفصول أو الحلقات، ثم متابعة المحتوى داخل القارئ أو المشغل المدمج.
 
-The project is based on "Kotatsu" (https://github.com/KotatsuApp/Kotatsu) and includes the parser source used by the application inside this repository to make building and reviewing the project easier.
+يحافظ المشروع على بنية Android الأصلية المكتوبة بـKotlin وXML مع View Binding، ويستخدم طبقة المصادر والمحللات المضمنة داخل المستودع. اسم الحزمة البرمجي الحالي هو `org.manga.peak` حفاظاً على التوافق مع البنية الأصلية، بينما الاسم الظاهر وهوية التطبيق هما **Anilord**.
 
-Features
+> لا يستضيف Anilord المحتوى بنفسه. يعرض التطبيق المحتوى الذي توفره المصادر الخارجية، وقد تتغير هذه المصادر أو تتوقف أو تفرض شروطاً خاصة بها.
 
-- Browse and search Manga, Anime, and Novels from multiple sources.
-- Customizable Manga and Novel reader with Webtoon support.
-- Built-in Anime player with multiple servers and support for HLS, MP4, and MKV.
-- Download chapters and episodes for offline reading and watching.
-- Favorites, categories, history, bookmarks, and update notifications.
-- Material You interface optimized for phones and tablets.
-- Completely ad-free.
-- Optional synchronization, backup, and tracking integrations.
-- Supports Android 6.0 and later.
+## الميزات الرئيسية
 
-Project Structure
+| المجال | ما يوفره التطبيق |
+|---|---|
+| التصفح والبحث | تصفح المانجا والأنمي والروايات والبحث عبر مصادر متعددة وإدارة إعدادات المصادر. |
+| التفاصيل | عرض معلومات العمل، الفصول أو الحلقات، الأعمال المرتبطة، التصنيفات، والتحديثات المتاحة. |
+| القراءة | قارئ مانجا قابل للتخصيص مع دعم أنماط القراءة المختلفة، بما في ذلك Webtoon عند توفره. |
+| المشاهدة | مشغل أنمي مدمج مع دعم خوادم وصيغ تشغيل متعددة بحسب المصدر، مثل HLS وMP4 وMKV. |
+| المكتبة | المفضلة، التصنيفات، سجل القراءة أو المشاهدة، العلامات المرجعية، وقوائم المتابعة. |
+| الاستخدام دون اتصال | تنزيل الفصول أو الحلقات وإدارتها محلياً عند دعم المصدر لذلك. |
+| التتبع | تكاملات اختيارية مع خدمات التتبع المدعومة داخل المشروع، عند ضبط بياناتها الخاصة. |
+| الواجهة | تصميم داكن بهوية Anilord، شريط تنقل سفلي عائم، حالات فراغ minimal، وتجربة مناسبة للهواتف والأجهزة اللوحية. |
+| الخصوصية | لا توجد شاشة مصادقة خاصة بـAnilord في النسخة الحالية، ولا يتطلب تشغيل التطبيق إنشاء حساب Anilord. |
+| الإعلانات | تم تصميم النسخة الحالية دون إعلانات داخل تجربة الاستخدام الأساسية. |
 
-Path| Description
-"app/"| Android application, tests, and resources
-"kotatsu-parsers/"| Parser sources used by the application
-"gradle/"| Gradle Wrapper and version catalogs
-"docs/images/"| Anilord project images and branding
+## مصادر المحتوى والتكاملات
 
-Build Requirements
+يتضمن المستودع طبقة المصادر والمحللات اللازمة للتعامل مع المصادر المدعومة داخل التطبيق، مع تكاملات اختيارية لخدمات التتبع والمزامنة عند تفعيلها بإعدادات المستخدم. قد تطلب بعض المصادر الخارجية تسجيل دخول خاصاً بها؛ هذا النوع من تسجيل الدخول يخص المصدر وحده ولا يمثل حساباً مركزياً في Anilord.
 
-- Recent Android Studio.
-- JDK 17.
-- Android SDK 36.
-- Android Build Tools 35.0.0.
-- Internet connection during the first build to download dependencies.
+لا تُضمّن بيانات الاعتماد أو مفاتيح الخدمات في المستودع. يجب ضبط أي تكامل اختياري في بيئة البناء الخاصة به وبحسب شروط الخدمة الخاصة بمزوده.
 
-Build the Development Version
+## البنية التقنية
 
-git clone https://github.com/lo-oord/Anilord.git
-cd Anilord
-./gradlew :app:assembleDebug
+| المكوّن | التقنية أو الدور |
+|---|---|
+| لغة التطبيق | Kotlin |
+| واجهة المستخدم | Android XML، Material Components، وView Binding |
+| البناء | Gradle Wrapper مع Java 17 |
+| التخزين المحلي | طبقات التخزين وقاعدة البيانات المحلية الموجودة في وحدة التطبيق |
+| الصور | Coil بحسب طبقة تحميل الصور المستخدمة في المشروع |
+| المحتوى | مصادر ومحللات مضمّنة داخل المشروع |
+| التشغيل الآلي | GitHub Actions لبناء Debug والتحقق، وبناء Release أو Nightly عند الطلب |
+| الترخيص | GNU General Public License v3.0 |
 
-On Windows:
+### أهم المسارات
 
-.\gradlew.bat :app:assembleDebug
+```text
+app/                    وحدة تطبيق Android الرئيسية
+app/src/main/kotlin/    كود Kotlin، الواجهات، القارئ، المشغل، والمصادر
+app/src/main/res/       التخطيطات، الألوان، الأيقونات، النصوص، والموارد
+kotatsu-parsers/        مصادر ومحللات المحتوى المستخدمة في المشروع
+gradle/                 Gradle Wrapper والملفات المساعدة
+.github/workflows/      تعريفات GitHub Actions للبناء والتحقق
+docs/images/            صور وهوية المشروع
+```
 
-Android Studio will normally generate "local.properties" automatically with the local Android SDK path.
+## البناء عبر GitHub Actions
 
-Private Configuration
+يُدار البناء المعتمد للمشروع عبر GitHub Actions، ولا يُشترط تشغيل Gradle محلياً. عند دفع commit إلى فرعي `main` أو `master`، أو عند فتح Pull Request إلى أحدهما، يعمل workflow التحقق تلقائياً لتنفيذ الخطوات التالية:
 
-The repository does not contain private signing keys, production Firebase configuration, bot tokens, crash-reporting credentials, or private OAuth secrets.
+1. تجهيز Java 17 والتحقق من Gradle Wrapper.
+2. تنفيذ `assembleDebug`.
+3. تشغيل `testDebugUnitTest`.
+4. رفع ملف Debug APK كـArtifact باسم `anilord-debug-apk` عند نجاح الفحص.
 
-To enable Firebase, download your "google-services.json" from your Firebase project and place it inside "app/". This file is intentionally ignored by Git.
+يمكن أيضاً تشغيل workflow يدوياً من تبويب **Actions** لاختيار variant من `release` أو `nightly`. روابط workflows:
 
-Private integrations and services that require credentials remain disabled until you provide your own configuration locally.
+- [Android verification](https://github.com/lo-oord/Anilord/actions/workflows/android.yml)
+- [Release and Nightly build](https://github.com/lo-oord/Anilord/actions/workflows/release.yml)
 
-Do not upload any of the following to GitHub:
+### خطوات نشر تعديل
 
-- "local.properties"
-- "google-services.json"
-- Keystore files
-- Signing passwords
-- API keys or private credentials
+```text
+1. أنشئ فرعاً أو commit جديداً.
+2. ادفع التغييرات إلى GitHub.
+3. افتح تبويب Actions.
+4. راجع نتيجة Assemble والاختبارات.
+5. نزّل الـAPK من Artifacts بعد نجاح المهمة.
+```
 
-Build a Release
+لا تحفظ داخل GitHub أو داخل commit أي ملف من الملفات التالية:
 
-After configuring your local environment and signing credentials:
+```text
+local.properties
+google-services.json
+مفاتيح التوقيع وملفات keystore
+كلمات مرور التوقيع
+مفاتيح API وبيانات OAuth والرموز الخاصة
+```
 
-./gradlew :app:bundleRelease
+## المساهمة والإبلاغ عن المشاكل
 
-The repository does not include a signing key or its password. Google Play signing configuration must remain outside the repository.
+المساهمات والإبلاغ عن الأخطاء مرحب بهما. عند الإبلاغ عن مشكلة مرتبطة بمصدر محتوى، أرفق اسم المصدر والرابط المتأثر وخطوات إعادة المشكلة وسجل الخطأ غير الحساس. لا تضع كلمات المرور أو الرموز الخاصة أو بيانات الحسابات داخل Issues أو Pull Requests.
 
-Contributing
+قبل إرسال تعديل، احرص على أن يكون نطاقه واضحاً وأن يحافظ على بنية التطبيق الحالية. يجب أن يمر workflow الخاص بـGitHub Actions بنجاح قبل اعتماد التغيير.
 
-Contributions and bug reports are welcome.
+## الترخيص والاعتمادات
 
-When reporting a source-related issue, include the source name, relevant URL, and the steps required to reproduce the problem.
+هذا المشروع مرخّص بموجب [GNU General Public License v3.0](LICENSE). يعتمد Anilord على مشروع [Kotatsu](https://github.com/KotatsuApp/Kotatsu) ويستخدم مكونات ومصادر مرتبطة بمشروع [kotatsu-parsers](https://github.com/KotatsuApp/kotatsu-parsers). يجب الحفاظ على إشعارات حقوق النشر وشروط التراخيص الأصلية.
 
-Do not include login credentials, private tokens, or other sensitive information in issues or pull requests.
+للمزيد من التفاصيل، راجع [NOTICE.md](NOTICE.md) و[CONTRIBUTING.md](CONTRIBUTING.md).
 
-License & Attribution
+## إخلاء المسؤولية
 
-This project is licensed under the "GNU General Public License v3.0" (LICENSE).
+Anilord ليس تابعاً للمواقع أو الخدمات الخارجية التي يمكن الوصول إليها من خلال مصادر التطبيق، ولا يملك أو يستضيف المواد التي توفرها تلك المصادر. يتحمل المستخدم والموزع مسؤولية الالتزام بالقوانين المحلية وشروط استخدام الخدمات الخارجية وحقوق أصحاب المحتوى.
 
-Anilord is based on "Kotatsu" (https://github.com/KotatsuApp/Kotatsu) and uses the "kotatsu-parsers" (https://github.com/KotatsuApp/kotatsu-parsers) project.
+## روابط المشروع
 
-Copyright notices, attribution, and license requirements of the original projects must be preserved in accordance with the GPL-3.0 license.
-
-See "NOTICE.md" (NOTICE.md) for additional attribution information.
-
-Disclaimer
-
-Anilord does not host Manga, Anime, or Novel content and is not affiliated with the third-party websites or services accessible through the application.
-
-Content is provided by external sources available on the web. These sources may change, become unavailable, or operate under their own terms and policies.
-
-Users and distributors are responsible for complying with applicable laws and third-party terms of service in their respective jurisdictions.
+- [المستودع على GitHub](https://github.com/lo-oord/Anilord)
+- [سجل GitHub Actions](https://github.com/lo-oord/Anilord/actions)
+- [سياسة الأمان](SECURITY.md)
+- [ملاحظات التصميم](ANILORD_DESIGN.md)
