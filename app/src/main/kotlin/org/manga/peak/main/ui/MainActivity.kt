@@ -9,18 +9,11 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.graphics.drawable.ColorDrawable
-import android.widget.ImageView
-import android.widget.PopupWindow
-import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.view.ActionMode
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
 import androidx.core.view.MenuProvider
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
@@ -57,7 +50,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.manga.peak.R
-import org.manga.peak.auth.AuthSession
 import org.manga.peak.backups.ui.periodical.PeriodicalBackupService
 import org.manga.peak.core.exceptions.resolve.SnackbarErrorObserver
 import org.manga.peak.core.nav.router
@@ -142,10 +134,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 		setSupportActionBar(viewBinding.searchBar)
 
 		viewBinding.fab?.setOnClickListener(this)
-					viewBinding.profileButton?.let { button ->
-				restoreProfileAvatar(button)
-				button.setOnClickListener { showProfileMenu(it) }
-			}
 
 		viewBinding.navRail?.headerView?.findViewById<View>(R.id.railFab)?.setOnClickListener(this)
 		fadingAppbarMediator =
@@ -215,48 +203,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 		}
 	}
 
-	private fun showProfileMenu(anchor: View) {
-		val menuView = LayoutInflater.from(this).inflate(R.layout.popup_main_menu, null)
-		val popup = PopupWindow(
-			menuView,
-			resources.getDimensionPixelSize(R.dimen.profile_menu_width),
-			android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
-			true,
-		)
-		popup.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
-		popup.isOutsideTouchable = true
-		menuView.findViewById<TextView>(R.id.menu_profile).setOnClickListener {
-			popup.dismiss()
-			startActivity(Intent(this, org.manga.peak.auth.ProfileActivity::class.java))
-		}
-		menuView.findViewById<TextView>(R.id.menu_incognito).setOnClickListener {
-			viewModel.setIncognitoMode(!viewModel.isIncognitoModeEnabled.value)
-			popup.dismiss()
-		}
-		menuView.findViewById<TextView>(R.id.menu_settings).setOnClickListener {
-			popup.dismiss()
-			router.openSettings()
-		}
-		popup.showAsDropDown(anchor, -resources.getDimensionPixelSize(R.dimen.profile_menu_width) + anchor.width, 8, Gravity.END)
-	}
-
 	override fun onResume() {
 		super.onResume()
-		viewBinding.profileButton?.let(::restoreProfileAvatar)
 		inAppUpdateCoordinator.resume(this, inAppUpdateLauncher)
-	}
-
-	private fun restoreProfileAvatar(button: View) {
-		val image = button as? ImageView ?: return
-		val uri = AuthSession.avatarUri(this)?.let { runCatching { it.toUri() }.getOrNull() }
-		if (uri != null) {
-			runCatching { image.setImageURI(uri) }
-				.onFailure { image.setImageResource(R.drawable.ic_person_24) }
-		} else {
-			image.setImageResource(R.drawable.ic_person_24)
 		}
-	}
-
 	override fun onDestroy() {
 		inAppUpdateCoordinator.stop()
 		super.onDestroy()

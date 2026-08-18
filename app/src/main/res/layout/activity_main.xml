@@ -40,11 +40,13 @@
 			android:id="@+id/search_bar"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginHorizontal="12dp"
-			android:layout_marginBottom="8dp"
+			android:layout_marginHorizontal="16dp"
+			android:layout_marginTop="8dp"
+			android:layout_marginBottom="12dp"
 			android:hint="@string/search_manga"
 			android:backgroundTint="@color/anilord_surface"
-			android:elevation="2dp"
+			android:textColorHint="@color/anilord_text_secondary"
+			android:elevation="4dp"
 			app:forceDefaultNavigationOnClickListener="true"
 			app:layout_scrollFlags="scroll|enterAlways|snap" />
 

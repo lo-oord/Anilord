@@ -12,13 +12,13 @@
 
 	<!-- Other Colors -->
 
-		<color name="blue_primary">#1976D2</color>
+		<color name="blue_primary">#008CFF</color>
 		<!-- Anilord reference surfaces: near-black with restrained electric blue/violet accents -->
-		<color name="anilord_preference_surface">#120F1D</color>
+		<color name="anilord_preference_surface">#0A0D12</color>
 		<color name="anilord_text_primary">#FFFFFFFF</color>
 		<color name="anilord_text_secondary">#B8B8C2</color>
-		<color name="anilord_outline">#33008CFF</color>
-		<color name="anilord_accent_muted">#55008CFF</color>
+		<color name="anilord_outline">#66008CFF</color>
+		<color name="anilord_accent_muted">#44008CFF</color>
 		<color name="anilord_violet">#A78BFA</color>
 	<color name="grey">#424242</color>
 	<color name="dim">#99000000</color>

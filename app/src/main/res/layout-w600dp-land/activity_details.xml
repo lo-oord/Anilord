@@ -230,6 +230,8 @@
 					android:layout_height="wrap_content"
 					android:layout_marginStart="@dimen/margin_small"
 					android:layout_marginTop="@dimen/margin_normal"
+					android:ellipsize="end"
+					android:maxLines="1"
 					android:layout_weight="1"
 					android:gravity="center_vertical|start"
 					android:padding="@dimen/grid_spacing"
@@ -303,9 +305,12 @@
 					android:gravity="center_vertical|start"
 					android:padding="@dimen/grid_spacing"
 					android:singleLine="true"
+					android:ellipsize="end"
+					android:maxLines="1"
 					android:text="@string/related_manga"
 					android:textAppearance="?textAppearanceTitleSmall"
 					app:layout_constraintEnd_toStartOf="@id/button_related_more"
+					app:layout_constraintHorizontal_bias="0"
 					app:layout_constraintStart_toStartOf="parent"
 					app:layout_constraintTop_toBottomOf="@id/recyclerView_scrobbling" />
 
