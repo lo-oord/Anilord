@@ -7,7 +7,7 @@
 	<Preference
 		android:key="app_version"
 		android:persistent="false"
-		android:summary="@string/check_for_updates" />
+		android:selectable="false" />
 
 		<Preference
 			android:key="about_privacy"
