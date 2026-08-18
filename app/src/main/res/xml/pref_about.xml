@@ -16,10 +16,4 @@
 			android:title="@string/privacy"
 			app:allowDividerAbove="true" />
 
-		<Preference
-			android:key="auth_logout"
-			android:persistent="false"
-			android:title="@string/logout"
-			app:allowDividerAbove="true" />
-
 </PreferenceScreen>

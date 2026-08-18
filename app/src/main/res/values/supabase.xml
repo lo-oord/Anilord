@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="supabase_url" translatable="false">https://huoekbuqxbwijfmnmikv.supabase.co</string>
-    <string name="supabase_publishable_key" translatable="false">sb_publishable_HRaQIoaRfGU0oMMFnaPyLg_EamvAKPL</string>
-    <string name="supabase_auth_redirect" translatable="false">anilord://auth/callback</string>
-</resources>

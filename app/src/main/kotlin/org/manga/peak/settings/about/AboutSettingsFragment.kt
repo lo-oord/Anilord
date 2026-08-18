@@ -1,17 +1,11 @@
 package org.manga.peak.settings.about
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.manga.peak.R
-import org.manga.peak.auth.AuthSession
-import org.manga.peak.auth.StartupActivity
-import org.manga.peak.auth.SupabaseAuthClient
 import org.manga.peak.core.nav.router
 import org.manga.peak.core.prefs.AppSettings
 import org.manga.peak.core.ui.BasePreferenceFragment
@@ -44,22 +38,9 @@ class AboutSettingsFragment : BasePreferenceFragment(R.string.about) {
 					true
 				}
 
-				KEY_LOGOUT -> {
-					logout()
-					true
-				}
-
 				else -> super.onPreferenceTreeClick(preference)
 		}
 	}
-
-	private fun logout() {
-			val context = requireContext()
-			viewLifecycleOwner.lifecycleScope.launch {
-				runCatching {
-					withContext(Dispatchers.IO) {
-						SupabaseAuthClient.signOut(AuthSession.accessToken(context))
-					}
 				}
 				AuthSession.clear(context)
 				startActivity(Intent(context, StartupActivity::class.java).apply {
@@ -71,6 +52,5 @@ class AboutSettingsFragment : BasePreferenceFragment(R.string.about) {
 
 		private companion object {
 			const val KEY_PRIVACY = "about_privacy"
-			const val KEY_LOGOUT = "auth_logout"
 		}
 }
