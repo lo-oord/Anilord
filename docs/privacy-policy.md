@@ -2,62 +2,62 @@
 
 **Last updated: August 18, 2026**
 
-هذه سياسة خصوصية تشغيلية لتطبيق Anilord. صيغت وفق الوظائف الحالية للمشروع، ويجب مراجعتها قانونياً قبل استخدامها كوثيقة نهائية للنشر التجاري أو في متاجر التطبيقات.
+> **Draft notice:** This policy is an operational draft based on the current Anilord project configuration. It should be reviewed by a qualified legal professional before being used as the final policy for commercial distribution or an app store submission.
 
-## 1. نطاق السياسة
+## 1. Scope
 
-Anilord هو تطبيق Android لعرض المانجا والأنمي والروايات من مصادر خارجية. التطبيق لا يستضيف المحتوى بنفسه ولا يملك المواقع أو الخدمات التي توفره. تخضع الطلبات والروابط التي يفتحها المستخدم أيضاً لسياسات مزودي المصادر الخارجية.
+Anilord is an Android application for accessing manga, anime, and novels through third-party sources. Anilord does not host the content itself and does not own or operate the websites or services that provide it. Requests and links opened through the application may also be subject to the privacy policies and terms of those third-party providers.
 
-## 2. لا يوجد حساب مركزي لـAnilord
+## 2. No Central Anilord Account
 
-لا تتطلب النسخة الحالية إنشاء حساب مركزي في Anilord لتشغيل التطبيق. تم حذف شاشات مصادقة Anilord وتكاملها من النسخة الحالية. إذا طلب مصدر خارجي تسجيل الدخول، فهذا تسجيل دخول خاص بذلك المصدر، ويجب التعامل معه وفق سياسة الخصوصية وشروط استخدام المصدر نفسه.
+The current version of Anilord does not require users to create a central Anilord account. Anilord authentication screens and their integration are not included in the current version. If a third-party source requires sign-in, that sign-in belongs to the source itself and is governed by the source's own privacy policy and terms of service.
 
-## 3. البيانات التي قد تُخزن محلياً
+## 3. Data That May Be Stored Locally
 
-قد يخزن التطبيق على جهاز المستخدم بيانات تشغيلية لازمة للميزات المحلية، مثل قائمة المفضلة، سجل القراءة أو المشاهدة، العلامات المرجعية، التصنيفات، إعدادات القارئ، المصادر المفعلة، ومسارات أو ملفات التنزيلات التي يختارها المستخدم. تبقى هذه البيانات محلياً ما لم يفعّل المستخدم تكاملاً خارجياً يوفر مزامنة أو تتبعاً.
+The application may store operational data on the user's device to provide local features. This can include favorites, reading or viewing history, bookmarks, categories, reader settings, enabled sources, download locations, and files selected for download by the user. This information remains local unless the user enables an external integration that provides synchronization or tracking.
 
-يمكن أن تتضمن البيانات المحلية معلومات عن الأعمال والفصول أو الحلقات التي اختارها المستخدم، لكنها لا تُعد حساباً مركزياً لدى Anilord. حذف بيانات التطبيق أو إزالة التطبيق قد يحذف البيانات المحلية وفق إعدادات Android والنسخ الاحتياطي على الجهاز.
+Local data may include information about works, chapters, or episodes selected by the user. This does not create a central Anilord account. Clearing the application's data or uninstalling the application may remove local data according to Android settings and the device's backup behavior.
 
-## 4. طلبات الشبكة والمصادر الخارجية
+## 4. Network Requests and Third-Party Sources
 
-يتصل التطبيق بالإنترنت للوصول إلى المصادر التي يختارها المستخدم، وتحميل الصور والبيانات وملفات القراءة أو المشاهدة عند توفرها. قد يرى مزود المصدر عنوان IP وبيانات الطلب المعتادة اللازمة لتقديم الخدمة. لا يتحكم Anilord في ممارسات هذه الجهات، وينبغي الرجوع إلى سياساتها مباشرة.
+The application connects to the internet to access sources selected by the user and to load images, metadata, reading files, or video files when available. A source provider may receive the user's IP address and normal request information needed to provide its service. Anilord does not control the privacy practices of those providers, so users should review their policies directly.
 
-لا يضمن التطبيق استمرار أي مصدر أو دقة محتواه أو توفره، وقد تتغير الروابط أو الخوادم أو متطلبات الوصول دون إشعار.
+Anilord does not guarantee the continued availability, accuracy, legality, or reliability of any source or its content. Links, servers, access requirements, and source behavior may change without notice.
 
-## 5. التكاملات الاختيارية
+## 5. Optional Integrations
 
-قد يحتوي التطبيق على تكاملات اختيارية للتتبع أو الخدمات المجتمعية أو مزامنة البيانات. لا تُستخدم هذه التكاملات إلا عند تفعيلها أو إعدادها من المستخدم، وقد تتطلب بيانات اعتماد خاصة بالمزود. لا تضع كلمات المرور أو مفاتيح API أو الرموز الخاصة داخل Issues أو Pull Requests أو ملفات عامة.
+The application may include optional integrations for tracking, community services, or data synchronization. These integrations are used only when enabled or configured by the user and may require provider-specific credentials. Users must not place passwords, API keys, OAuth tokens, or other private credentials in public issues, pull requests, or repository files.
 
-## 6. الإعلانات والتحليلات
+## 6. Advertising and Analytics
 
-لا تتضمن تجربة الاستخدام الأساسية الحالية إعلانات داخل التطبيق. قد تحتوي بعض تبعيات المشروع أو بعض المصادر الخارجية على ممارسات مستقلة لا يتحكم بها Anilord؛ لذلك يجب مراجعة سياسة كل خدمة خارجية قبل استخدامها.
+The current core user experience does not include in-app advertisements. Some dependencies or third-party sources may have independent practices that Anilord does not control. Users should review the privacy policy of each external service before using it.
 
-## 7. الأذونات والوظائف المحلية
+## 7. Permissions and Local Features
 
-قد يطلب التطبيق أذونات Android اللازمة لوظائف محددة، مثل الإشعارات، الاهتزاز، تشغيل الخدمات في الخلفية، أو إدارة التنزيلات والملفات وفق إصدار Android. تُستخدم الأذونات لأغراض الوظائف المرتبطة بها، ويمكن للمستخدم مراجعتها أو تعطيلها من إعدادات النظام، مع احتمال توقف الوظيفة التي تعتمد عليها.
+Depending on the Android version and the features used, the application may request permissions needed for notifications, vibration, background operation, downloads, or local file management. Permissions are used for the features associated with them. Users can review or disable permissions in Android settings, although disabling a permission may prevent the related feature from working.
 
-## 8. حماية البيانات
+## 8. Data Security
 
-يتجنب المشروع تضمين مفاتيح التوقيع أو الأسرار وبيانات الاعتماد داخل المستودع. مع ذلك، لا يمكن ضمان أمان مطلق لأي جهاز أو اتصال بالإنترنت. استخدم مصادر موثوقة، وحافظ على تحديث Android، ولا تشارك بيانات تسجيل الدخول الخاصة بالمصادر الخارجية.
+The project is designed to avoid placing signing keys, secrets, or private credentials in the public repository. However, no device or internet connection can be guaranteed to be completely secure. Users should use trusted sources, keep Android updated, and avoid sharing credentials for third-party services.
 
-## 9. الأطفال
+## 9. Children
 
-التطبيق ليس موجهاً لجمع بيانات الأطفال أو إنشاء ملفات شخصية لهم. يتحمل الوالدان أو الأوصياء مسؤولية الإشراف على استخدام التطبيق والمصادر الخارجية، خصوصاً أن تصنيف المحتوى وشروطه قد تختلف من مصدر إلى آخر.
+Anilord is not designed to collect children's personal information or create child profiles. Parents and guardians are responsible for supervising use of the application and third-party sources, especially because content ratings and terms may vary between providers.
 
-## 10. حقوق المستخدم
+## 10. User Choices and Rights
 
-يمكن للمستخدم إدارة البيانات المحلية من إعدادات Android، وحذف بيانات التطبيق أو التنزيلات أو السجل المحلي، وتعطيل الأذونات والتكاملات الاختيارية. قد تحتفظ الخدمات الخارجية ببياناتها وفق سياساتها الخاصة، ويجب تقديم طلبات الحذف أو الوصول إليها إلى الجهة التي جمعتها.
+Users can manage local data through Android settings, delete application data, remove downloads, clear local history, and disable permissions or optional integrations. Third-party services may retain data according to their own policies. Requests to access or delete information held by a third party should be sent to the provider that collected it.
 
-## 11. تحديث السياسة
+## 11. Policy Updates
 
-قد تتغير هذه السياسة عند تغيير وظائف التطبيق أو مصادره أو متطلبات قانونية. ستُنشر النسخة الأحدث في هذا الرابط، ويظهر تاريخ آخر تحديث في أعلى الصفحة.
+This policy may be updated when the application's features, sources, integrations, or legal requirements change. The latest version will be published at this URL, and the most recent update date will appear at the top of the page.
 
-## 12. التواصل
+## 12. Contact
 
-للاستفسارات المتعلقة بتطبيق Anilord أو هذه السياسة، يمكن التواصل عبر البريد:
+For questions about Anilord or this privacy policy, contact:
 
 **Anilordapp@gmail.com**
 
-## English summary
+## Disclaimer
 
-Anilord is an Android client for manga, anime, and novels from third-party sources. The current version does not require a central Anilord account and does not include Anilord authentication screens. The app may store favorites, history, bookmarks, reader settings, source settings, and selected downloads locally on the device. Network requests are sent to the sources selected by the user, which operate under their own privacy policies. Optional tracking or synchronization integrations are controlled by the user and may require provider-specific credentials. Anilord does not host third-party content and cannot guarantee the availability, accuracy, or privacy practices of external sources.
+Anilord is not affiliated with the third-party websites or services accessible through the application. Anilord does not own or host third-party manga, anime, or novel content. Users and distributors are responsible for complying with applicable laws, copyright requirements, and third-party terms of service in their jurisdictions.
