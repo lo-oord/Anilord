@@ -70,21 +70,6 @@
 
 	</com.google.android.material.search.SearchView>
 
-		<ImageView
-			android:id="@+id/profile_button"
-			android:layout_width="52dp"
-			android:layout_height="52dp"
-			android:layout_gravity="top|end"
-			android:layout_marginTop="56dp"
-			android:layout_marginEnd="16dp"
-			android:background="@drawable/bg_profile_avatar"
-			android:contentDescription="@string/profile_avatar"
-			android:elevation="10dp"
-			android:padding="6dp"
-			android:scaleType="centerCrop"
-			android:src="@drawable/ic_person_24"
-			android:visibility="visible" />
-
 	<com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 		android:id="@+id/fab"
 		android:layout_width="wrap_content"
