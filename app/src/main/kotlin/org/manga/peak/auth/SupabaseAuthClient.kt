@@ -10,6 +10,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import java.io.IOException
 import java.net.URLEncoder
+import java.time.Instant
 
 class SupabaseAuthException(message: String) : IOException(message)
 
@@ -19,6 +20,12 @@ data class SupabaseSession(
     val userId: String?,
     val email: String?,
     val emailVerified: Boolean,
+)
+
+data class SupabaseProfile(
+    val username: String?,
+    val birthDate: String?,
+    val avatarUrl: String?,
 )
 
 object SupabaseAuthClient {
@@ -98,6 +105,38 @@ object SupabaseAuthClient {
     suspend fun signOut(accessToken: String?) {
         if (accessToken.isNullOrBlank()) return
         execute(requestBuilder("/auth/v1/logout", accessToken).post(JSONObject().toString().toRequestBody(jsonType)).build())
+    }
+
+    suspend fun getProfile(accessToken: String, userId: String): SupabaseProfile =
+        withContext(Dispatchers.IO) {
+            val encodedId = URLEncoder.encode(userId, Charsets.UTF_8.name())
+            val request = requestBuilder(
+                "/rest/v1/profiles?id=eq.$encodedId&select=username,birth_date,avatar_url",
+                accessToken,
+            ).get().build()
+            http.newCall(request).execute().use { response ->
+                val body = response.body?.string().orEmpty()
+                if (!response.isSuccessful) throw SupabaseAuthException("Profile request failed (${response.code})")
+                val profile = if (body.isBlank()) JSONObject() else org.json.JSONArray(body).optJSONObject(0) ?: JSONObject()
+                SupabaseProfile(
+                    username = profile.optString("username").ifBlank { null },
+                    birthDate = profile.optString("birth_date").ifBlank { null },
+                    avatarUrl = profile.optString("avatar_url").ifBlank { null },
+                )
+            }
+        }
+
+    suspend fun updateProfile(accessToken: String, userId: String, username: String, birthDate: String?) {
+        val encodedId = URLEncoder.encode(userId, Charsets.UTF_8.name())
+        val body = JSONObject().apply {
+            put("username", username)
+            if (birthDate.isNullOrBlank()) put("birth_date", JSONObject.NULL) else put("birth_date", birthDate)
+            put("updated_at", Instant.now().toString())
+        }
+        execute(requestBuilder("/rest/v1/profiles?id=eq.$encodedId", accessToken)
+            .patch(body.toString().toRequestBody(jsonType))
+            .header("Prefer", "return=minimal")
+            .build())
     }
 
     fun googleSignInUrl(): String {

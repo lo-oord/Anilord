@@ -99,8 +99,13 @@
 						<data android:scheme="anilord" android:host="auth" android:path="/callback" />
 					</intent-filter>
 				</activity>
-			<activity
-				android:name="org.manga.peak.main.ui.MainActivity"
+							<activity
+					android:name="org.manga.peak.auth.ProfileActivity"
+					android:exported="false"
+					android:windowSoftInputMode="adjustResize" />
+				<activity
+					android:name="org.manga.peak.main.ui.MainActivity"
+
 				android:exported="true">
 				<meta-data
 					android:name="android.app.default_searchable"

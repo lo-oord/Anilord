@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="232dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_side_menu"
+    android:elevation="14dp"
+    android:orientation="vertical"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
+
+    <TextView
+        android:id="@+id/menu_profile"
+        style="@style/AnilordPopupMenuItem"
+        android:drawableStart="@drawable/ic_person_24"
+        android:text="@string/profile_title" />
+
+    <TextView
+        android:id="@+id/menu_incognito"
+        style="@style/AnilordPopupMenuItem"
+        android:drawableStart="@drawable/ic_incognito"
+        android:text="@string/incognito_mode" />
+
+    <TextView
+        android:id="@+id/menu_settings"
+        style="@style/AnilordPopupMenuItem"
+        android:drawableStart="@drawable/ic_settings"
+        android:text="@string/settings" />
+</LinearLayout>

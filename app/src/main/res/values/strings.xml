@@ -1202,6 +1202,14 @@
 	<string name="auth_reset_sent">Password reset email sent to %s.</string>
 	<string name="auth_verification_resent">Verification email resent.</string>
 	<string name="auth_google_unavailable">Unable to open Google sign-in</string>
+	<string name="profile_title">Your profile</string>
+	<string name="profile_username">Username</string>
+	<string name="profile_birth_date">Date of birth</string>
+	<string name="profile_save">Save changes</string>
+	<string name="profile_logout">Sign out</string>
+	<string name="profile_saved">Profile updated</string>
+	<string name="profile_load_failed">Could not load your profile</string>
+	<string name="profile_save_failed">Could not update your profile</string>
 	<string name="auth_required_field">This field is required</string>
 	<string name="auth_password_mismatch">Passwords do not match</string>
 	<string name="auth_terms_required">Accept the Terms of Service and Privacy Policy</string>

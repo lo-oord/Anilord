@@ -21,6 +21,8 @@ object AuthSession {
 
     fun email(context: Context): String? = prefs(context).getString(KEY_EMAIL, null)
 
+    fun userId(context: Context): String? = prefs(context).getString(KEY_USER_ID, null)
+
     fun saveSession(context: Context, session: SupabaseSession) {
         prefs(context).edit()
             .putString(KEY_ACCESS, session.accessToken)

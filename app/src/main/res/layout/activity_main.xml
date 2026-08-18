@@ -68,6 +68,21 @@
 
 	</com.google.android.material.search.SearchView>
 
+	<TextView
+		android:id="@+id/profile_button"
+		android:layout_width="52dp"
+		android:layout_height="52dp"
+		android:layout_gravity="top|end"
+		android:layout_marginTop="56dp"
+		android:layout_marginEnd="16dp"
+		android:background="@drawable/bg_profile_avatar"
+		android:elevation="10dp"
+		android:gravity="center"
+		android:text="A"
+		android:textColor="@color/anilord_text_primary"
+		android:textSize="20sp"
+		android:visibility="visible" />
+
 	<com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 		android:id="@+id/fab"
 		android:layout_width="wrap_content"

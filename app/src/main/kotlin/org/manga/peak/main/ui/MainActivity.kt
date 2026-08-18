@@ -9,6 +9,11 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.graphics.drawable.ColorDrawable
+import android.widget.PopupWindow
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.view.ActionMode
@@ -135,6 +140,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 		setSupportActionBar(viewBinding.searchBar)
 
 		viewBinding.fab?.setOnClickListener(this)
+		viewBinding.profileButton?.setOnClickListener { showProfileMenu(it) }
 		viewBinding.navRail?.headerView?.findViewById<View>(R.id.railFab)?.setOnClickListener(this)
 		fadingAppbarMediator =
 			FadingAppbarMediator(viewBinding.appbar, viewBinding.layoutSearch ?: viewBinding.searchBar)
@@ -201,6 +207,31 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 				}
 			}
 		}
+	}
+
+	private fun showProfileMenu(anchor: View) {
+		val menuView = LayoutInflater.from(this).inflate(R.layout.popup_main_menu, null)
+		val popup = PopupWindow(
+			menuView,
+			resources.getDimensionPixelSize(R.dimen.profile_menu_width),
+			android.view.ViewGroup.LayoutParams.WRAP_CONTENT,
+			true,
+		)
+		popup.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
+		popup.isOutsideTouchable = true
+		menuView.findViewById<TextView>(R.id.menu_profile).setOnClickListener {
+			popup.dismiss()
+			startActivity(Intent(this, org.manga.peak.auth.ProfileActivity::class.java))
+		}
+		menuView.findViewById<TextView>(R.id.menu_incognito).setOnClickListener {
+			viewModel.setIncognitoMode(!viewModel.isIncognitoModeEnabled.value)
+			popup.dismiss()
+		}
+		menuView.findViewById<TextView>(R.id.menu_settings).setOnClickListener {
+			popup.dismiss()
+			router.openSettings()
+		}
+		popup.showAsDropDown(anchor, -resources.getDimensionPixelSize(R.dimen.profile_menu_width) + anchor.width, 8, Gravity.END)
 	}
 
 	override fun onResume() {

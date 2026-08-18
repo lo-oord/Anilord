@@ -2,6 +2,7 @@
 <resources>
 
 	<!-- Common dimensions -->
+	<dimen name="profile_menu_width">232dp</dimen>
 	<dimen name="margin_normal">16dp</dimen>
 	<dimen name="margin_small">8dp</dimen>
 	<!-- List spacing -->
