@@ -13,44 +13,34 @@ import org.manga.peak.settings.SettingsActivity
 
 class AboutSettingsFragment : BasePreferenceFragment(R.string.about) {
 
-	override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-		addPreferencesFromResource(R.xml.pref_about)
-		findPreference<Preference>(AppSettings.KEY_APP_VERSION)?.run {
-			title = getString(R.string.about_display_version)
-		}
-	}
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        addPreferencesFromResource(R.xml.pref_about)
+        findPreference<Preference>(AppSettings.KEY_APP_VERSION)?.run {
+            title = getString(R.string.about_display_version)
+        }
+    }
 
-	override fun onPreferenceTreeClick(preference: Preference): Boolean {
-		return when (preference.key) {
-			AppSettings.KEY_APP_VERSION -> {
-				if (!router.openPlayStore(preference.title)) {
-					Snackbar.make(listView, R.string.operation_not_supported, Snackbar.LENGTH_SHORT).show()
-				}
-				true
-			}
+    override fun onPreferenceTreeClick(preference: Preference): Boolean {
+        return when (preference.key) {
+            AppSettings.KEY_APP_VERSION -> {
+                if (!router.openPlayStore(preference.title)) {
+                    Snackbar.make(listView, R.string.operation_not_supported, Snackbar.LENGTH_SHORT).show()
+                }
+                true
+            }
+            KEY_PRIVACY -> {
+                (activity as? SettingsActivity)?.openFragment(
+                    PrivacyPolicyFragment::class.java,
+                    null,
+                    false,
+                )
+                true
+            }
+            else -> super.onPreferenceTreeClick(preference)
+        }
+    }
 
-				KEY_PRIVACY -> {
-					(activity as? SettingsActivity)?.openFragment(
-						PrivacyPolicyFragment::class.java,
-						null,
-						false,
-					)
-					true
-				}
-
-				else -> super.onPreferenceTreeClick(preference)
-		}
-	}
-				}
-				AuthSession.clear(context)
-				startActivity(Intent(context, StartupActivity::class.java).apply {
-					flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-				})
-				activity?.finish()
-			}
-		}
-
-		private companion object {
-			const val KEY_PRIVACY = "about_privacy"
-		}
+    private companion object {
+        const val KEY_PRIVACY = "about_privacy"
+    }
 }
