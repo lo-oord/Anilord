@@ -4,12 +4,12 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:background="?selectableItemBackground"
+	android:background="@drawable/bg_preference_row"
 	android:clipToPadding="false"
 	android:gravity="center_vertical"
-	android:minHeight="?android:attr/listPreferredItemHeight"
+	android:minHeight="72dp"
 	android:orientation="vertical"
-	android:padding="4dp"
+	android:padding="12dp"
 	android:paddingStart="?android:attr/listPreferredItemPaddingStart"
 	android:paddingEnd="?android:attr/listPreferredItemPaddingEnd">
 

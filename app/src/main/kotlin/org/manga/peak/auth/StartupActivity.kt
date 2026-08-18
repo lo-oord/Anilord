@@ -1,5 +1,6 @@
 package org.manga.peak.auth
 
+import android.content.Intent
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.os.Bundle
