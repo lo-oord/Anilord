@@ -12,6 +12,7 @@ import android.view.ViewGroup.MarginLayoutParams
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.graphics.drawable.ColorDrawable
+import android.widget.ImageView
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
@@ -56,6 +57,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.manga.peak.R
+import org.manga.peak.auth.AuthSession
 import org.manga.peak.backups.ui.periodical.PeriodicalBackupService
 import org.manga.peak.core.exceptions.resolve.SnackbarErrorObserver
 import org.manga.peak.core.nav.router
@@ -140,7 +142,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 		setSupportActionBar(viewBinding.searchBar)
 
 		viewBinding.fab?.setOnClickListener(this)
-		viewBinding.profileButton?.setOnClickListener { showProfileMenu(it) }
+					viewBinding.profileButton?.let { button ->
+				restoreProfileAvatar(button)
+				button.setOnClickListener { showProfileMenu(it) }
+			}
+
 		viewBinding.navRail?.headerView?.findViewById<View>(R.id.railFab)?.setOnClickListener(this)
 		fadingAppbarMediator =
 			FadingAppbarMediator(viewBinding.appbar, viewBinding.layoutSearch ?: viewBinding.searchBar)
@@ -236,7 +242,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 
 	override fun onResume() {
 		super.onResume()
+		viewBinding.profileButton?.let(::restoreProfileAvatar)
 		inAppUpdateCoordinator.resume(this, inAppUpdateLauncher)
+	}
+
+	private fun restoreProfileAvatar(button: View) {
+		val image = button as? ImageView ?: return
+		val uri = AuthSession.avatarUri(this)?.let { runCatching { it.toUri() }.getOrNull() }
+		if (uri != null) {
+			runCatching { image.setImageURI(uri) }
+				.onFailure { image.setImageResource(R.drawable.ic_person_24) }
+		} else {
+			image.setImageResource(R.drawable.ic_person_24)
+		}
 	}
 
 	override fun onDestroy() {

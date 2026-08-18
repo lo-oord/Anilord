@@ -8,6 +8,7 @@ object AuthSession {
     private const val KEY_REFRESH = "refresh_token"
     private const val KEY_USER_ID = "user_id"
     private const val KEY_EMAIL = "email"
+    private const val KEY_AVATAR_URI = "avatar_uri"
 
     private fun prefs(context: Context) =
         context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
@@ -22,6 +23,12 @@ object AuthSession {
     fun email(context: Context): String? = prefs(context).getString(KEY_EMAIL, null)
 
     fun userId(context: Context): String? = prefs(context).getString(KEY_USER_ID, null)
+
+    fun avatarUri(context: Context): String? = prefs(context).getString(KEY_AVATAR_URI, null)
+
+    fun saveAvatarUri(context: Context, uri: String?) {
+        prefs(context).edit().putString(KEY_AVATAR_URI, uri).apply()
+    }
 
     fun saveSession(context: Context, session: SupabaseSession) {
         prefs(context).edit()

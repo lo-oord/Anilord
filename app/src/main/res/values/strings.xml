@@ -180,6 +180,10 @@
     <string name="about">About</string>
     <string name="app_version">Version %s</string>
     <string name="about_display_version">Version 1</string>
+    <string name="profile_avatar">Profile picture</string>
+    <string name="profile_change_avatar">Change profile picture</string>
+    <string name="profile_choose_image">Choose an image</string>
+    <string name="profile_image_not_available">The selected image is not available</string>
 
     <string name="check_for_updates">Check for updates</string>
     <string name="no_update_available">No updates available</string>

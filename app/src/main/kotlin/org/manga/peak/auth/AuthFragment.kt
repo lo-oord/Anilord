@@ -69,8 +69,6 @@ class AuthFragment : Fragment() {
     private fun render() {
         binding.buttonBack.isVisible = screen != AuthScreen.LOGIN
         binding.buttonBack.setOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
-        binding.buttonGoogle.setOnClickListener { openGoogleSignIn() }
-        binding.buttonGuest.setOnClickListener { continueAsGuest() }
         binding.textLinkPrimary.setOnClickListener { if (screen == AuthScreen.LOGIN) authActivity.show(AuthScreen.FORGOT_PASSWORD) }
         binding.textLinkSecondary.setOnClickListener { if (screen == AuthScreen.EMAIL_VERIFICATION) resendVerification() }
         binding.textBottomAction.setOnClickListener {
@@ -81,7 +79,18 @@ class AuthFragment : Fragment() {
                 AuthScreen.SPLASH -> Unit
             }
         }
-        binding.buttonPrimary.setOnClickListener { onPrimaryAction() }
+        binding.buttonPrimary.setOnClickListener {
+            animatePress(binding.buttonPrimary)
+            onPrimaryAction()
+        }
+        binding.buttonGoogle.setOnClickListener {
+            animatePress(binding.buttonGoogle)
+            openGoogleSignIn()
+        }
+        binding.buttonGuest.setOnClickListener {
+            animatePress(binding.buttonGuest)
+            continueAsGuest()
+        }
 
         binding.inputUsername.isVisible = screen == AuthScreen.CREATE_ACCOUNT
         binding.inputConfirmPassword.isVisible = screen == AuthScreen.CREATE_ACCOUNT || screen == AuthScreen.RESET_PASSWORD
@@ -187,15 +196,20 @@ class AuthFragment : Fragment() {
         val password = binding.editPassword.text?.toString().orEmpty()
         val confirm = binding.editConfirmPassword.text?.toString().orEmpty()
         var valid = username.length >= 2
-        if (!valid) binding.inputUsername.error = getString(R.string.auth_required_field)
+        if (!valid) {
+            binding.inputUsername.error = getString(R.string.auth_required_field)
+            shake(binding.inputUsername)
+        }
         valid = validateEmail(email) && valid
         valid = validatePassword(password) && valid
         if (password != confirm) {
             binding.inputConfirmPassword.error = getString(R.string.auth_password_mismatch)
+            shake(binding.inputConfirmPassword)
             valid = false
         }
         if (!binding.checkboxTerms.isChecked) {
             binding.checkboxTerms.error = getString(R.string.auth_terms_required)
+            shake(binding.checkboxTerms)
             valid = false
         }
         if (!valid) return
@@ -277,6 +291,7 @@ class AuthFragment : Fragment() {
     private fun validateEmail(email: String): Boolean {
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             binding.inputEmail.error = getString(R.string.auth_invalid_email)
+            shake(binding.inputEmail)
             return false
         }
         binding.inputEmail.error = null
@@ -286,10 +301,29 @@ class AuthFragment : Fragment() {
     private fun validatePassword(password: String): Boolean {
         if (password.length < 8) {
             binding.inputPassword.error = getString(R.string.auth_password_too_short)
+            shake(binding.inputPassword)
             return false
         }
         binding.inputPassword.error = null
         return true
+    }
+
+    private fun animatePress(view: View) {
+        view.animate().cancel()
+        view.animate().scaleX(0.97f).scaleY(0.97f).setDuration(70L).withEndAction {
+            view.animate().scaleX(1f).scaleY(1f).setDuration(100L).start()
+        }.start()
+    }
+
+    private fun shake(view: View) {
+        view.animate().cancel()
+        view.animate().translationX(10f).setDuration(45L).withEndAction {
+            view.animate().translationX(-10f).setDuration(45L).withEndAction {
+                view.animate().translationX(6f).setDuration(40L).withEndAction {
+                    view.animate().translationX(0f).setDuration(40L).start()
+                }.start()
+            }.start()
+        }.start()
     }
 
     private fun withLoading(block: suspend () -> Unit) {

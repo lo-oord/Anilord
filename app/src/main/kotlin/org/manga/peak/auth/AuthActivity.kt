@@ -12,7 +12,12 @@ class AuthActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
         if (savedInstanceState == null) {
-            if (!handleAuthCallback(intent)) show(AuthScreen.LOGIN, addToBackStack = false)
+            if (handleAuthCallback(intent)) return
+            if (AuthSession.hasSession(this)) {
+                finishAuthentication()
+            } else {
+                show(AuthScreen.LOGIN, addToBackStack = false)
+            }
         } else {
             handleAuthCallback(intent)
         }

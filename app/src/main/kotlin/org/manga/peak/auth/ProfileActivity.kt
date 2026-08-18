@@ -2,8 +2,11 @@ package org.manga.peak.auth
 
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputEditText
@@ -14,7 +17,20 @@ import java.util.Calendar
 class ProfileActivity : AppCompatActivity() {
     private lateinit var usernameInput: TextInputEditText
     private lateinit var birthDateInput: TextInputEditText
+    private lateinit var avatarImage: ImageView
     private var loading = false
+
+    private val pickAvatar = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        if (uri == null) return@registerForActivityResult
+        runCatching {
+            contentResolver.takePersistableUriPermission(
+                uri,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION,
+            )
+        }
+        AuthSession.saveAvatarUri(this, uri.toString())
+        avatarImage.setImageURI(uri)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,14 +38,28 @@ class ProfileActivity : AppCompatActivity() {
 
         usernameInput = findViewById(R.id.edit_profile_username)
         birthDateInput = findViewById(R.id.edit_profile_birth_date)
+        avatarImage = findViewById(R.id.image_profile_avatar)
         findViewById<android.widget.TextView>(R.id.text_profile_email).text =
             AuthSession.email(this).orEmpty()
 
+        restoreAvatar()
         findViewById<android.view.View>(R.id.button_profile_back).setOnClickListener { finish() }
+        findViewById<android.view.View>(R.id.button_profile_avatar_edit).setOnClickListener {
+            pickAvatar.launch("image/*")
+        }
         birthDateInput.setOnClickListener { showDatePicker() }
         findViewById<android.view.View>(R.id.button_profile_save).setOnClickListener { saveProfile() }
         findViewById<android.view.View>(R.id.button_profile_logout).setOnClickListener { signOut() }
         loadProfile()
+    }
+
+    private fun restoreAvatar() {
+        val uri = AuthSession.avatarUri(this)?.let(Uri::parse) ?: return
+        runCatching { avatarImage.setImageURI(uri) }
+            .onFailure {
+                AuthSession.saveAvatarUri(this, null)
+                Toast.makeText(this, R.string.profile_image_not_available, Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun loadProfile() {
@@ -42,7 +72,9 @@ class ProfileActivity : AppCompatActivity() {
                     usernameInput.setText(profile.username.orEmpty())
                     birthDateInput.setText(profile.birthDate.orEmpty())
                 }
-                .onFailure { Toast.makeText(this@ProfileActivity, it.message ?: getString(R.string.profile_load_failed), Toast.LENGTH_SHORT).show() }
+                .onFailure {
+                    Toast.makeText(this@ProfileActivity, it.message ?: getString(R.string.profile_load_failed), Toast.LENGTH_SHORT).show()
+                }
         }
     }
 

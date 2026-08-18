@@ -45,17 +45,35 @@
                 android:layout_height="48dp" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/text_profile_avatar"
-            android:layout_width="88dp"
-            android:layout_height="88dp"
+        <FrameLayout
+            android:id="@+id/profile_avatar_container"
+            android:layout_width="112dp"
+            android:layout_height="112dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/bg_profile_avatar"
-            android:gravity="center"
-            android:text="A"
-            android:textColor="@color/anilord_text_primary"
-            android:textSize="34sp" />
+            android:layout_marginTop="26dp">
+
+            <ImageView
+                android:id="@+id/image_profile_avatar"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_profile_avatar"
+                android:contentDescription="@string/profile_avatar"
+                android:padding="4dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_person_24" />
+
+            <ImageButton
+                android:id="@+id/button_profile_avatar_edit"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="bottom|end"
+                android:background="@drawable/bg_profile_avatar_edit"
+                android:contentDescription="@string/profile_change_avatar"
+                android:padding="8dp"
+                android:src="@drawable/ic_edit"
+                android:tint="@color/anilord_text_primary" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/text_profile_email"

@@ -78,20 +78,15 @@
 			android:name="com.google.firebase.messaging.default_notification_channel_id"
 			android:value="firebase_messages" />
 
-			<activity
-				android:name="org.manga.peak.auth.StartupActivity"
-				android:exported="true"
-				android:noHistory="true">
-				<intent-filter>
-					<action android:name="android.intent.action.MAIN" />
-					<category android:name="android.intent.category.LAUNCHER" />
-				</intent-filter>
-			</activity>
 				<activity
 					android:name="org.manga.peak.auth.AuthActivity"
 					android:exported="true"
 					android:launchMode="singleTop"
 					android:windowSoftInputMode="adjustResize">
+					<intent-filter>
+						<action android:name="android.intent.action.MAIN" />
+						<category android:name="android.intent.category.LAUNCHER" />
+					</intent-filter>
 					<intent-filter>
 						<action android:name="android.intent.action.VIEW" />
 						<category android:name="android.intent.category.DEFAULT" />
