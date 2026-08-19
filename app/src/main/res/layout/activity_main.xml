@@ -5,7 +5,7 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:background="@color/background_amoled"
+	android:background="@color/anilord_surface"
 	tools:context=".main.ui.MainActivity">
 
 	<androidx.fragment.app.FragmentContainerView
@@ -40,13 +40,13 @@
 			android:id="@+id/search_bar"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginHorizontal="16dp"
-			android:layout_marginTop="8dp"
-			android:layout_marginBottom="12dp"
+			android:layout_marginHorizontal="20dp"
+			android:layout_marginTop="12dp"
+			android:layout_marginBottom="16dp"
 			android:hint="@string/search_manga"
-			android:backgroundTint="@color/anilord_surface"
+			android:backgroundTint="@color/anilord_surface_container"
 			android:textColorHint="@color/anilord_text_secondary"
-			android:elevation="4dp"
+			android:elevation="0dp"
 			app:forceDefaultNavigationOnClickListener="true"
 			app:layout_scrollFlags="scroll|enterAlways|snap" />
 
@@ -91,14 +91,14 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_gravity="bottom"
-			android:layout_marginStart="16dp"
-			android:layout_marginEnd="16dp"
-			android:layout_marginBottom="16dp"
+			android:layout_marginStart="20dp"
+			android:layout_marginEnd="20dp"
+			android:layout_marginBottom="20dp"
 			android:background="@drawable/bg_floating_bottom_nav"
 			android:clipToPadding="false"
 			android:elevation="12dp"
 			android:fitsSystemWindows="false"
-			android:paddingTop="4dp"
-			android:paddingBottom="4dp" />
+			android:paddingTop="6dp"
+			android:paddingBottom="6dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

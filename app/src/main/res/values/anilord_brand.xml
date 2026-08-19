@@ -5,5 +5,11 @@
     <color name="anilord_accent_soft">#A8D9FF</color>
     <color name="anilord_ink">#FFFFFF</color>
     <color name="anilord_on_surface">#D6E0EA</color>
-    <color name="anilord_surface">#000000</color>
+    <color name="anilord_surface">#070A11</color>
+    <color name="anilord_surface_container_lowest">#080B12</color>
+    <color name="anilord_surface_container_low">#0B1019</color>
+    <color name="anilord_surface_container">#101724</color>
+    <color name="anilord_surface_container_high">#162132</color>
+    <color name="anilord_surface_container_highest">#1B2A3E</color>
+    <color name="anilord_outline_subtle">#263750</color>
 </resources>
