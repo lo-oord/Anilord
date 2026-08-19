@@ -95,6 +95,7 @@ import anilord.app.scrobbling.common.domain.model.ScrobblerService
 import anilord.app.scrobbling.common.ui.config.ScrobblerConfigActivity
 import anilord.app.scrobbling.common.ui.selector.ScrobblingSelectorSheet
 import anilord.app.search.domain.SearchKind
+import anilord.app.search.domain.SearchContentScope
 import anilord.app.search.ui.MangaListActivity
 import anilord.app.search.ui.multi.SearchActivity
 import anilord.app.settings.SettingsActivity
@@ -143,13 +144,18 @@ class AppRouter private constructor(
 
     fun openList(tag: MangaTag) = openList(tag.source, MangaListFilter(tags = setOf(tag)), null)
 
-    fun openSearch(query: String, kind: SearchKind = SearchKind.SIMPLE) {
-        startActivity(
-            Intent(contextOrNull() ?: return, SearchActivity::class.java)
-                .putExtra(KEY_QUERY, query)
-                .putExtra(KEY_KIND, kind),
-        )
-    }
+	fun openSearch(
+		query: String,
+		kind: SearchKind = SearchKind.SIMPLE,
+		contentScope: SearchContentScope = SearchContentScope.ALL,
+	) {
+		startActivity(
+			Intent(contextOrNull() ?: return, SearchActivity::class.java)
+				.putExtra(KEY_QUERY, query)
+				.putExtra(KEY_KIND, kind)
+				.putExtra(KEY_CONTENT_SCOPE, contentScope),
+		)
+	}
 
     fun openSearch(source: MangaSource, query: String) = openList(source, MangaListFilter(query = query), null)
 
@@ -861,6 +867,7 @@ class AppRouter private constructor(
         const val KEY_PAGES = "pages"
         const val KEY_PREVIEW = "preview"
         const val KEY_QUERY = "query"
+        const val KEY_CONTENT_SCOPE = "content_scope"
         const val KEY_READER_MODE = "reader_mode"
         const val KEY_SORT_ORDER = "sort_order"
         const val KEY_SOURCE = "source"

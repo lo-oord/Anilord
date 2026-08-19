@@ -15,6 +15,7 @@ import anilord.app.R
 import anilord.app.core.db.MangaDatabase
 import anilord.app.core.db.TABLE_SOURCES
 import anilord.app.core.model.SourceContentType
+import anilord.app.core.model.filterVisibleSources
 import anilord.app.core.model.getLocaleCode
 import anilord.app.core.model.sourceContentType
 import anilord.app.core.prefs.AppSettings
@@ -42,7 +43,7 @@ class SourcesCatalogViewModel @Inject constructor(
 ) : BaseViewModel() {
 
 	val onActionDone = MutableEventFlow<ReversibleAction>()
-	val locales: Set<String?> = repository.allMangaSources.mapTo(HashSet<String?>()) { it.getLocaleCode() }.also {
+	val locales: Set<String?> = repository.allMangaSources.filterVisibleSources().mapTo(HashSet<String?>()) { it.getLocaleCode() }.also {
 		it.add(null)
 	}
 
@@ -143,7 +144,8 @@ class SourcesCatalogViewModel @Inject constructor(
 			query = query,
 			locale = filter.locale,
 			sortOrder = SourcesSortOrder.ALPHABETIC,
-		)
+		).filterVisibleSources()
+
 		return if (sources.isEmpty()) {
 			listOf(
 				if (query == null) {
@@ -172,7 +174,7 @@ class SourcesCatalogViewModel @Inject constructor(
 
 	@WorkerThread
 	private fun getContentTypes(isNsfwDisabled: Boolean): List<SourceContentType> {
-		val result = repository.allMangaSources.mapSortedByCount { it.sourceContentType }
+		val result = repository.allMangaSources.filterVisibleSources().mapSortedByCount { it.sourceContentType }
 		return if (isNsfwDisabled) {
 			result.filterNot { it == SourceContentType.HENTAI }
 		} else {

@@ -4,6 +4,30 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 
 	<item
+		android:id="@+id/action_search_content_scope"
+		android:icon="@drawable/ic_filter_menu"
+		android:orderInCategory="0"
+		android:title="@string/search_content_type"
+		app:showAsAction="ifRoom">
+
+		<menu>
+			<group
+				android:id="@+id/group_search_content_scope"
+				android:checkableBehavior="single">
+				<item
+					android:id="@+id/action_scope_all"
+					android:title="@string/content_type_all" />
+				<item
+					android:id="@+id/action_scope_anime"
+					android:title="@string/content_type_anime" />
+				<item
+					android:id="@+id/action_scope_manga"
+					android:title="@string/content_type_manga" />
+			</group>
+		</menu>
+	</item>
+
+	<item
 		android:id="@+id/action_search_kind"
 		android:icon="@drawable/ic_filter_menu"
 		android:orderInCategory="0"

@@ -22,6 +22,7 @@ import kotlinx.coroutines.sync.withPermit
 import anilord.app.R
 import anilord.app.core.model.LocalMangaSource
 import anilord.app.core.model.UnknownMangaSource
+import anilord.app.core.model.filterVisibleSources
 import anilord.app.core.model.isNsfw
 import anilord.app.core.nav.AppRouter
 import anilord.app.core.prefs.ListMode
@@ -45,6 +46,10 @@ import org.koitharu.kotatsu.parsers.model.MangaParserSource
 import org.koitharu.kotatsu.parsers.model.MangaSource
 import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
 import anilord.app.search.domain.SearchKind
+import anilord.app.search.domain.SearchContentScope
+import anilord.app.search.domain.matches
+import anilord.app.core.model.sourceContentType
+import anilord.app.core.model.isVisibleInCurrentUi
 import anilord.app.search.domain.SearchV2Helper
 import java.util.Locale
 import javax.inject.Inject
@@ -65,6 +70,8 @@ class SearchViewModel @Inject constructor(
 
 	val query = savedStateHandle.get<String>(AppRouter.KEY_QUERY).orEmpty()
 	val kind = savedStateHandle.get<SearchKind>(AppRouter.KEY_KIND) ?: SearchKind.SIMPLE
+	val contentScope = savedStateHandle.get<SearchContentScope>(AppRouter.KEY_CONTENT_SCOPE)
+		?: SearchContentScope.ALL
 
 	private var includeDisabledSources = MutableStateFlow(false)
 	private var pinnedOnly = MutableStateFlow(false)
@@ -146,12 +153,13 @@ class SearchViewModel @Inject constructor(
 		searchJob = launchLoadingJob(Dispatchers.Default) {
 			includeDisabledSources.value = true
 			prevJob?.join()
-			val sources = if (pinnedOnly.value) {
-				emptyList()
-			} else {
-				sourcesRepository.getDisabledSources()
-					.sortedByDescending { it.priority() }
-			}
+				val sources = if (pinnedOnly.value) {
+					emptyList()
+				} else {
+					sourcesRepository.getDisabledSources()
+						.filterByContentScope()
+						.sortedByDescending { it.priority() }
+				}
 			val semaphore = Semaphore(MAX_PARALLELISM)
 			sources.map { source ->
 				launch {
@@ -170,7 +178,7 @@ class SearchViewModel @Inject constructor(
 			appendResult(searchHistory())
 			appendResult(searchFavorites())
 			appendResult(searchLocal())
-			val sources = getPresetSourcesOrDefault()
+				val sources = getPresetSourcesOrDefault()
 			val semaphore = Semaphore(MAX_PARALLELISM)
 			sources.map { source ->
 				launch {
@@ -201,8 +209,8 @@ class SearchViewModel @Inject constructor(
 					source = source,
 					list = list,
 					error = null,
-					listFilter = result.listFilter,
-					sortOrder = result.sortOrder,
+					listFilter = result?.listFilter,
+					sortOrder = result?.sortOrder,
 				)
 			}
 		},
@@ -217,14 +225,15 @@ class SearchViewModel @Inject constructor(
 	)
 
 	private suspend fun searchHistory(): SearchResultsListModel? = runCatchingCancellable {
-		historyRepository.search(query, kind, Int.MAX_VALUE)
-	}.fold(
-		onSuccess = { result ->
-			if (result.isNotEmpty()) {
+			historyRepository.search(query, kind, Int.MAX_VALUE)
+		}.fold(
+			onSuccess = { result ->
+				val filteredResult = result.filterByContentScope()
+				if (filteredResult.isNotEmpty()) {
 				SearchResultsListModel(
 					titleResId = R.string.history,
 					source = UnknownMangaSource,
-					list = mangaListMapper.toListModelList(manga = result, mode = ListMode.GRID),
+					list = mangaListMapper.toListModelList(manga = filteredResult, mode = ListMode.GRID),
 					error = null,
 					listFilter = null,
 					sortOrder = null,
@@ -246,16 +255,17 @@ class SearchViewModel @Inject constructor(
 	)
 
 	private suspend fun searchFavorites(): SearchResultsListModel? = runCatchingCancellable {
-		favouritesRepository.search(query, kind, Int.MAX_VALUE)
-	}.fold(
-		onSuccess = { result ->
-			if (result.isNotEmpty()) {
+			favouritesRepository.search(query, kind, Int.MAX_VALUE)
+		}.fold(
+			onSuccess = { result ->
+				val filteredResult = result.filterByContentScope()
+				if (filteredResult.isNotEmpty()) {
 				SearchResultsListModel(
 					titleResId = R.string.favourites,
 					source = UnknownMangaSource,
 					list = mangaListMapper.toListModelList(
-						manga = result,
-						mode = ListMode.GRID,
+manga = filteredResult,
+							mode = ListMode.GRID,
 						flags = MangaListMapper.NO_FAVORITE,
 					),
 					error = null,
@@ -280,20 +290,21 @@ class SearchViewModel @Inject constructor(
 
 	private suspend fun searchLocal(): SearchResultsListModel? = runCatchingCancellable {
 		searchHelperFactory.create(LocalMangaSource).invoke(query, kind)
-	}.fold(
-		onSuccess = { result ->
-			if (!result?.manga.isNullOrEmpty()) {
+		}.fold(
+			onSuccess = { result ->
+				val filteredResult = result?.manga.orEmpty().filterByContentScope()
+				if (filteredResult.isNotEmpty()) {
 				SearchResultsListModel(
 					titleResId = 0,
 					source = LocalMangaSource,
 					list = mangaListMapper.toListModelList(
-						manga = result.manga,
-						mode = ListMode.GRID,
+						manga = filteredResult,
+							mode = ListMode.GRID,
 						flags = MangaListMapper.NO_SAVED,
 					),
 					error = null,
-					listFilter = result.listFilter,
-					sortOrder = result.sortOrder,
+					listFilter = result?.listFilter,
+					sortOrder = result?.sortOrder,
 				)
 			} else {
 				null
@@ -325,6 +336,13 @@ class SearchViewModel @Inject constructor(
 		return res
 	}
 
+	private fun List<MangaSource>.filterByContentScope(): List<MangaSource> =
+		filter { it.isVisibleInCurrentUi() && contentScope.matches(it.sourceContentType) }
+
+	private fun List<Manga>.filterByContentScope(): List<Manga> =
+		filter { (it.source.isVisibleInCurrentUi() && contentScope.matches(it.source.sourceContentType)) ||
+			(contentScope == SearchContentScope.MANGA && it.source == LocalMangaSource) }
+
 	private suspend fun getPresetSourcesOrDefault(): List<MangaSource> {
 		val presetId = settings.activeSourcePresetId
 		if (presetId != 0L) {
@@ -332,15 +350,19 @@ class SearchViewModel @Inject constructor(
 			if (preset != null) {
 				if (preset.sources.isEmpty()) return emptyList()
 				val skipNsfw = settings.isNsfwContentDisabled
-				return sourcesRepository.allMangaSources.filter { source ->
-					source.name in preset.sources && (!skipNsfw || !source.isNsfw())
+									return sourcesRepository.allMangaSources
+						.filterVisibleSources()
+						.filterByContentScope()
+						.filter { source ->
+							source.name in preset.sources && (!skipNsfw || !source.isNsfw())
+						}
 				}
 			}
+			return if (pinnedOnly.value) {
+				sourcesRepository.getPinnedSources().filterVisibleSources().filterByContentScope()
+			} else {
+				sourcesRepository.getEnabledSources().filterVisibleSources().filterByContentScope()
+			}
 		}
-		return if (pinnedOnly.value) {
-			sourcesRepository.getPinnedSources().toList()
-		} else {
-			sourcesRepository.getEnabledSources()
-		}
-	}
+
 }

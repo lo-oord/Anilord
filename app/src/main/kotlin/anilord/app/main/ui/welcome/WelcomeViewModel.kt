@@ -8,6 +8,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import anilord.app.core.LocalizedAppContext
 import anilord.app.core.model.SourceContentType
+import anilord.app.core.model.filterVisibleSources
 import anilord.app.core.model.getLocaleCode
 import anilord.app.core.model.sourceContentType
 import anilord.app.core.ui.BaseViewModel
@@ -28,7 +29,7 @@ class WelcomeViewModel @Inject constructor(
 	@LocalizedAppContext context: Context,
 ) : BaseViewModel() {
 
-	private val allSources = repository.allMangaSources
+	private val allSources = repository.allMangaSources.filterVisibleSources()
 	private val localesGroups by lazy { allSources.groupBy { it.getLocaleCode().orEmpty().toLocale() } }
 
 	private var updateJob: Job

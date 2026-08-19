@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.plus
+import anilord.app.core.model.filterVisibleSources
 import anilord.app.core.prefs.AppSettings
 import anilord.app.core.prefs.SearchSuggestionType
 import anilord.app.core.prefs.observeAsFlow
@@ -27,6 +28,10 @@ import org.koitharu.kotatsu.parsers.model.MangaTag
 import org.koitharu.kotatsu.parsers.util.mapToSet
 import org.koitharu.kotatsu.parsers.util.runCatchingCancellable
 import anilord.app.search.domain.MangaSearchRepository
+import anilord.app.search.domain.SearchContentScope
+import anilord.app.search.domain.matches
+import anilord.app.core.model.sourceContentType
+import anilord.app.core.model.isVisibleInCurrentUi
 import anilord.app.search.ui.suggestion.model.SearchSuggestionItem
 import javax.inject.Inject
 
@@ -48,6 +53,13 @@ class SearchSuggestionViewModel @Inject constructor(
 
 	private val query = MutableStateFlow("")
 	private val invalidationTrigger = MutableStateFlow(0)
+	private val contentScope = MutableStateFlow(SearchContentScope.ALL)
+	val currentContentScope: SearchContentScope
+		get() = contentScope.value
+
+	fun setContentScope(scope: SearchContentScope) {
+		contentScope.value = scope
+	}
 
 	val isIncognitoModeEnabled = settings.observeAsStateFlow(
 		scope = viewModelScope + Dispatchers.Default,
@@ -57,14 +69,15 @@ class SearchSuggestionViewModel @Inject constructor(
 
 	val suggestion: Flow<List<SearchSuggestionItem>> = combine(
 		query.debounce(DEBOUNCE_TIMEOUT),
-		sourcesRepository.observeEnabledSources().map { it.mapToSet { x -> x.name } },
+		sourcesRepository.observeEnabledSources().map { sources -> sources.filterVisibleSources().mapToSet { x -> x.name } },
 		settings.observeAsFlow(AppSettings.KEY_SEARCH_SUGGESTION_TYPES) { searchSuggestionTypes },
+		contentScope,
 		invalidationTrigger,
 	)
-	{ a, b, c, _ ->
-		Triple(a, b, c)
-	}.mapLatest { (searchQuery, enabledSources, types) ->
-		buildSearchSuggestion(searchQuery, enabledSources, types)
+		{ searchQuery, enabledSources, types, scope, _ ->
+			SearchSuggestionState(searchQuery, enabledSources, types, scope)
+		}.mapLatest { state ->
+			buildSearchSuggestion(state.query, state.enabledSources, state.types, state.scope)
 	}.distinctUntilChanged()
 		.withErrorHandling()
 		.flowOn(Dispatchers.Default)
@@ -104,15 +117,16 @@ class SearchSuggestionViewModel @Inject constructor(
 		searchQuery: String,
 		enabledSources: Set<String>,
 		types: Set<SearchSuggestionType>,
+		scope: SearchContentScope,
 	): List<SearchSuggestionItem> = coroutineScope {
 		listOfNotNull(
 			if (SearchSuggestionType.GENRES in types) {
-				async { getTags(searchQuery) }
+				async { getTags(searchQuery, scope) }
 			} else {
 				null
 			},
 			if (SearchSuggestionType.MANGA in types) {
-				async { getManga(searchQuery) }
+				async { getManga(searchQuery, scope) }
 			} else {
 				null
 			},
@@ -127,12 +141,12 @@ class SearchSuggestionViewModel @Inject constructor(
 				null
 			},
 			if (SearchSuggestionType.SOURCES in types) {
-				async { getSources(searchQuery, enabledSources) }
+				async { getSources(searchQuery, enabledSources, scope) }
 			} else {
 				null
 			},
 			if (SearchSuggestionType.RECENT_SOURCES in types) {
-				async { getRecentSources(searchQuery) }
+				async { getRecentSources(searchQuery, scope) }
 			} else {
 				null
 			},
@@ -170,8 +184,13 @@ class SearchSuggestionViewModel @Inject constructor(
 		listOf(SearchSuggestionItem.Text(0, e))
 	}
 
-	private suspend fun getTags(searchQuery: String): List<SearchSuggestionItem> = runCatchingCancellable {
-		val tags = repository.getTagsSuggestion(searchQuery, MAX_TAGS_ITEMS, null)
+private suspend fun getTags(
+		searchQuery: String,
+		scope: SearchContentScope,
+	): List<SearchSuggestionItem> = runCatchingCancellable {
+			val tags = repository.getTagsSuggestion(searchQuery, MAX_TAGS_ITEMS * 2, null)
+				.filter { it.source.isVisibleInCurrentUi() && scope.matches(it.source.sourceContentType) }
+				.take(MAX_TAGS_ITEMS)
 		if (tags.isEmpty()) {
 			emptyList()
 		} else {
@@ -182,8 +201,13 @@ class SearchSuggestionViewModel @Inject constructor(
 		listOf(SearchSuggestionItem.Text(0, e))
 	}
 
-	private suspend fun getManga(searchQuery: String): List<SearchSuggestionItem> = runCatchingCancellable {
-		val manga = repository.getMangaSuggestion(searchQuery, MAX_MANGA_ITEMS, null)
+private suspend fun getManga(
+		searchQuery: String,
+		scope: SearchContentScope,
+	): List<SearchSuggestionItem> = runCatchingCancellable {
+			val manga = repository.getMangaSuggestion(searchQuery, MAX_MANGA_ITEMS * 2, null)
+				.filter { it.source.isVisibleInCurrentUi() && scope.matches(it.source.sourceContentType) }
+				.take(MAX_MANGA_ITEMS)
 		if (manga.isEmpty()) {
 			emptyList()
 		} else {
@@ -194,18 +218,28 @@ class SearchSuggestionViewModel @Inject constructor(
 		listOf(SearchSuggestionItem.Text(0, e))
 	}
 
-	private fun getSources(searchQuery: String, enabledSources: Set<String>): List<SearchSuggestionItem> =
-		runCatchingCancellable {
-			repository.getSourcesSuggestion(searchQuery, MAX_SOURCES_ITEMS)
-				.map { SearchSuggestionItem.Source(it, it.name in enabledSources) }
+	private fun getSources(
+		searchQuery: String,
+		enabledSources: Set<String>,
+		scope: SearchContentScope,
+	): List<SearchSuggestionItem> = runCatchingCancellable {
+		repository.getSourcesSuggestion(searchQuery, MAX_SOURCES_ITEMS * 2)
+			.filter { it.isVisibleInCurrentUi() && scope.matches(it.sourceContentType) }
+			.take(MAX_SOURCES_ITEMS)
+			.map { SearchSuggestionItem.Source(it, it.name in enabledSources) }
 		}.getOrElse { e ->
 			e.printStackTraceDebug()
 			listOf(SearchSuggestionItem.Text(0, e))
 		}
 
-	private suspend fun getRecentSources(searchQuery: String): List<SearchSuggestionItem> = if (searchQuery.isEmpty()) {
+	private suspend fun getRecentSources(
+		searchQuery: String,
+		scope: SearchContentScope,
+	): List<SearchSuggestionItem> = if (searchQuery.isEmpty()) {
 		runCatchingCancellable {
-			repository.getSourcesSuggestion(MAX_SOURCES_TIPS_ITEMS)
+			repository.getSourcesSuggestion(MAX_SOURCES_TIPS_ITEMS * 2)
+				.filter { it.isVisibleInCurrentUi() && scope.matches(it.sourceContentType) }
+				.take(MAX_SOURCES_TIPS_ITEMS)
 				.map { SearchSuggestionItem.SourceTip(it) }
 		}.getOrElse { e ->
 			e.printStackTraceDebug()
@@ -214,6 +248,13 @@ class SearchSuggestionViewModel @Inject constructor(
 	} else {
 		emptyList()
 	}
+
+	private data class SearchSuggestionState(
+		val query: String,
+		val enabledSources: Set<String>,
+		val types: Set<SearchSuggestionType>,
+		val scope: SearchContentScope,
+	)
 
 	private fun mapTags(tags: List<MangaTag>): List<ChipsView.ChipModel> = tags.map { tag ->
 		ChipsView.ChipModel(

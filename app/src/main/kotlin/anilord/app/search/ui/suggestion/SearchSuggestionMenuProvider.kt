@@ -10,6 +10,7 @@ import anilord.app.R
 import anilord.app.core.ui.dialog.buildAlertDialog
 import anilord.app.core.util.ext.resolve
 import anilord.app.core.util.ext.tryLaunch
+import anilord.app.search.domain.SearchContentScope
 
 class SearchSuggestionMenuProvider(
 	private val context: Context,
@@ -23,6 +24,21 @@ class SearchSuggestionMenuProvider(
 
 	override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
 		return when (menuItem.itemId) {
+			R.id.action_scope_all -> {
+				viewModel.setContentScope(SearchContentScope.ALL)
+				true
+			}
+
+			R.id.action_scope_anime -> {
+				viewModel.setContentScope(SearchContentScope.ANIME)
+				true
+			}
+
+			R.id.action_scope_manga -> {
+				viewModel.setContentScope(SearchContentScope.MANGA)
+				true
+			}
+
 			R.id.action_clear -> {
 				clearSearchHistory()
 				true
@@ -38,9 +54,11 @@ class SearchSuggestionMenuProvider(
 
 	override fun onPrepareMenu(menu: Menu) {
 		super.onPrepareMenu(menu)
-		// Presentation-only change: keep the clear-history action and callback intact,
-		// but remove its visible overflow item from the search bar.
+		// Keep the clear-history callback intact while hiding its overflow presentation.
 		menu.findItem(R.id.action_clear)?.isVisible = false
+		menu.findItem(R.id.action_scope_all)?.isChecked = viewModel.currentContentScope == SearchContentScope.ALL
+		menu.findItem(R.id.action_scope_anime)?.isChecked = viewModel.currentContentScope == SearchContentScope.ANIME
+		menu.findItem(R.id.action_scope_manga)?.isChecked = viewModel.currentContentScope == SearchContentScope.MANGA
 		menu.findItem(R.id.action_voice_search)?.isVisible = voiceInputLauncher.resolve(context, null) != null
 	}
 

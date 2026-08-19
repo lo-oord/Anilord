@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 import anilord.app.R
 import anilord.app.core.LocalizedAppContext
 import anilord.app.core.db.TABLE_SOURCES
+import anilord.app.core.model.filterVisibleSources
 import anilord.app.core.model.getTitle
 import anilord.app.core.model.isNsfw
 import anilord.app.core.model.unwrap
@@ -66,7 +67,7 @@ class SourcesListProducer @Inject constructor(
 	}
 
 	private suspend fun buildList(): List<SourceConfigItem> {
-		val enabledSources = repository.getEnabledSources().filter { it.unwrap() is MangaParserSource }
+		val enabledSources = repository.getEnabledSources().filter { it.unwrap() is MangaParserSource }.filterVisibleSources()
 		val pinned = repository.getPinnedSources().mapToSet { it.name }
 		val isNsfwDisabled = settings.isNsfwContentDisabled
 		val isReorderAvailable = settings.sourcesSortOrder == SourcesSortOrder.MANUAL

@@ -7,6 +7,7 @@ import android.view.MenuItem
 import androidx.core.view.MenuProvider
 import anilord.app.R
 import anilord.app.core.nav.router
+import anilord.app.search.domain.SearchContentScope
 import anilord.app.search.domain.SearchKind
 
 class SearchMenuProvider(
@@ -28,6 +29,9 @@ class SearchMenuProvider(
 				SearchKind.TAG -> R.id.action_kind_tag
 			},
 		)?.isChecked = true
+		menu.findItem(R.id.action_scope_all)?.isChecked = viewModel.contentScope == SearchContentScope.ALL
+		menu.findItem(R.id.action_scope_anime)?.isChecked = viewModel.contentScope == SearchContentScope.ANIME
+		menu.findItem(R.id.action_scope_manga)?.isChecked = viewModel.contentScope == SearchContentScope.MANGA
 	}
 
 	override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -45,6 +49,24 @@ class SearchMenuProvider(
 			}
 		}
 
+		val newScope = when (menuItem.itemId) {
+			R.id.action_scope_all -> SearchContentScope.ALL
+			R.id.action_scope_anime -> SearchContentScope.ANIME
+			R.id.action_scope_manga -> SearchContentScope.MANGA
+			else -> null
+		}
+		if (newScope != null) {
+			if (newScope == viewModel.contentScope) return true
+			activity.router.openSearch(
+				query = viewModel.query,
+				kind = viewModel.kind,
+				contentScope = newScope,
+			)
+			applyFadeTransition()
+			activity.finishAfterTransition()
+			return true
+		}
+
 		val newKind = when (menuItem.itemId) {
 			R.id.action_kind_simple -> SearchKind.SIMPLE
 			R.id.action_kind_title -> SearchKind.TITLE
@@ -56,14 +78,19 @@ class SearchMenuProvider(
 			activity.router.openSearch(
 				query = viewModel.query,
 				kind = newKind,
+				contentScope = viewModel.contentScope,
 			)
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-				activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out, 0)
-			} else {
-				activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-			}
+			applyFadeTransition()
 			activity.finishAfterTransition()
 		}
 		return true
+	}
+
+	private fun applyFadeTransition() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+			activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out, 0)
+		} else {
+			activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+		}
 	}
 }

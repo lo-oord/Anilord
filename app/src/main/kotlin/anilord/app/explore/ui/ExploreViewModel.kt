@@ -16,6 +16,7 @@ import kotlinx.coroutines.plus
 import anilord.app.R
 import anilord.app.core.model.MangaSourceInfo
 import anilord.app.core.model.isNsfw
+import anilord.app.core.model.isVisibleInCurrentUi
 import anilord.app.core.os.AppShortcutManager
 import anilord.app.core.prefs.AppSettings
 import anilord.app.core.prefs.observeAsFlow
@@ -182,6 +183,7 @@ class ExploreViewModel @Inject constructor(
 				flowOf(getPresetSources(preset))
 			} else {
 				sourcesRepository.observeEnabledSources()
+					.map { sources -> sources.filter { it.mangaSource.isVisibleInCurrentUi() } }
 			}
 		}
 
@@ -189,7 +191,7 @@ class ExploreViewModel @Inject constructor(
 		if (preset.sources.isEmpty()) return emptyList()
 		val skipNsfw = settings.isNsfwContentDisabled
 		return sourcesRepository.allMangaSources
-			.filter { it.name in preset.sources && (!skipNsfw || !it.isNsfw()) }
+			.filter { it.name in preset.sources && it.isVisibleInCurrentUi() && (!skipNsfw || !it.isNsfw()) }
 			.map { MangaSourceInfo(it, isEnabled = true, isPinned = false) }
 	}
 

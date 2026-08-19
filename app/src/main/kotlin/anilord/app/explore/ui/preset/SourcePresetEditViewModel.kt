@@ -5,6 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import anilord.app.core.nav.AppRouter
+import anilord.app.core.model.filterVisibleSources
 import anilord.app.core.model.isNsfw
 import anilord.app.core.model.getLocaleCode
 import anilord.app.core.prefs.AppSettings
@@ -29,7 +30,7 @@ class SourcePresetEditViewModel @Inject constructor(
 	val onSaved = MutableEventFlow<Unit>()
 	val preset = MutableStateFlow<SourcePreset?>(null)
 
-	val allLocales: Set<String> = sourcesRepository.allMangaSources
+	val allLocales: Set<String> = sourcesRepository.allMangaSources.filterVisibleSources()
 		.mapNotNullTo(LinkedHashSet()) { it.getLocaleCode()?.takeIf { l -> l.isNotEmpty() } }
 
 	init {
@@ -59,6 +60,7 @@ class SourcePresetEditViewModel @Inject constructor(
 		if (languages.isEmpty()) return emptySet()
 		val skipNsfw = settings.isNsfwContentDisabled
 		return sourcesRepository.allMangaSources
+			.filterVisibleSources()
 			.filter { it.getLocaleCode() in languages && (!skipNsfw || !it.isNsfw()) }
 			.mapTo(HashSet()) { it.name }
 	}
