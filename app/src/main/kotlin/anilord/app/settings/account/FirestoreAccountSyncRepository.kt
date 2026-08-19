@@ -51,7 +51,7 @@ class FirestoreAccountSyncRepository @Inject constructor(
         val settingsDocument = userRoot.collection(SETTINGS).document(SETTINGS).get().await()
         val remoteSettings = (settingsDocument.get(PAYLOAD) as? Map<*, *>)
             ?.entries
-            ?.mapNotNull { (key, value) -> key as? String to value }
+            ?.mapNotNull { (key, value) -> (key as? String)?.let { it to value } }
             ?.toMap()
             .orEmpty()
 

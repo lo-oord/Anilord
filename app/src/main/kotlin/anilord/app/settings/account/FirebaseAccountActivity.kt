@@ -124,8 +124,8 @@ class FirebaseAccountActivity : BaseActivity<ActivityFirebaseAccountBinding>() {
         val calendar = Calendar.getInstance()
         DatePickerDialog(this, { _, year, month, day ->
             val selected = Calendar.getInstance().apply { set(year, month, day) }
-            birthDateInput.setText(SimpleDateFormat("yyyy-MM-dd", Locale.US).format(selected.time))
-            birthDateLayout.error = null
+            viewBinding.birthDateInput.setText(SimpleDateFormat("yyyy-MM-dd", Locale.US).format(selected.time))
+            viewBinding.birthDateLayout.error = null
         }, calendar.get(Calendar.YEAR) - 18, calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).apply {
             datePicker.maxDate = System.currentTimeMillis()
             show()
