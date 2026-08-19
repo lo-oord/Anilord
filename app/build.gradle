@@ -62,19 +62,20 @@ android {
 		resValue 'string', 'acra_password', localProperty('acra_password', '')
 	}
 
-	buildTypes {
-		debug {
-			applicationIdSuffix = '.debug'
-		}
-		release {
+			buildTypes {
+			debug {
+				// Keep the Firebase-registered package stable across build variants.
+			}
+			release {
+
 			minifyEnabled true
 			shrinkResources true 
 			proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 			// Configure production units privately in local.properties.
 		}
-		nightly {
-			initWith release
-			applicationIdSuffix = '.nightly'
+					nightly {
+				initWith release
+
 			// Nightly builds are test builds and must not request production ads.
 		}
 	}
