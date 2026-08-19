@@ -130,6 +130,7 @@ ssiv = { module = "com.github.KotatsuApp:subsampling-scale-image-view", version.
 workinspector = { module = "com.github.Koitharu:WorkInspector", version.ref = "workinspector" }
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }

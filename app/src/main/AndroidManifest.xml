@@ -143,8 +143,13 @@
 		<activity
 			android:name="anilord.app.details.ui.related.RelatedMangaActivity"
 			android:label="@string/related_manga" />
-		<activity
-			android:name="anilord.app.settings.SettingsActivity"
+					<activity
+				android:name="anilord.app.settings.account.FirebaseAccountActivity"
+				android:exported="false"
+				android:screenOrientation="portrait" />
+			<activity
+				android:name="anilord.app.settings.SettingsActivity"
+
 			android:exported="true"
 			android:label="@string/settings">
 			<intent-filter>

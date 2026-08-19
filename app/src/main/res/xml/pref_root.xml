@@ -2,6 +2,13 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <Preference
+        android:icon="@drawable/ic_person_24"
+        android:key="account"
+        android:layout="@layout/preference_settings_row"
+        android:title="@string/account"
+        android:summary="@string/account_sync_title" />
+
     <PreferenceScreen
         android:fragment="anilord.app.settings.AppearanceSettingsFragment"
         android:icon="@drawable/ic_appearance"

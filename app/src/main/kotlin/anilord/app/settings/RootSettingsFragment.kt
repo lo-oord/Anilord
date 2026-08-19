@@ -1,11 +1,14 @@
 package anilord.app.settings
 
 import android.os.Bundle
+import android.content.Intent
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.preference.Preference
+import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import anilord.app.R
 import anilord.app.core.prefs.AppSettings
@@ -32,6 +35,29 @@ class RootSettingsFragment : BasePreferenceFragment(0) {
 		bindPreferenceSummary("tracker", R.string.track_sources, R.string.notifications_settings)
 		bindPreferenceSummary("services", R.string.suggestions, R.string.sync, R.string.tracking)
 		findPreference<Preference>("about")?.summary = getString(R.string.about_display_version)
+		updateAccountSummary()
+	}
+
+	override fun onPreferenceTreeClick(preference: Preference): Boolean {
+		if (preference.key == "account") {
+			startActivity(Intent(requireContext(), anilord.app.settings.account.FirebaseAccountActivity::class.java))
+			return true
+		}
+		return super.onPreferenceTreeClick(preference)
+	}
+
+	override fun onResume() {
+		super.onResume()
+		updateAccountSummary()
+	}
+
+	private fun updateAccountSummary() {
+		val user = FirebaseApp.getApps(requireContext()).firstOrNull()?.let(FirebaseAuth::getInstance)?.currentUser
+		findPreference<Preference>("account")?.summary = when {
+			user == null -> getString(R.string.account_sync_title)
+			user.isAnonymous -> getString(R.string.account_guest_status)
+			else -> user.email ?: getString(R.string.account_connected_status)
+		}
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
