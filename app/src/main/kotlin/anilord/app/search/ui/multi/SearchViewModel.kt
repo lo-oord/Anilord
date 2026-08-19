@@ -336,7 +336,7 @@ manga = filteredResult,
 		return res
 	}
 
-	private fun List<MangaSource>.filterByContentScope(): List<MangaSource> =
+	private fun Iterable<MangaSource>.filterByContentScope(): List<MangaSource> =
 		filter { it.isVisibleInCurrentUi() && contentScope.matches(it.sourceContentType) }
 
 	private fun List<Manga>.filterByContentScope(): List<Manga> =
