@@ -78,6 +78,8 @@ import anilord.app.main.ui.owners.BottomNavOwner
 import anilord.app.main.ui.welcome.WelcomeSheet
 import anilord.app.main.domain.InAppReviewCoordinator
 import anilord.app.main.domain.InAppUpdateCoordinator
+import anilord.app.update.UpdateInfo
+import anilord.app.update.UpdateManager
 import org.koitharu.kotatsu.parsers.model.Manga
 import anilord.app.remotelist.ui.MangaSearchMenuProvider
 import anilord.app.search.ui.suggestion.SearchSuggestionItemCallback
@@ -106,6 +108,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 	@Inject
 	lateinit var inAppUpdateCoordinator: InAppUpdateCoordinator
 
+	@Inject
+	lateinit var updateManager: UpdateManager
+
 	private val viewModel by viewModels<MainViewModel>()
 	private val searchSuggestionViewModel by viewModels<SearchSuggestionViewModel>()
 	private val isSecondaryExplore: Boolean
@@ -124,6 +129,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 	private lateinit var fadingAppbarMediator: FadingAppbarMediator
 	private var isCommunityDialogVisible = false
 	private var updateReadySnackbar: Snackbar? = null
+	private var shownGithubUpdateCode: Long? = null
 
 	override val appBar: AppBarLayout
 		get() = viewBinding.appbar
@@ -195,6 +201,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 			launcher = inAppUpdateLauncher,
 			onUpdateDownloaded = ::showDownloadedUpdate,
 		)
+		updateManager.availableUpdate
+			.onEach { update ->
+				viewBinding.updateBadge.isVisible = update != null
+				if (update != null && shownGithubUpdateCode != update.versionCode) {
+					shownGithubUpdateCode = update.versionCode
+					showGithubUpdateDialog(update)
+				}
+			}
+			.launchIn(lifecycleScope)
+		updateManager.check()
+
 		if (savedInstanceState == null) {
 			lifecycleScope.launch {
 				delay(COMMUNITY_NOTICE_DELAY_MS)
@@ -213,7 +230,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 	override fun onResume() {
 		super.onResume()
 		inAppUpdateCoordinator.resume(this, inAppUpdateLauncher)
-		}
+		updateManager.check()
+	}
+
 	override fun onDestroy() {
 		inAppUpdateCoordinator.stop()
 		super.onDestroy()
@@ -462,6 +481,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 		).setAction(R.string.restart_app) {
 			inAppUpdateCoordinator.completeUpdate()
 		}.also(Snackbar::show)
+	}
+
+	private fun showGithubUpdateDialog(update: UpdateInfo) {
+		if (isFinishing || isDestroyed || supportFragmentManager.isStateSaved) return
+		val message = getString(
+			R.string.update_version_message,
+			update.versionName,
+			update.releaseNotes.ifBlank { getString(R.string.update_notification_text) },
+		)
+		buildAlertDialog(this) {
+			setTitle(R.string.update_available)
+			setMessage(message)
+			setPositiveButton(R.string.update_now) { _, _ -> openCommunityLink(update.apkUrl) }
+			setNegativeButton(R.string.update_later, null)
+		}.show()
 	}
 
 	private fun openCommunityLink(url: String) {

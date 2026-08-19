@@ -1270,4 +1270,10 @@
     <string name="account_history">Reading history</string>
     <string name="account_sync_complete">Account data synced</string>
     <string name="account_sync_failed">Could not sync account data</string>
+    <string name="update_available">يتوفر إصدار جديد</string>
+    <string name="update_notification_text">يتوفر إصدار جديد من التطبيق. اضغط هنا للتحديث.</string>
+    <string name="update_version_message">الإصدار الجديد: %1$s\n\n%2$s</string>
+    <string name="update_now">تحديث الآن</string>
+    <string name="update_later">لاحقًا</string>
+    <string name="update_badge_content_description">يتوفر تحديث للتطبيق</string>
 </resources>

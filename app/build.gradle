@@ -25,6 +25,13 @@ if (localPropertiesFile.isFile()) {
 	localProperties.load(new FileInputStream(localPropertiesFile))
 }
 def localProperty = { String name, String fallback -> localProperties.getProperty(name, fallback) }
+def releaseStoreFile = System.getenv('ANILORD_RELEASE_STORE_FILE') ?: localProperties.getProperty('ANILORD_RELEASE_STORE_FILE')
+def releaseStorePassword = System.getenv('ANILORD_RELEASE_STORE_PASSWORD') ?: localProperties.getProperty('ANILORD_RELEASE_STORE_PASSWORD')
+def releaseKeyAlias = System.getenv('ANILORD_RELEASE_KEY_ALIAS') ?: localProperties.getProperty('ANILORD_RELEASE_KEY_ALIAS')
+def releaseKeyPassword = System.getenv('ANILORD_RELEASE_KEY_PASSWORD') ?: localProperties.getProperty('ANILORD_RELEASE_KEY_PASSWORD')
+def hasReleaseSigning = [releaseStoreFile, releaseStorePassword, releaseKeyAlias, releaseKeyPassword].every { it != null && !it.isBlank() }
+def configuredVersionCode = (project.findProperty('versionCode') ?: '1084').toString().toInteger()
+def configuredVersionName = (project.findProperty('versionName') ?: '2.6.8').toString()
 
 android {
 	compileSdk = 36
@@ -35,12 +42,23 @@ android {
 		includeInBundle = false
 	}
 
-	defaultConfig {
-		applicationId "anilord.app"
+		signingConfigs {
+			release {
+				if (hasReleaseSigning) {
+					storeFile file(releaseStoreFile)
+					storePassword releaseStorePassword
+					keyAlias releaseKeyAlias
+					keyPassword releaseKeyPassword
+				}
+			}
+		}
+
+		defaultConfig {
+			applicationId "anilord.app"
 		minSdk = 23
 		targetSdk = 36
-		versionCode 1084
-		versionName "2.6.8"
+			versionCode configuredVersionCode
+			versionName configuredVersionName
 		generatedDensities = []
 		testInstrumentationRunner 'anilord.app.HiltTestRunner'
 		ksp {
@@ -67,9 +85,10 @@ android {
 				// Keep the Firebase-registered package stable across build variants.
 			}
 			release {
-			// Sign CI release APKs so Android can install them.
-			signingConfig signingConfigs.debug
-			minifyEnabled true
+				if (hasReleaseSigning) {
+					signingConfig signingConfigs.release
+				}
+				minifyEnabled true
 			shrinkResources true 
 			proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 			// Configure production units privately in local.properties.
@@ -121,10 +140,8 @@ android {
 			'-Xtype-enhancement-improvements-strict-mode'
 		]
 	}
-	room {
-		schemaDirectory "$projectDir/schemas"
-	}
-	lint {
+
+		lint {
 		abortOnError true
 		disable 'MissingTranslation', 'PrivateResource', 'SetJavaScriptEnabled', 'SimpleDateFormat'
 	}
@@ -147,6 +164,11 @@ android {
 			}
 		}
 }
+
+room {
+	schemaDirectory "$projectDir/schemas"
+}
+
 dependencies {
 	implementation platform(libs.firebase.bom)
 	implementation libs.firebase.messaging
