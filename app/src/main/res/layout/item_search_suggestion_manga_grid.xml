@@ -17,9 +17,10 @@
 		<anilord.app.image.ui.CoverImageView
 			android:id="@+id/imageView_cover"
 			android:layout_width="wrap_content"
-			android:layout_height="0dp"
-			android:layout_weight="1"
-			android:scaleType="centerCrop"
+				android:layout_height="0dp"
+				android:layout_weight="1"
+				android:scaleType="centerCrop"
+				style="@style/Widget.Kotatsu.ImageView.Cover"
 			app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Kotatsu.Cover.Small"
 			tools:src="@tools:sample/backgrounds/scenic" />
 

@@ -22,6 +22,7 @@
 			android:layout_height="wrap_content"
 			android:background="@color/anilord_preference_surface"
 			android:orientation="horizontal"
+			style="@style/Widget.Kotatsu.ImageView.Cover"
 			app:allowRgb565="true"
 			app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Kotatsu.Cover"
 			tools:ignore="ContentDescription"
@@ -66,11 +67,10 @@
 		android:elegantTextHeight="false"
 		android:ellipsize="end"
 		android:lines="2"
-			android:paddingVertical="6dp"
+			android:paddingTop="6dp"
+			android:paddingBottom="6dp"
 			android:textAppearance="?attr/textAppearanceTitleSmall"
-		android:textColor="?android:attr/textColorPrimary"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@+id/thumbnail"
+			android:textColor="?android:attr/textColorPrimary"
 		tools:text="@tools:sample/lorem" />
 
 </LinearLayout>

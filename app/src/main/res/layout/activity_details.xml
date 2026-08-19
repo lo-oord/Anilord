@@ -53,7 +53,7 @@
 
 			<androidx.constraintlayout.widget.ConstraintLayout
 				android:layout_width="match_parent"
-				android:layout_height="match_parent"
+				android:layout_height="wrap_content"
 				android:paddingBottom="@dimen/margin_normal">
 
 				<anilord.app.image.ui.CoverImageView
@@ -307,6 +307,7 @@
 					android:id="@+id/recyclerView_related"
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
+					android:layout_marginTop="@dimen/margin_small"
 					android:layout_marginBottom="6dp"
 					android:clipToPadding="false"
 					android:nestedScrollingEnabled="false"
