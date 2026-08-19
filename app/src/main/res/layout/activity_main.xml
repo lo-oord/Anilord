@@ -28,7 +28,7 @@
 		app:liftOnScroll="false"
 		app:liftOnScrollColor="@null">
 
-		<org.manga.peak.core.ui.widgets.WindowInsetHolder
+		<anilord.app.core.ui.widgets.WindowInsetHolder
 			android:id="@+id/insetsHolder"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
@@ -80,13 +80,13 @@
 		app:icon="@drawable/ic_read"
 		app:layout_anchor="@id/bottomNav"
 		app:layout_anchorGravity="top|end"
-		app:layout_behavior="org.manga.peak.main.ui.MainActionButtonBehavior"
+		app:layout_behavior="anilord.app.main.ui.MainActionButtonBehavior"
 		app:layout_dodgeInsetEdges="bottom"
 		app:layout_insetEdge="bottom"
 		tools:ignore="InconsistentLayout"
 		tools:visibility="visible" />
 
-		<org.manga.peak.core.ui.widgets.SlidingBottomNavigationView
+		<anilord.app.core.ui.widgets.SlidingBottomNavigationView
 			android:id="@+id/bottomNav"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"

@@ -8,7 +8,7 @@
 	android:orientation="vertical"
 	android:paddingBottom="@dimen/screen_padding">
 
-	<org.manga.peak.core.ui.sheet.AdaptiveSheetHeaderBar
+	<anilord.app.core.ui.sheet.AdaptiveSheetHeaderBar
 		android:id="@+id/headerBar"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
 
 			</LinearLayout>
 
-			<org.manga.peak.stats.ui.views.BarChartView
+			<anilord.app.stats.ui.views.BarChartView
 				android:id="@+id/chartView"
 				android:layout_width="match_parent"
 				android:layout_height="240dp"

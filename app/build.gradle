@@ -29,20 +29,20 @@ def localProperty = { String name, String fallback -> localProperties.getPropert
 android {
 	compileSdk = 36
 	buildToolsVersion = '35.0.0'
-	namespace = 'org.manga.peak'
+	namespace = 'anilord.app'
 	dependenciesInfo {
 		includeInApk = false
 		includeInBundle = false
 	}
 
 	defaultConfig {
-		applicationId "com.anilord.app"
+		applicationId "anilord.app"
 		minSdk = 23
 		targetSdk = 36
 		versionCode = 1082
 		versionName = '2.6.6'
 		generatedDensities = []
-		testInstrumentationRunner 'org.manga.peak.HiltTestRunner'
+		testInstrumentationRunner 'anilord.app.HiltTestRunner'
 		ksp {
 			arg('room.generateKotlin', 'true')
 		}

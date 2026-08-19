@@ -16,12 +16,12 @@
 -dontwarn com.google.j2objc.annotations.**
 -dontwarn coil3.PlatformContext
 
--keep class org.manga.peak.settings.NotificationSettingsLegacyFragment
--keep class org.manga.peak.settings.about.changelog.ChangelogFragment
+-keep class anilord.app.settings.NotificationSettingsLegacyFragment
+-keep class anilord.app.settings.about.changelog.ChangelogFragment
 
--keep class org.manga.peak.core.exceptions.* { *; }
--keep class org.manga.peak.core.prefs.ScreenshotsPolicy { *; }
--keep class org.manga.peak.backups.ui.periodical.PeriodicalBackupSettingsFragment { *; }
+-keep class anilord.app.core.exceptions.* { *; }
+-keep class anilord.app.core.prefs.ScreenshotsPolicy { *; }
+-keep class anilord.app.backups.ui.periodical.PeriodicalBackupSettingsFragment { *; }
 -keep class org.jsoup.parser.Tag
 -keep class org.jsoup.internal.StringUtil
 

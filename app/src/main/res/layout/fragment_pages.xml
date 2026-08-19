@@ -6,7 +6,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
-	<org.manga.peak.core.ui.list.fastscroll.FastScrollRecyclerView
+	<anilord.app.core.ui.list.fastscroll.FastScrollRecyclerView
 		android:id="@+id/recyclerView"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"

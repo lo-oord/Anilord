@@ -12,7 +12,7 @@
 		android:layout_height="match_parent"
 		tools:background="@color/grey" />
 
-	<org.manga.peak.core.ui.widgets.ZoomControl
+	<anilord.app.core.ui.widgets.ZoomControl
 		android:id="@+id/zoomControl"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
 		app:layout_dodgeInsetEdges="bottom"
 		tools:visibility="visible" />
 
-	<org.manga.peak.reader.ui.ReaderInfoBarView
+	<anilord.app.reader.ui.ReaderInfoBarView
 		android:id="@+id/infoBar"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
 		android:visibility="gone"
 		tools:visibility="visible" />
 
-	<org.manga.peak.reader.ui.ScrollTimerControlView
+	<anilord.app.reader.ui.ScrollTimerControlView
 		android:id="@+id/timerControl"
 		android:layout_width="320dp"
 		android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
 			app:elevation="@dimen/m3_card_elevated_elevation"
 			tools:menu="@menu/opt_reader">
 
-			<org.manga.peak.reader.ui.ReaderActionsView
+			<anilord.app.reader.ui.ReaderActionsView
 				android:id="@+id/actionsView"
 				android:layout_width="400dp"
 				android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
 
 	</com.google.android.material.appbar.AppBarLayout>
 
-	<org.manga.peak.reader.ui.ReaderToastView
+	<anilord.app.reader.ui.ReaderToastView
 		android:id="@+id/toastView"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"

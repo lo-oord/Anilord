@@ -8,7 +8,7 @@
 	android:background="@drawable/list_selector"
 	android:clipChildren="false">
 
-	<org.manga.peak.image.ui.CoverImageView
+	<anilord.app.image.ui.CoverImageView
 		android:id="@+id/imageView_cover"
 		android:layout_width="40dp"
 		android:layout_height="40dp"
@@ -55,7 +55,7 @@
 		app:layout_constraintTop_toBottomOf="@+id/textView_title"
 		tools:text="@tools:sample/lorem/random" />
 
-	<org.manga.peak.core.ui.widgets.BadgeView
+	<anilord.app.core.ui.widgets.BadgeView
 		android:id="@+id/badge"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"

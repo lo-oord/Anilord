@@ -9,7 +9,7 @@
 	<string name="url_user_manual" translatable="false">https://github.com/lo-oord/Anilord/blob/main/docs/privacy-policy.md</string>
 	<string name="url_privacy_policy" translatable="false">https://github.com/lo-oord/Anilord/blob/main/docs/privacy-policy.md</string>
 	<string name="url_error_report" translatable="false">https://mangapeak.app/report</string>
-	<string name="url_google_play" translatable="false">https://play.google.com/store/apps/details?id=org.manga.peak</string>
+	<string name="url_google_play" translatable="false">https://play.google.com/store/apps/details?id=anilord.app</string>
 	<string name="tg_backup_bot_name" translatable="false">kotatsu_backup_bot</string>
 	<string name="discord_app_id" translatable="false">1395464028611940393</string>
 	<string name="app_icon_url" translatable="false">https://raw.githubusercontent.com/hema995/Mangapeak/main/ic_launcher_round.png</string>

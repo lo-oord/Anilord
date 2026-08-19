@@ -42,9 +42,9 @@
 	</queries>
 
 	<application
-		android:name="org.manga.peak.KotatsuApp"
+		android:name="anilord.app.KotatsuApp"
 		android:allowBackup="true"
-		android:backupAgent="org.manga.peak.backups.domain.AppBackupAgent"
+		android:backupAgent="anilord.app.backups.domain.AppBackupAgent"
 		android:dataExtractionRules="@xml/backup_rules"
 		android:enableOnBackInvokedCallback="@bool/is_predictive_back_enabled"
 		android:extractNativeLibs="true"
@@ -78,7 +78,7 @@
 			android:name="com.google.firebase.messaging.default_notification_channel_id"
 			android:value="firebase_messages" />
 									<activity
-			android:name="org.manga.peak.main.ui.MainActivity"
+			android:name="anilord.app.main.ui.MainActivity"
 			android:exported="true">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -87,24 +87,24 @@
 
 				<meta-data
 					android:name="android.app.default_searchable"
-					android:value="org.manga.peak.search.ui.multi.MultiSearchActivity" />
+					android:value="anilord.app.search.ui.multi.MultiSearchActivity" />
 			</activity>
 		<activity
-			android:name="org.manga.peak.anime.player.AnimePlayerActivity"
+			android:name="anilord.app.anime.player.AnimePlayerActivity"
 			android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden"
 			android:exported="false"
 			android:hardwareAccelerated="true"
 			android:screenOrientation="fullSensor"
 			android:supportsPictureInPicture="true" />
 		<activity
-			android:name="org.manga.peak.details.ui.DetailsActivity"
+			android:name="anilord.app.details.ui.DetailsActivity"
 			android:exported="true">
 			<intent-filter>
 				<action android:name="${applicationId}.action.VIEW_MANGA" />
 			</intent-filter>
 		</activity>
 		<activity
-			android:name="org.manga.peak.reader.ui.ReaderActivity"
+			android:name="anilord.app.reader.ui.ReaderActivity"
 			android:exported="true">
 			<intent-filter>
 				<action android:name="${applicationId}.action.READ_MANGA" />
@@ -118,7 +118,7 @@
 				android:resource="@xml/remote_action" />
 		</activity>
 		<activity
-			android:name="org.manga.peak.search.ui.MangaListActivity"
+			android:name="anilord.app.search.ui.MangaListActivity"
 			android:exported="true"
 			android:label="@string/manga_list">
 			<intent-filter>
@@ -126,25 +126,25 @@
 			</intent-filter>
 		</activity>
 		<activity
-			android:name="org.manga.peak.history.ui.HistoryActivity"
+			android:name="anilord.app.history.ui.HistoryActivity"
 			android:label="@string/history" />
 		<activity
-			android:name="org.manga.peak.tracker.ui.updates.UpdatesActivity"
+			android:name="anilord.app.tracker.ui.updates.UpdatesActivity"
 			android:label="@string/updates" />
 		<activity
-			android:name="org.manga.peak.favourites.ui.FavouritesActivity"
+			android:name="anilord.app.favourites.ui.FavouritesActivity"
 			android:label="@string/favourites" />
 		<activity
-			android:name="org.manga.peak.bookmarks.ui.AllBookmarksActivity"
+			android:name="anilord.app.bookmarks.ui.AllBookmarksActivity"
 			android:label="@string/bookmarks" />
 		<activity
-			android:name="org.manga.peak.suggestions.ui.SuggestionsActivity"
+			android:name="anilord.app.suggestions.ui.SuggestionsActivity"
 			android:label="@string/suggestions" />
 		<activity
-			android:name="org.manga.peak.details.ui.related.RelatedMangaActivity"
+			android:name="anilord.app.details.ui.related.RelatedMangaActivity"
 			android:label="@string/related_manga" />
 		<activity
-			android:name="org.manga.peak.settings.SettingsActivity"
+			android:name="anilord.app.settings.SettingsActivity"
 			android:exported="true"
 			android:label="@string/settings">
 			<intent-filter>
@@ -159,33 +159,33 @@
 			</intent-filter>
 		</activity>
 		<activity
-			android:name="org.manga.peak.settings.reader.ReaderTapGridConfigActivity"
+			android:name="anilord.app.settings.reader.ReaderTapGridConfigActivity"
 			android:label="@string/reader_actions" />
 		<activity
-			android:name="org.manga.peak.settings.storage.directories.MangaDirectoriesActivity"
+			android:name="anilord.app.settings.storage.directories.MangaDirectoriesActivity"
 			android:label="@string/local_manga_directories" />
 		<activity
-			android:name="org.manga.peak.browser.BrowserActivity"
+			android:name="anilord.app.browser.BrowserActivity"
 			android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
 			android:windowSoftInputMode="adjustResize" />
 		<activity
-			android:name="org.manga.peak.browser.cloudflare.CloudFlareActivity"
+			android:name="anilord.app.browser.cloudflare.CloudFlareActivity"
 			android:autoRemoveFromRecents="true"
 			android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
 			android:windowSoftInputMode="adjustResize" />
 		<activity
-			android:name="org.manga.peak.settings.sources.auth.SourceAuthActivity"
+			android:name="anilord.app.settings.sources.auth.SourceAuthActivity"
 			android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
 			android:windowSoftInputMode="adjustResize" />
 		<activity
-			android:name="org.manga.peak.settings.sources.auth.CredentialsSourceAuthActivity"
+			android:name="anilord.app.settings.sources.auth.CredentialsSourceAuthActivity"
 			android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
 			android:windowSoftInputMode="adjustResize" />
 		<activity
-			android:name="org.manga.peak.favourites.ui.categories.FavouriteCategoriesActivity"
+			android:name="anilord.app.favourites.ui.categories.FavouriteCategoriesActivity"
 			android:label="@string/manage_categories" />
 		<activity
-			android:name="org.manga.peak.widget.shelf.ShelfWidgetConfigActivity"
+			android:name="anilord.app.widget.shelf.ShelfWidgetConfigActivity"
 			android:exported="true"
 			android:label="@string/manga_shelf">
 			<intent-filter>
@@ -193,7 +193,7 @@
 			</intent-filter>
 		</activity>
 		<activity
-			android:name="org.manga.peak.widget.recent.RecentWidgetConfigActivity"
+			android:name="anilord.app.widget.recent.RecentWidgetConfigActivity"
 			android:exported="true"
 			android:label="@string/recent_manga">
 			<intent-filter>
@@ -201,33 +201,33 @@
 			</intent-filter>
 		</activity>
 		<activity
-			android:name="org.manga.peak.search.ui.multi.SearchActivity"
+			android:name="anilord.app.search.ui.multi.SearchActivity"
 			android:label="@string/search" />
 		<activity
-			android:name="org.manga.peak.main.ui.protect.ProtectActivity"
+			android:name="anilord.app.main.ui.protect.ProtectActivity"
 			android:noHistory="true"
 			android:windowSoftInputMode="adjustResize" />
 		<activity
-			android:name="org.manga.peak.settings.protect.ProtectSetupActivity"
+			android:name="anilord.app.settings.protect.ProtectSetupActivity"
 			android:windowSoftInputMode="adjustResize" />
 		<activity
-			android:name="org.manga.peak.download.ui.list.DownloadsActivity"
+			android:name="anilord.app.download.ui.list.DownloadsActivity"
 			android:label="@string/downloads"
 			android:launchMode="singleTop" />
-		<activity android:name="org.manga.peak.image.ui.ImageActivity" />
-		<activity android:name="org.manga.peak.favourites.ui.categories.edit.FavouritesCategoryEditActivity" />
-		<activity android:name="org.manga.peak.explore.ui.preset.SourcePresetEditActivity" />
+		<activity android:name="anilord.app.image.ui.ImageActivity" />
+		<activity android:name="anilord.app.favourites.ui.categories.edit.FavouritesCategoryEditActivity" />
+		<activity android:name="anilord.app.explore.ui.preset.SourcePresetEditActivity" />
 		<activity
-			android:name="org.manga.peak.explore.ui.preset.SourcePresetListActivity"
+			android:name="anilord.app.explore.ui.preset.SourcePresetListActivity"
 			android:label="@string/source_presets" />
 		<activity
-			android:name="org.manga.peak.settings.override.OverrideConfigActivity"
+			android:name="anilord.app.settings.override.OverrideConfigActivity"
 			android:label="@string/edit" />
 		<activity
-			android:name="org.manga.peak.reader.ui.colorfilter.ColorFilterConfigActivity"
+			android:name="anilord.app.reader.ui.colorfilter.ColorFilterConfigActivity"
 			android:label="@string/color_correction" />
 		<activity
-			android:name="org.manga.peak.scrobbling.common.ui.config.ScrobblerConfigActivity"
+			android:name="anilord.app.scrobbling.common.ui.config.ScrobblerConfigActivity"
 			android:exported="true"
 			android:label="@string/settings"
 			android:launchMode="singleTop">
@@ -247,10 +247,10 @@
 
 		</activity>
 		<activity
-			android:name="org.manga.peak.settings.sources.catalog.SourcesCatalogActivity"
+			android:name="anilord.app.settings.sources.catalog.SourcesCatalogActivity"
 			android:label="@string/sources_catalog" />
 		<activity
-			android:name="org.manga.peak.scrobbling.kitsu.ui.KitsuAuthActivity"
+			android:name="anilord.app.scrobbling.kitsu.ui.KitsuAuthActivity"
 			android:exported="false"
 			android:label="@string/kitsu"
 			tools:ignore="AppLinkUrlError">
@@ -261,16 +261,16 @@
 			</intent-filter>
 		</activity>
 		<activity
-			android:name="org.manga.peak.stats.ui.StatsActivity"
+			android:name="anilord.app.stats.ui.StatsActivity"
 			android:label="@string/reading_stats" />
 		<activity
-			android:name="org.manga.peak.alternatives.ui.AlternativesActivity"
+			android:name="anilord.app.alternatives.ui.AlternativesActivity"
 			android:label="@string/alternatives" />
 		<activity
-			android:name="org.manga.peak.tracker.ui.debug.TrackerDebugActivity"
+			android:name="anilord.app.tracker.ui.debug.TrackerDebugActivity"
 			android:label="@string/tracker_debug_info" />
 		<activity
-			android:name="org.manga.peak.picker.ui.PageImagePickActivity"
+			android:name="anilord.app.picker.ui.PageImagePickActivity"
 			android:exported="true"
 			android:label="@string/pick_manga_page">
 			<intent-filter>
@@ -288,7 +288,7 @@
 			</intent-filter>
 		</activity>
 		<activity
-			android:name="org.manga.peak.scrobbling.discord.ui.DiscordAuthActivity"
+			android:name="anilord.app.scrobbling.discord.ui.DiscordAuthActivity"
 			android:label="@string/discord" />
 
 		<service
@@ -296,53 +296,53 @@
 			android:foregroundServiceType="dataSync"
 			tools:node="merge" />
 		<service
-			android:name="org.manga.peak.local.ui.LocalChaptersRemoveService"
+			android:name="anilord.app.local.ui.LocalChaptersRemoveService"
 			android:foregroundServiceType="dataSync"
 			android:label="@string/local_manga_processing" />
 		<service
-			android:name="org.manga.peak.backups.ui.periodical.PeriodicalBackupService"
+			android:name="anilord.app.backups.ui.periodical.PeriodicalBackupService"
 			android:foregroundServiceType="dataSync"
 			android:label="@string/periodic_backups" />
 		<service
-			android:name="org.manga.peak.alternatives.ui.AutoFixService"
+			android:name="anilord.app.alternatives.ui.AutoFixService"
 			android:foregroundServiceType="dataSync"
 			android:label="@string/fixing_manga" />
 		<service
-			android:name="org.manga.peak.local.ui.LocalIndexUpdateService"
+			android:name="anilord.app.local.ui.LocalIndexUpdateService"
 			android:label="@string/local_manga_processing" />
 		<service
-			android:name="org.manga.peak.backups.ui.backup.BackupService"
+			android:name="anilord.app.backups.ui.backup.BackupService"
 			android:foregroundServiceType="dataSync"
 			android:label="@string/creating_backup" />
 		<service
-			android:name="org.manga.peak.backups.ui.restore.RestoreService"
+			android:name="anilord.app.backups.ui.restore.RestoreService"
 			android:foregroundServiceType="dataSync"
 			android:label="@string/restoring_backup" />
 		<service
-			android:name="org.manga.peak.local.ui.ImportService"
+			android:name="anilord.app.local.ui.ImportService"
 			android:foregroundServiceType="dataSync"
 			android:label="@string/importing_manga" />
 		<service
-			android:name="org.manga.peak.widget.shelf.ShelfWidgetService"
+			android:name="anilord.app.widget.shelf.ShelfWidgetService"
 			android:label="@string/manga_shelf"
 			android:permission="android.permission.BIND_REMOTEVIEWS" />
 		<service
-			android:name="org.manga.peak.widget.recent.RecentWidgetService"
+			android:name="anilord.app.widget.recent.RecentWidgetService"
 			android:label="@string/recent_manga"
 			android:permission="android.permission.BIND_REMOTEVIEWS" />
 		<service
-			android:name="org.manga.peak.details.service.MangaPrefetchService"
+			android:name="anilord.app.details.service.MangaPrefetchService"
 			android:exported="false"
 			android:label="@string/prefetch_content" />
 		<service
-			android:name="org.manga.peak.firebase.MangaPeakMessagingService"
+			android:name="anilord.app.firebase.MangaPeakMessagingService"
 			android:exported="false">
 			<intent-filter>
 				<action android:name="com.google.firebase.MESSAGING_EVENT" />
 			</intent-filter>
 		</service>
 		<provider
-			android:name="org.manga.peak.search.ui.MangaSuggestionsProvider"
+			android:name="anilord.app.search.ui.MangaSuggestionsProvider"
 			android:authorities="${applicationId}.MangaSuggestionsProvider"
 			android:exported="false" />
 		<provider
@@ -366,14 +366,14 @@
 		</provider>
 
 		<receiver
-			android:name="org.manga.peak.core.exceptions.resolve.CaptchaHandler$DiscardReceiver"
+			android:name="anilord.app.core.exceptions.resolve.CaptchaHandler$DiscardReceiver"
 			android:exported="false">
 			<intent-filter>
-				<action android:name="org.manga.peak.CAPTCHA_DISCARD" />
+				<action android:name="anilord.app.CAPTCHA_DISCARD" />
 			</intent-filter>
 		</receiver>
 		<receiver
-			android:name="org.manga.peak.widget.shelf.ShelfWidgetProvider"
+			android:name="anilord.app.widget.shelf.ShelfWidgetProvider"
 			android:exported="true"
 			android:label="@string/manga_shelf">
 			<intent-filter>
@@ -384,7 +384,7 @@
 				android:resource="@xml/widget_shelf" />
 		</receiver>
 		<receiver
-			android:name="org.manga.peak.widget.recent.RecentWidgetProvider"
+			android:name="anilord.app.widget.recent.RecentWidgetProvider"
 			android:exported="true"
 			android:label="@string/recent_manga">
 			<intent-filter>
@@ -395,7 +395,7 @@
 				android:resource="@xml/widget_recent" />
 		</receiver>
 		<receiver
-			android:name="org.manga.peak.core.ErrorReporterReceiver"
+			android:name="anilord.app.core.ErrorReporterReceiver"
 			android:exported="false">
 			<intent-filter>
 				<action android:name="${applicationId}.action.REPORT_ERROR" />
