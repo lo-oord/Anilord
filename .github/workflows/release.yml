@@ -27,6 +27,12 @@ jobs:
       - run: chmod +x ./gradlew
       - name: Assemble selected variant
         run: ./gradlew --no-daemon --stacktrace assemble${{ inputs.variant == 'nightly' && 'Nightly' || 'Release' }}
+      - name: Verify APK is signed and readable
+        run: |
+          APK=$(find app/build/outputs/apk -type f -name '*.apk' | head -n 1)
+          test -n "$APK"
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose "$APK"
+          "$ANDROID_HOME/build-tools/35.0.0/aapt2" dump badging "$APK" | grep -E "package: name='anilord.app'"
       - name: Upload APKs
         uses: actions/upload-artifact@v4
         with:

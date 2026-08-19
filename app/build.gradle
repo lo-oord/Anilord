@@ -67,7 +67,8 @@ android {
 				// Keep the Firebase-registered package stable across build variants.
 			}
 			release {
-
+			// Sign CI release APKs so Android can install them.
+			signingConfig signingConfigs.debug
 			minifyEnabled true
 			shrinkResources true 
 			proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
