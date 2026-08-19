@@ -26,7 +26,7 @@
 				android:layout_height="?attr/actionBarSize"
 				app:layout_collapseMode="pin">
 
-				<org.manga.peak.core.image.CoilImageView
+				<anilord.app.core.image.CoilImageView
 					android:id="@+id/imageView_avatar"
 					android:layout_width="28dp"
 					android:layout_height="28dp"

@@ -8,7 +8,7 @@
 	android:animateLayoutChanges="true"
 	android:orientation="vertical">
 
-	<org.manga.peak.core.ui.sheet.AdaptiveSheetHeaderBar
+	<anilord.app.core.ui.sheet.AdaptiveSheetHeaderBar
 		android:id="@+id/headerBar"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"

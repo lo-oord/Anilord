@@ -7,7 +7,7 @@
 	android:layout_height="wrap_content"
 	android:orientation="vertical">
 
-	<org.manga.peak.core.ui.sheet.AdaptiveSheetHeaderBar
+	<anilord.app.core.ui.sheet.AdaptiveSheetHeaderBar
 		android:id="@+id/headerBar"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
 			android:paddingBottom="@dimen/margin_normal">
 
 			<!-- Bookmark -->
-			<org.manga.peak.core.ui.widgets.ListItemTextView
+			<anilord.app.core.ui.widgets.ListItemTextView
 				android:id="@+id/button_bookmark"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
@@ -210,7 +210,7 @@
 				android:textColor="?colorOnSurfaceVariant" />
 
 			<!-- Screen Rotation -->
-			<org.manga.peak.core.ui.widgets.ListItemTextView
+			<anilord.app.core.ui.widgets.ListItemTextView
 				android:id="@+id/button_screen_rotate"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"

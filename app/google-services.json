@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "698616036994",
+    "project_id": "anilord-2814",
+    "storage_bucket": "anilord-2814.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:698616036994:android:de5a9975ed4bf7c1ac3e9b",
+        "android_client_info": {
+          "package_name": "anilord.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYI4gT6uWmyEAew7X-y5uxBwt2_uBBWQQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

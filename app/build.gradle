@@ -29,20 +29,20 @@ def localProperty = { String name, String fallback -> localProperties.getPropert
 android {
 	compileSdk = 36
 	buildToolsVersion = '35.0.0'
-	namespace = 'org.manga.peak'
+	namespace = 'anilord.app'
 	dependenciesInfo {
 		includeInApk = false
 		includeInBundle = false
 	}
 
 	defaultConfig {
-		applicationId "com.anilord.app"
+		applicationId "anilord.app"
 		minSdk = 23
 		targetSdk = 36
 		versionCode = 1082
 		versionName = '2.6.6'
 		generatedDensities = []
-		testInstrumentationRunner 'org.manga.peak.HiltTestRunner'
+		testInstrumentationRunner 'anilord.app.HiltTestRunner'
 		ksp {
 			arg('room.generateKotlin', 'true')
 		}
@@ -62,19 +62,20 @@ android {
 		resValue 'string', 'acra_password', localProperty('acra_password', '')
 	}
 
-	buildTypes {
-		debug {
-			applicationIdSuffix = '.debug'
-		}
-		release {
+			buildTypes {
+			debug {
+				// Keep the Firebase-registered package stable across build variants.
+			}
+			release {
+
 			minifyEnabled true
 			shrinkResources true 
 			proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 			// Configure production units privately in local.properties.
 		}
-		nightly {
-			initWith release
-			applicationIdSuffix = '.nightly'
+					nightly {
+				initWith release
+
 			// Nightly builds are test builds and must not request production ads.
 		}
 	}
@@ -149,7 +150,10 @@ dependencies {
 	implementation platform(libs.firebase.bom)
 	implementation libs.firebase.messaging
 	implementation libs.firebase.analytics
+	implementation libs.firebase.auth
+	implementation 'com.google.android.gms:play-services-auth:21.4.0'
 	implementation libs.firebase.database
+	implementation libs.firebase.firestore
 	implementation libs.firebase.crashlytics
 	implementation libs.firebase.inappmessaging.display
 	def parsersVersion = libs.versions.parsers.get()
@@ -167,6 +171,7 @@ dependencies {
 	implementation libs.kotlin.stdlib
 	implementation libs.kotlinx.coroutines.android
 	implementation libs.kotlinx.coroutines.guava
+	implementation libs.kotlinx.coroutines.play.services
 
 	implementation libs.androidx.appcompat
 	implementation libs.androidx.core

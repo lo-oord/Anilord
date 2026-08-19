@@ -12,7 +12,7 @@
 		android:layout_height="wrap_content"
 		android:paddingBottom="16dp">
 
-		<org.manga.peak.core.ui.sheet.AdaptiveSheetHeaderBar
+		<anilord.app.core.ui.sheet.AdaptiveSheetHeaderBar
 			android:id="@+id/headerBar"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
 			app:layout_constraintTop_toTopOf="parent"
 			app:title="@string/tracking" />
 
-		<org.manga.peak.image.ui.CoverImageView
+		<anilord.app.image.ui.CoverImageView
 			android:id="@+id/imageView_cover"
 			android:layout_width="0dp"
 			android:layout_height="0dp"
@@ -124,7 +124,7 @@
 			app:barrierMargin="8dp"
 			app:constraint_referenced_ids="imageView_cover,spinner_status" />
 
-		<org.manga.peak.core.ui.widgets.SelectableTextView
+		<anilord.app.core.ui.widgets.SelectableTextView
 			android:id="@+id/textView_description"
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"

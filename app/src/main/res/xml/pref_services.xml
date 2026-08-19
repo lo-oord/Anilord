@@ -5,7 +5,7 @@
 	android:title="@string/services">
 
 	<PreferenceScreen
-		android:fragment="org.manga.peak.settings.SuggestionsSettingsFragment"
+		android:fragment="anilord.app.settings.SuggestionsSettingsFragment"
 		android:key="suggestions"
 		android:title="@string/suggestions"
 		app:allowDividerAbove="false" />
@@ -16,7 +16,7 @@
 		android:summary="@string/related_manga_summary"
 		android:title="@string/related_manga" />
 
-	<org.manga.peak.settings.utils.SplitSwitchPreference
+	<anilord.app.settings.utils.SplitSwitchPreference
 		android:defaultValue="false"
 		android:key="stats_on"
 		android:title="@string/reading_stats"
@@ -57,7 +57,7 @@
 	</PreferenceCategory>
 
 	<Preference
-		android:fragment="org.manga.peak.settings.discord.DiscordSettingsFragment"
+		android:fragment="anilord.app.settings.discord.DiscordSettingsFragment"
 		android:key="discord_rpc"
 		android:summary="@string/discord_rpc_summary"
 		android:title="@string/discord_rpc"

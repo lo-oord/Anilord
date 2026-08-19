@@ -35,7 +35,7 @@
 		android:summary="@string/webtoon_zoom_summary"
 		android:title="@string/webtoon_zoom" />
 
-	<org.manga.peak.settings.utils.SliderPreference
+	<anilord.app.settings.utils.SliderPreference
 		android:dependency="webtoon_zoom"
 		android:key="webtoon_zoom_out"
 		android:stepSize="10"
@@ -122,7 +122,7 @@
 			android:summary="@string/flash_on_page_change_summary"
 			android:title="@string/flash_on_page_change" />
 
-		<org.manga.peak.settings.utils.SliderPreference
+		<anilord.app.settings.utils.SliderPreference
 			android:dependency="eink_flash"
 			android:key="eink_flash_duration"
 			android:stepSize="50"
@@ -131,7 +131,7 @@
 			android:valueTo="1000"
 			app:defaultValue="300" />
 
-		<org.manga.peak.settings.utils.SliderPreference
+		<anilord.app.settings.utils.SliderPreference
 			android:dependency="eink_flash"
 			android:key="eink_flash_every"
 			android:stepSize="1"

@@ -15,7 +15,7 @@
         android:title="@string/show_in_grid_view" />
 
     <PreferenceScreen
-        android:fragment="org.manga.peak.settings.sources.manage.SourcesManageFragment"
+        android:fragment="anilord.app.settings.sources.manage.SourcesManageFragment"
         android:key="remote_sources"
         android:persistent="false"
         android:title="@string/manage_sources" />

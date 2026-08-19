@@ -11,7 +11,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
 
-		<org.manga.peak.image.ui.CoverImageView
+		<anilord.app.image.ui.CoverImageView
 			android:id="@+id/imageView_cover"
 			android:layout_width="98dp"
 			android:layout_height="0dp"
@@ -22,7 +22,7 @@
 			app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Kotatsu.Cover"
 			tools:src="@tools:sample/backgrounds/scenic" />
 
-		<org.manga.peak.core.ui.widgets.IconsView
+		<anilord.app.core.ui.widgets.IconsView
 			android:id="@+id/iconsView"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
 			app:layout_constraintStart_toStartOf="@id/imageView_cover"
 			app:layout_constraintTop_toTopOf="@id/imageView_cover" />
 
-		<org.manga.peak.history.ui.util.ReadingProgressView
+		<anilord.app.history.ui.util.ReadingProgressView
 			android:id="@+id/progressView"
 			android:layout_width="@dimen/card_indicator_size"
 			android:layout_height="@dimen/card_indicator_size"
