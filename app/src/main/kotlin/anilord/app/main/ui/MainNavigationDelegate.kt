@@ -53,6 +53,7 @@ class MainNavigationDelegate(
 	private val navBar: NavigationBarView,
 	private val fragmentManager: FragmentManager,
 	private val settings: AppSettings,
+	private val onSettingsSelected: () -> Unit,
 ) : OnBackPressedCallback(false),
 	NavigationBarView.OnItemSelectedListener,
 	NavigationBarView.OnItemReselectedListener, View.OnClickListener {
@@ -110,7 +111,7 @@ class MainNavigationDelegate(
 
 	fun onCreate(lifecycleOwner: LifecycleOwner, savedInstanceState: Bundle?) {
 		if (navBar.menu.isEmpty()) {
-			createMenu(settings.mainNavItems, navBar.menu)
+			createMenu(navBar.menu)
 		}
 		observeSettings(lifecycleOwner)
 		val fragment = primaryFragment
@@ -142,6 +143,10 @@ class MainNavigationDelegate(
 
 	fun setCounter(item: NavItem, counter: Int) {
 		setCounter(item.id, counter)
+	}
+
+	fun openExplore() {
+		onNavigationItemSelected(R.id.nav_explore)
 	}
 
 	fun syncSelectedItem() {
@@ -193,6 +198,10 @@ class MainNavigationDelegate(
 			R.id.nav_suggestions -> SuggestionsFragment::class.java
 			R.id.nav_bookmarks -> AllBookmarksFragment::class.java
 			R.id.nav_updated -> UpdatesFragment::class.java
+			R.id.nav_settings -> {
+				onSettingsSelected()
+				return false
+			}
 			else -> return false
 		}
 		if (!setPrimaryFragment(newFragment)) {
@@ -241,14 +250,13 @@ class MainNavigationDelegate(
 		listeners.forEach { it.onFragmentChanged(fragment, fromUser) }
 	}
 
-	private fun createMenu(items: List<NavItem>, menu: Menu) {
-		for (item in items) {
+	private fun createMenu(menu: Menu) {
+		listOf(NavItem.HISTORY, NavItem.FAVORITES, NavItem.FEED).forEach { item ->
 			menu.add(Menu.NONE, item.id, Menu.NONE, item.title)
 				.setIcon(item.icon)
-			if (menu.size >= navBar.maxItemCount) {
-				break
-			}
 		}
+		menu.add(Menu.NONE, R.id.nav_settings, Menu.NONE, R.string.settings)
+			.setIcon(R.drawable.ic_settings)
 	}
 
 	private fun instantiateFragment(fragmentClass: Class<out Fragment>): Fragment {
@@ -264,7 +272,7 @@ class MainNavigationDelegate(
 			AppSettings.KEY_FLOATING_NAV,
 		).onEach {
 				setItemVisibility(R.id.nav_suggestions, settings.isSuggestionsEnabled)
-				setItemVisibility(R.id.nav_feed, settings.isTrackerEnabled)
+				setItemVisibility(R.id.nav_feed, true)
 				val isFloating = settings.isFloatingNavBar
 				setNavbarIsLabeled(if (isFloating) false else settings.isNavLabelsVisible)
 				(navBar as? SlidingBottomNavigationView)?.isFloating = isFloating

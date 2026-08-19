@@ -127,6 +127,15 @@ class AppRouter private constructor(
 
     /** Activities **/
 
+    fun openExplore() {
+        val context = contextOrNull() ?: return
+        if (activity is MainActivity) {
+            activity.openExplore()
+        } else {
+            startActivity(homeIntent(context).putExtra(KEY_OPEN_EXPLORE, true))
+        }
+    }
+
     fun openList(source: MangaSource, filter: MangaListFilter?, sortOrder: SortOrder?) {
         startActivity(listIntent(contextOrNull() ?: return, source, filter, sortOrder))
     }
@@ -835,6 +844,7 @@ class AppRouter private constructor(
         const val KEY_ID = "id"
         const val KEY_INDEX = "index"
         const val KEY_IS_BOTTOMTAB = "is_btab"
+        const val KEY_OPEN_EXPLORE = "open_explore"
         const val KEY_KIND = "kind"
         const val KEY_LIST_SECTION = "list_section"
         const val KEY_MANGA = "manga"

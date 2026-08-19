@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Preference
         android:icon="@drawable/ic_person_24"
@@ -10,9 +11,30 @@
         android:summary="@string/account_sync_title" />
 
     <PreferenceScreen
+        android:fragment="anilord.app.settings.LanguageSettingsFragment"
+        android:icon="@drawable/ic_language"
+        android:key="language"
+        android:layout="@layout/preference_settings_row"
+        android:title="@string/language" />
+
+    <PreferenceScreen
+        android:fragment="anilord.app.settings.ThemeSettingsFragment"
+        android:icon="@drawable/ic_appearance"
+        android:key="theme_settings"
+        android:layout="@layout/preference_settings_row"
+        android:title="@string/theme" />
+
+    <Preference
+        android:icon="@drawable/ic_manga_source"
+        android:key="explore"
+        android:layout="@layout/preference_settings_row"
+        android:title="@string/explore" />
+
+    <PreferenceScreen
         android:fragment="anilord.app.settings.AppearanceSettingsFragment"
         android:icon="@drawable/ic_appearance"
         android:key="appearance"
+        app:isPreferenceVisible="false"
         android:layout="@layout/preference_settings_row"
         android:title="@string/appearance" />
 
@@ -27,6 +49,7 @@
         android:fragment="anilord.app.settings.ReaderSettingsFragment"
         android:icon="@drawable/ic_book_page"
         android:key="reader"
+        app:isPreferenceVisible="false"
         android:layout="@layout/preference_settings_row"
         android:title="@string/reader_settings" />
 
@@ -34,6 +57,7 @@
         android:fragment="anilord.app.settings.StorageAndNetworkSettingsFragment"
         android:icon="@drawable/ic_usage"
         android:key="network"
+        app:isPreferenceVisible="false"
         android:layout="@layout/preference_settings_row"
         android:title="@string/storage_and_network" />
 
@@ -41,6 +65,7 @@
         android:fragment="anilord.app.settings.DownloadsSettingsFragment"
         android:icon="@drawable/ic_download"
         android:key="downloads"
+        app:isPreferenceVisible="false"
         android:layout="@layout/preference_settings_row"
         android:title="@string/downloads" />
 
@@ -48,6 +73,7 @@
         android:fragment="anilord.app.settings.tracker.TrackerSettingsFragment"
         android:icon="@drawable/ic_feed"
         android:key="tracker"
+        app:isPreferenceVisible="false"
         android:layout="@layout/preference_settings_row"
         android:title="@string/check_for_new_chapters" />
 

@@ -108,6 +108,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 
 	private val viewModel by viewModels<MainViewModel>()
 	private val searchSuggestionViewModel by viewModels<SearchSuggestionViewModel>()
+	private val isSecondaryExplore: Boolean
+		get() = intent?.getBooleanExtra(anilord.app.core.nav.AppRouter.KEY_OPEN_EXPLORE, false) == true
 	private val inAppUpdateLauncher = registerForActivityResult(
 		ActivityResultContracts.StartIntentSenderForResult(),
 	) {
@@ -144,9 +146,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 			navBar = checkNotNull(bottomNav ?: viewBinding.navRail),
 			fragmentManager = supportFragmentManager,
 			settings = settings,
+			onSettingsSelected = router::openSettings,
 		)
 		navigationDelegate.addOnFragmentChangedListener(this)
 		navigationDelegate.onCreate(this, savedInstanceState)
+		if (intent?.getBooleanExtra(anilord.app.core.nav.AppRouter.KEY_OPEN_EXPLORE, false) == true) {
+			navigationDelegate.openExplore()
+		}
 		viewBinding.textViewTitle?.let { tv ->
 			navigationDelegate.observeTitle().observe(this) { tv.text = it }
 		}
@@ -232,6 +238,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 		if (provider !is MangaSearchMenuProvider) { // do not duplicate search menu item
 			super.addMenuProvider(provider, owner, state)
 		}
+	}
+
+	fun openExplore() {
+		navigationDelegate.openExplore()
 	}
 
 	override fun onClick(v: View) {
@@ -326,8 +336,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 	override fun onSupportActionModeFinished(mode: ActionMode) {
 		super.onSupportActionModeFinished(mode)
 		adjustFabVisibility()
-		bottomNav?.show()
-		(viewBinding.layoutSearch ?: viewBinding.searchBar).isInvisible = false
+		if (isSecondaryExplore) {
+			hideMainShellChrome()
+		} else {
+			bottomNav?.show()
+			(viewBinding.layoutSearch ?: viewBinding.searchBar).isInvisible = false
+		}
 		updateContainerBottomMargin()
 	}
 
@@ -459,6 +473,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 	}
 
 	private fun adjustAppbar(topFragment: Fragment) {
+		if (isSecondaryExplore) {
+			hideMainShellChrome()
+			fadingAppbarMediator.unbind()
+			return
+		}
 		viewBinding.appbar.isVisible = true
 		if (topFragment is FavouritesContainerFragment) {
 			viewBinding.appbar.fitsSystemWindows = true
@@ -474,6 +493,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 		topFragment: Fragment? = navigationDelegate.primaryFragment,
 		isSearchOpened: Boolean = viewBinding.searchView.isShowing,
 	) {
+		if (isSecondaryExplore) {
+			navigationDelegate.navRailHeader?.railFab?.isVisible = false
+			viewBinding.fab?.hide()
+			return
+		}
 		navigationDelegate.navRailHeader?.railFab?.isVisible = isResumeEnabled
 		val fab = viewBinding.fab ?: return
 		if (isResumeEnabled && !actionModeDelegate.isActionModeStarted && !isSearchOpened && topFragment is HistoryListFragment) {
@@ -488,6 +512,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 	}
 
 	private fun adjustSearchUI(isOpened: Boolean) {
+		if (isSecondaryExplore) {
+			hideMainShellChrome()
+			return
+		}
 		val appBarScrollFlags = if (isOpened) {
 			SCROLL_FLAG_NO_SCROLL
 		} else {
@@ -565,6 +593,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 			}
 		}
 		updateContainerBottomMargin()
+	}
+
+	private fun hideMainShellChrome() {
+		viewBinding.appbar.isVisible = false
+		viewBinding.bottomNav?.isVisible = false
+		viewBinding.navRail?.isVisible = false
+		viewBinding.fab?.hide()
+		navigationDelegate.navRailHeader?.railFab?.isVisible = false
 	}
 
 	private fun updateContainerBottomMargin() {

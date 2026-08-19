@@ -38,6 +38,9 @@ class SearchSuggestionMenuProvider(
 
 	override fun onPrepareMenu(menu: Menu) {
 		super.onPrepareMenu(menu)
+		// Presentation-only change: keep the clear-history action and callback intact,
+		// but remove its visible overflow item from the search bar.
+		menu.findItem(R.id.action_clear)?.isVisible = false
 		menu.findItem(R.id.action_voice_search)?.isVisible = voiceInputLauncher.resolve(context, null) != null
 	}
 
