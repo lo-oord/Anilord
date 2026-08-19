@@ -17,8 +17,12 @@ class MainMenuProvider(
 	}
 
 	override fun onPrepareMenu(menu: Menu) {
-		menu.findItem(R.id.action_incognito)?.isChecked =
-			viewModel.isIncognitoModeEnabled.value
+		menu.findItem(R.id.action_incognito)?.apply {
+			isChecked = viewModel.isIncognitoModeEnabled.value
+			// Keep the action and callback intact, but remove the overflow affordance.
+			isVisible = false
+		}
+		menu.findItem(R.id.action_settings)?.isVisible = false
 	}
 
 	override fun onMenuItemSelected(menuItem: MenuItem): Boolean = when (menuItem.itemId) {

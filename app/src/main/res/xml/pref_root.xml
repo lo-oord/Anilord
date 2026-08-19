@@ -24,11 +24,6 @@
         android:layout="@layout/preference_settings_row"
         android:title="@string/theme" />
 
-    <Preference
-        android:icon="@drawable/ic_manga_source"
-        android:key="explore"
-        android:layout="@layout/preference_settings_row"
-        android:title="@string/explore" />
 
     <PreferenceScreen
         android:fragment="anilord.app.settings.AppearanceSettingsFragment"

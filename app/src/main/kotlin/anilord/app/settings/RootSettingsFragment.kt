@@ -11,7 +11,6 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import anilord.app.R
-import anilord.app.core.nav.router
 import anilord.app.core.prefs.AppSettings
 import anilord.app.core.ui.BasePreferenceFragment
 import anilord.app.core.util.ext.addMenuProvider
@@ -43,12 +42,6 @@ class RootSettingsFragment : BasePreferenceFragment(0) {
 		when (preference.key) {
 			"account" -> {
 				startActivity(Intent(requireContext(), anilord.app.settings.account.FirebaseAccountActivity::class.java))
-				return true
-			}
-
-			"explore" -> {
-				router.openExplore()
-				requireActivity().finish()
 				return true
 			}
 		}

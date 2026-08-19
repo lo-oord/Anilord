@@ -1,6 +1,7 @@
 package anilord.app.core.nav
 
 import android.app.Activity
+import android.app.ActivityOptions
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.DialogInterface
@@ -271,7 +272,15 @@ class AppRouter private constructor(
         startActivity(intent)
     }
 
-    fun openSettings() = startActivity(SettingsActivity::class.java)
+    fun openSettings() {
+        val context = contextOrNull() ?: return
+        val options = ActivityOptions.makeCustomAnimation(
+            context,
+            android.R.anim.fade_in,
+            android.R.anim.fade_out,
+        ).toBundle()
+        startActivity(Intent(context, SettingsActivity::class.java), options)
+    }
 
     fun openReaderSettings() {
         startActivity(readerSettingsIntent(contextOrNull() ?: return))
