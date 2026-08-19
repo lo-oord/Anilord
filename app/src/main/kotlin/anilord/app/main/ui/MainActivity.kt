@@ -203,7 +203,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), AppBarOwner, BottomNav
 		)
 		updateManager.availableUpdate
 			.onEach { update ->
-				viewBinding.updateBadge.isVisible = update != null
+				viewBinding.updateBadge?.isVisible = update != null
 				if (update != null && shownGithubUpdateCode != update.versionCode) {
 					shownGithubUpdateCode = update.versionCode
 					showGithubUpdateDialog(update)
