@@ -12,18 +12,23 @@
 	android:padding="8dp"
 	tools:layout_width="140dp">
 
-	<FrameLayout
+	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content">
 
 		<anilord.app.image.ui.CoverImageView
 			android:id="@+id/imageView_cover"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
+			android:layout_width="0dp"
+			android:layout_height="0dp"
 			android:background="@color/anilord_preference_surface"
-			android:orientation="horizontal"
+			android:scaleType="centerCrop"
 			style="@style/Widget.Kotatsu.ImageView.Cover"
 			app:allowRgb565="true"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintDimensionRatio="H,13:18"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
 			app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Kotatsu.Cover"
 			tools:ignore="ContentDescription"
 			tools:src="@tools:sample/backgrounds/scenic[5]" />
@@ -32,33 +37,36 @@
 			android:id="@+id/progressView"
 			android:layout_width="@dimen/card_indicator_size"
 			android:layout_height="@dimen/card_indicator_size"
-			android:layout_gravity="bottom|end"
-			android:layout_margin="@dimen/card_indicator_offset" />
+			android:layout_margin="@dimen/card_indicator_offset"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent" />
 
 		<anilord.app.core.ui.widgets.IconsView
 			android:id="@+id/iconsView"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_gravity="top|start"
 			android:layout_marginTop="10dp"
 			android:background="@drawable/bg_list_icons"
 			android:orientation="horizontal"
 			android:padding="4dp"
 			app:iconSize="14dp"
-			app:iconSpacing="4dp" />
+			app:iconSpacing="4dp"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
 
 		<anilord.app.core.ui.widgets.BadgeView
 			android:id="@+id/badge"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_gravity="top|end"
 			android:layout_margin="@dimen/margin_small"
 			android:visibility="gone"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
 			app:maxCharacterCount="@integer/manga_badge_max_character_count"
 			tools:number="8"
 			tools:visibility="visible" />
 
-	</FrameLayout>
+	</androidx.constraintlayout.widget.ConstraintLayout>
 
 	<TextView
 		android:id="@+id/textView_title"
@@ -67,10 +75,10 @@
 		android:elegantTextHeight="false"
 		android:ellipsize="end"
 		android:lines="2"
-			android:paddingTop="6dp"
-			android:paddingBottom="6dp"
-			android:textAppearance="?attr/textAppearanceTitleSmall"
-			android:textColor="?android:attr/textColorPrimary"
+		android:paddingTop="6dp"
+		android:paddingBottom="6dp"
+		android:textAppearance="?attr/textAppearanceTitleSmall"
+		android:textColor="?android:attr/textColorPrimary"
 		tools:text="@tools:sample/lorem" />
 
 </LinearLayout>

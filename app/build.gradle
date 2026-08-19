@@ -39,8 +39,8 @@ android {
 		applicationId "anilord.app"
 		minSdk = 23
 		targetSdk = 36
-		versionCode = 1082
-		versionName = '2.6.6'
+		versionCode = 1083
+		versionName = '2.6.7'
 		generatedDensities = []
 		testInstrumentationRunner 'anilord.app.HiltTestRunner'
 		ksp {
