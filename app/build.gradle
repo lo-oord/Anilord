@@ -153,6 +153,7 @@ dependencies {
 	implementation libs.firebase.auth
 	implementation 'com.google.android.gms:play-services-auth:21.4.0'
 	implementation libs.firebase.database
+	implementation libs.firebase.firestore
 	implementation libs.firebase.crashlytics
 	implementation libs.firebase.inappmessaging.display
 	def parsersVersion = libs.versions.parsers.get()
@@ -170,6 +171,7 @@ dependencies {
 	implementation libs.kotlin.stdlib
 	implementation libs.kotlinx.coroutines.android
 	implementation libs.kotlinx.coroutines.guava
+	implementation libs.kotlinx.coroutines.play.services
 
 	implementation libs.androidx.appcompat
 	implementation libs.androidx.core

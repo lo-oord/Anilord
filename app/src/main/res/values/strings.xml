@@ -1261,4 +1261,12 @@
     <string name="account_google_unavailable">Google sign-in is not configured yet.</string>
     <string name="account_invalid_email">Enter a valid email address</string>
     <string name="account_password_short">Password must be at least 6 characters</string>
+    <string name="account_display_name">Display name</string>
+    <string name="account_country">Country or region</string>
+    <string name="account_birth_date">Date of birth</string>
+    <string name="account_required_field">This field is required</string>
+    <string name="account_favorites">Favorites</string>
+    <string name="account_history">Reading history</string>
+    <string name="account_sync_complete">Account data synced</string>
+    <string name="account_sync_failed">Could not sync account data</string>
 </resources>

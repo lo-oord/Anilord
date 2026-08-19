@@ -3,10 +3,16 @@ package anilord.app.settings.account
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.app.DatePickerDialog
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -24,12 +30,21 @@ class FirebaseAccountActivity : BaseActivity<ActivityFirebaseAccountBinding>() {
 
     private var auth: FirebaseAuth? = null
     private var isCreateMode = false
+    private var pendingProfile: AccountProfile? = null
+
+    @javax.inject.Inject
+    lateinit var cloudSync: FirestoreAccountSyncRepository
 
     private val googleLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult(),
     ) { result ->
         if (result.resultCode != Activity.RESULT_OK) return@registerForActivityResult
-        val account: GoogleSignInAccount? = GoogleSignIn.getSignedInAccountFromIntent(result.data).result
+        val signInTask = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+        if (!signInTask.isSuccessful) {
+            showMessage(signInTask.exception?.localizedMessage ?: getString(R.string.account_auth_failed))
+            return@registerForActivityResult
+        }
+        val account: GoogleSignInAccount? = signInTask.result
         val credential = account?.idToken?.let { GoogleAuthProvider.getCredential(it, null) }
         if (credential == null) {
             showMessage(getString(R.string.account_google_unavailable))
@@ -45,6 +60,7 @@ class FirebaseAccountActivity : BaseActivity<ActivityFirebaseAccountBinding>() {
         auth = FirebaseApp.initializeApp(this)?.let(FirebaseAuth::getInstance)
         setupActions()
         render(auth?.currentUser)
+        syncCurrentAccount(showResult = false)
     }
 
     override fun onApplyWindowInsets(v: View, insets: WindowInsetsCompat): WindowInsetsCompat = insets
@@ -52,6 +68,7 @@ class FirebaseAccountActivity : BaseActivity<ActivityFirebaseAccountBinding>() {
     override fun onStart() {
         super.onStart()
         render(auth?.currentUser)
+        syncCurrentAccount(showResult = false)
     }
 
     private fun setupActions() = with(viewBinding) {
@@ -63,10 +80,8 @@ class FirebaseAccountActivity : BaseActivity<ActivityFirebaseAccountBinding>() {
         }
         googleAction.setOnClickListener { signInWithGoogle() }
         guestAction.setOnClickListener { runAuthAction { auth?.signInAnonymously() } }
-        syncAction.setOnClickListener {
-            render(auth?.currentUser)
-            showMessage(getString(R.string.account_sync_ready))
-        }
+        birthDateInput.setOnClickListener { showBirthDatePicker() }
+        syncAction.setOnClickListener { syncCurrentAccount(showResult = true) }
         signOutAction.setOnClickListener {
             auth?.signOut()
             GoogleSignIn.getClient(this@FirebaseAccountActivity, GoogleSignInOptions.DEFAULT_SIGN_IN).signOut()
@@ -81,17 +96,39 @@ class FirebaseAccountActivity : BaseActivity<ActivityFirebaseAccountBinding>() {
         authSubtitle.setText(if (isCreateMode) R.string.account_create_subtitle else R.string.account_sign_in_subtitle)
         emailAction.setText(if (isCreateMode) R.string.account_create_account else R.string.account_sign_in)
         toggleMode.setText(if (isCreateMode) R.string.account_have_account else R.string.account_create_account)
+        displayNameLayout.isVisible = isCreateMode
+        countryLayout.isVisible = isCreateMode
+        birthDateLayout.isVisible = isCreateMode
     }
 
     private fun submitEmail() = with(viewBinding) {
         val email = emailInput.text?.toString()?.trim().orEmpty()
         val password = passwordInput.text?.toString().orEmpty()
+        val displayName = displayNameInput.text?.toString()?.trim().orEmpty()
+        val country = countryInput.text?.toString()?.trim().orEmpty()
+        val birthDate = birthDateInput.text?.toString()?.trim().orEmpty()
         emailLayout.error = if (email.contains("@")) null else getString(R.string.account_invalid_email)
         passwordLayout.error = if (password.length >= 6) null else getString(R.string.account_password_short)
-        if (emailLayout.error != null || passwordLayout.error != null) return
+        displayNameLayout.error = if (!isCreateMode || displayName.isNotBlank()) null else getString(R.string.account_required_field)
+        countryLayout.error = if (!isCreateMode || country.isNotBlank()) null else getString(R.string.account_required_field)
+        birthDateLayout.error = if (!isCreateMode || birthDate.isNotBlank()) null else getString(R.string.account_required_field)
+        if (emailLayout.error != null || passwordLayout.error != null || displayNameLayout.error != null || countryLayout.error != null || birthDateLayout.error != null) return
+        pendingProfile = if (isCreateMode) AccountProfile(displayName, country, birthDate) else null
         runAuthAction {
             if (isCreateMode) auth?.createUserWithEmailAndPassword(email, password)
             else auth?.signInWithEmailAndPassword(email, password)
+        }
+    }
+
+    private fun showBirthDatePicker() {
+        val calendar = Calendar.getInstance()
+        DatePickerDialog(this, { _, year, month, day ->
+            val selected = Calendar.getInstance().apply { set(year, month, day) }
+            birthDateInput.setText(SimpleDateFormat("yyyy-MM-dd", Locale.US).format(selected.time))
+            birthDateLayout.error = null
+        }, calendar.get(Calendar.YEAR) - 18, calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).apply {
+            datePicker.maxDate = System.currentTimeMillis()
+            show()
         }
     }
 
@@ -118,9 +155,18 @@ class FirebaseAccountActivity : BaseActivity<ActivityFirebaseAccountBinding>() {
         task.addOnCompleteListener { completed ->
             setLoading(false)
             if (completed.isSuccessful) {
+                val createdProfile = pendingProfile
+                pendingProfile = null
                 render(auth?.currentUser)
+                if (createdProfile != null) {
+                    auth?.currentUser?.let { user ->
+                        lifecycleScope.launch { cloudSync.saveProfile(user, createdProfile) }
+                    }
+                }
+                syncCurrentAccount(showResult = false)
                 showMessage(getString(R.string.account_signed_in))
             } else {
+                pendingProfile = null
                 showMessage(completed.exception?.localizedMessage ?: getString(R.string.account_auth_failed))
             }
         }
@@ -140,6 +186,26 @@ class FirebaseAccountActivity : BaseActivity<ActivityFirebaseAccountBinding>() {
         profileStatus.setText(if (user?.isAnonymous == true) R.string.account_guest_status else R.string.account_connected_status)
         profileStatusDetail.setText(if (user?.isAnonymous == true) R.string.account_guest_detail else R.string.account_connected_detail)
     }
+
+    private fun syncCurrentAccount(showResult: Boolean) {
+        val user = auth?.currentUser ?: return
+        if (user.isAnonymous) return
+        setLoading(true)
+        lifecycleScope.launch {
+            runCatching { cloudSync.sync(user) }
+                .onSuccess { result ->
+                    viewBinding.profileFavoritesCount.text = result.favorites.toString()
+                    viewBinding.profileHistoryCount.text = result.history.toString()
+                    if (showResult) showMessage(getString(R.string.account_sync_complete))
+                }
+                .onFailure {
+                    if (showResult) showMessage(getString(R.string.account_sync_failed))
+                }
+            setLoading(false)
+        }
+    }
+
+    data class AccountProfile(val displayName: String, val country: String, val birthDate: String)
 
     private fun setLoading(loading: Boolean) = with(viewBinding) {
         progress.isVisible = loading
