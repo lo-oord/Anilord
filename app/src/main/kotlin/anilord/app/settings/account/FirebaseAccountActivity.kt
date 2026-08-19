@@ -5,8 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseApp
@@ -27,8 +29,8 @@ class FirebaseAccountActivity : BaseActivity<ActivityFirebaseAccountBinding>() {
         ActivityResultContracts.StartActivityForResult(),
     ) { result ->
         if (result.resultCode != Activity.RESULT_OK) return@registerForActivityResult
-        val account = GoogleSignIn.getSignedInAccountFromIntent(result.data).result
-        val credential = account?.idToken?.let(GoogleAuthProvider::getCredential)
+        val account: GoogleSignInAccount? = GoogleSignIn.getSignedInAccountFromIntent(result.data).result
+        val credential = account?.idToken?.let { GoogleAuthProvider.getCredential(it, null) }
         if (credential == null) {
             showMessage(getString(R.string.account_google_unavailable))
             return@registerForActivityResult
@@ -44,6 +46,8 @@ class FirebaseAccountActivity : BaseActivity<ActivityFirebaseAccountBinding>() {
         setupActions()
         render(auth?.currentUser)
     }
+
+    override fun onApplyWindowInsets(v: View, insets: WindowInsetsCompat): WindowInsetsCompat = insets
 
     override fun onStart() {
         super.onStart()
