@@ -20,7 +20,7 @@
             android:layout_height="?attr/actionBarSize"
             android:layout_marginStart="-12dp"
             android:layout_marginEnd="-12dp"
-            app:navigationIcon="@drawable/ic_arrow_back"
+            app:navigationIcon="@drawable/ic_arrow_back_24"
             app:title="@string/account" />
 
         <LinearLayout
